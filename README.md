@@ -1,82 +1,149 @@
-# CKZ2 还原仓库
+# Contract Killer: Zombies 2 Reverse
 
-《Contract Killer: Zombies 2》iOS 2.0.2 的源码还原。`Assets/` 照原版 Unity 工程的路径摆放，编译出的 `Assembly-CSharp.dll` 以与原版逐字节一致为目标。
+**English** | [中文](README_CN.md)
 
-## 目录
+## Overview
 
-| 目录 | 内容 | 是否原版就有 |
-| --- | --- | --- |
-| `Assets/` | 还原的源码，路径照原版工程：`Packages/`（Glu 公共包和 EZ GUI）、`Scripts/`（游戏代码）、`Plugins/iOS/`（已还原的 14 个 Glu 原生插件，加上 Glu 改过的模板文件 `AppController.mm`；Unity 3.5.7 只取这里的顶层文件，所以平铺放，见 `docs/native.md`）、`3rd_party/LitJSON.dll`（第三方托管库原件，目录名是推断） | 是，只放原版就有的文件 |
-| `native_stubs/` | 广告、统计、联网类 11 个原生插件的同名空实现，只进 tuned 产物，见 `native_stubs/README.md` | 否 |
-| `data/` | 要改的 MonoBehaviour 数据导出的 JSON，文件名用原版资源路径；内容和原版一致，不在这里改 | 否 |
-| `tweaks/` | 数值调整（“防坐牢”），只写改了哪些字段、改成多少 | 否 |
-| `tools/` | 构建、比对、数据导入导出脚本 | 否 |
-| `docs/` | 进度页；`native.md`（原生部分的来源、构建与验证）；`link.md`（完整主程序的链接与逐函数比对） | 否 |
-| `recovery/` | 本地工作区：`file_map.csv`、`notes/`、账本。不入库 | 否 |
-| `build/` | 构建产物：`vanilla/` 与原版一致，`tuned/` 叠加了 `tweaks/`。不入库 | 否 |
-| `bin/` | 最终产物：`ckzombies2` 和 `Data/Managed/` 下的 8 个程序集，结构与 `ckzombies2.app` 相同，整个覆盖进 `.app` 即可。主程序已带 ad-hoc 签名（entitlements 取自原版，越狱设备可直接运行）。`build_main.py` 最后一步生成，不入库 | 否 |
+This project is based on Glu Mobile's *Contract Killer: Zombies 2* for iOS, version 2.0.2 (`com.glu.ckzombies2`). The game was made with Unity 3.5.7f6: its C# scripts are compiled into `Assembly-CSharp.dll`, which Mono then fully AOT-compiles into the main executable `ckzombies2` (armv7 Mach-O). The original executable is not stripped and still carries its complete STABS debug map: every AOT method has a name, and the compilation units, build paths and link order of the native code are all on record.
 
-原版文件在上一级的 `Payload-ori/`，不复制进仓库。
+The goal is a **1:1 source recovery**: compiling the recovered sources with the original toolchain must produce an `Assembly-CSharp.dll` that is byte-identical to the original, and from it an identical `ckzombies2`. Fixing the game's bugs is out of scope; the original behavior, including its own bugs, is kept as is.
 
-## 源码路径从哪来
+Fixes and ports built on top of this source only make sense if the source itself can be trusted.
 
-原版没有留下源码目录，路径按下面的证据推出来，每个类型的依据记在 `recovery/file_map.csv`（`tools/file_map.py` 生成）：
+The executable has four layers, each recovered and verified differently:
 
-| 证据 | 含义 | 类型数 |
-| --- | --- | --- |
-| `po` | 本地化 PO 注释直接给出完整路径 | 63 |
-| `bracketed` | MonoBehaviour 子类（文件名 = 类名），被同目录的两个锚点夹住，且与相邻的确定路径不冲突 | 64 |
-| `class_name` | MonoBehaviour 子类，文件名确定，目录只知道范围 | 302 |
-| `unknown` | 普通类、结构、枚举、接口，可能和别的类型同文件 | 255 |
-| `delegate` | smcs 把委托排在最后，顺序不反映位置 | 20 |
-| `generated` | `<Module>`、`<PrivateImplementationDetails>` | 2 |
+| Layer | Contents | Approach | Verification |
+| --- | --- | --- | --- |
+| C# | `Assembly-CSharp.dll`: 579 source files, 9,894 methods | Decompile, then bring each method's code back to its original form | Per-method IL identical; with MVID and timestamp backfilled, the whole DLL is byte-identical |
+| AOT | 72% of the executable's `__text`, generated from the DLLs | Not hand-written: regenerated with the original AOT compiler and arguments | Re-AOT of the original DLL gives a `__text` byte-identical to the original (relocations aside) |
+| Native code | Xcode project template and Glu's native plugins | 14 plugins recovered; 11 ad, analytics and networking plugins stubbed | Function-by-function comparison |
+| Link | Unity engine library, Mono runtime, third-party SDKs | Linked with the original arguments and order | Function, data-chunk and structure comparison after linking |
 
-**目录名会影响校验**：Unity 按路径字母序把文件交给 smcs，类型顺序跟着路径走。推断的目录名必须和原版排出同样的顺序，否则 DLL 对不上。反过来，只要排序相同，用的名字对不对，比对是查不出来的，所以证据等级要如实记录。
+## Compiler, SDK and third-party libraries
 
-### 目录表与证据等级
+The versions are derived from the `.app`'s `Info.plist`, the build and SDK paths in the debug map, and function-by-function machine-code comparison.
 
-`tools/layout.csv` 按 TypeDef 序号区间给每段类型指定目录，少数类型单独指定文件。`tools/import_decompiled.py` 照这张表把反编译源码导入成 579 个文件，每个类型的放置结果记在 `recovery/placement.csv`。每个类型的证据等级如下：
+> ✅ matched　⚠️ same version, but one aspect cannot be fully verified　❓ original version unknown
 
-| 等级 | 类型数 | 含义 |
-| --- | --- | --- |
-| `po` | 63 | 完整路径来自 PO 注释 |
-| `bracketed` | 64 | MonoBehaviour，被同目录的两个锚点夹住 |
-| `anchor` | 136 | 目录是锚点给出的已知目录，文件名按类名规则或排序推定 |
-| `evidence` | 1 | `Packages/ABTesting/Examples/`，DLL 里有这个路径字符串 |
-| `package` | 276 | 包目录 `Packages/<包名>/` 取自日志名 `Package.<包名>` 和原版顺序；包内子目录（`Examples`、`Scripts`、`Template` 等）和 EZ GUI 的内部结构是猜的 |
-| `guess` | 164 | 目录名是猜的（如 `Scripts/Camera`、`Scripts/Utils`），含 20 个委托的宿主文件 |
+### Toolchain
 
-猜测的部分只保证排序正确：编译出的类型顺序和原版一致（逐方法比对结果与导入前完全相同），名字是否和原版一样无法验证。
+| Component | Original | This project | Match | Notes |
+| --- | --- | --- | :---: | --- |
+| Unity | 3.5.7f6 | 3.5.7f6 macOS installer | ✅ | The game's 5 bundled framework DLLs and `UnityEngine.dll` are byte-identical to the installer's |
+| C# compiler | smcs 2.6.5.0, running on the Mac Mono bundled with Unity | The same smcs.exe on the same Mac Mono | ✅ | Arguments as in the Unity 3.5.7 editor: `-debug -target:library -nowarn:0169`. The DLL is byte-identical to the original except for MVID and timestamp |
+| AOT compiler | mono-xcompiler (Mono 2.6.5, bundled with Unity 3.5.7) | Same | ✅ | `--aot=full,asmonly,nodebug,ntrampolines=4096,nrgctx-trampolines=4096,nimt-trampolines=4096,static` |
+| Compiler, assembler | Xcode 4.5 (4G182): clang-421.11.65 | Same | ✅ | `Info.plist`: `DTXcodeBuild=4G182`; not 4.5.1 / 4.5.2 (both ship clang-421.11.66) |
+| Linker | ld64-134.9 (same Xcode) | Same | ⚠️ | Header, load commands, dylib order and weak linking, and function order match the original; the whole file is not byte-identical yet (third-party SDKs missing) |
+| iOS SDK | iOS 6.0 SDK (10A403) | Same | ✅ | `Info.plist`: `DTSDKBuild=10A403`; minimum OS 5.1 |
+| Native compiler flags | — | Unity template Release configuration + Glu's changes: `-Os -mno-thumb -g -fvisibility=hidden` | ✅ | Derived from functions that match byte for byte; all original symbols are private extern and ObjC classes carry `RO_HIDDEN`, which proves `-fvisibility=hidden` |
+| Linker flags | — | `-all_load -dead_strip` | ✅ | Only this combination pulls in exactly the 551 `libiPhone-lib.a` members listed in the original debug map, in the same order |
+| Build path | `/Applications/buildAgent/work/a03c2b4a5f58e0ef/GeneratedProject_ios` | Same | ✅ | `__FILE__` strings and debug-info paths match the original |
 
-几个不是一类型一文件的情况：
-- 日志类、接口、枚举等放不进自己的文件时，并入下一个文件的开头（`attached_forward`，26 个）。
-- 其余放不进的，追加到上一个文件（`attached_back`，16 个）。
-- `Tutorial/TutorialScripts.cs` 是 PO 锚点里的多类型文件，按顺序放进 17 个教程类。
+Unity's Mac Mono and mono-xcompiler are i386 Mach-O programs; Xcode 4.5's clang, ld and as are x86_64 Mach-O. This project runs them directly on Linux with a patched [maloader](https://github.com/shinh/maloader); the patches and the shim are in [`toolchain/`](toolchain/README.md).
 
-## 工具
+**Why the build must use the Mac Mono**: the Windows smcs produces the same method IL, but not the same DLL. The original references the unity-profile mscorlib 2.0.5.0, while the Windows build defaults to 2.0.0.0; and the order of the CustomAttribute table depends on how the C library's `qsort` treats equal elements, and the original used Apple Libc's implementation. The shim contains a transcription of Apple Libc's `qsort`.
 
-| 命令 | 作用 |
+### Third-party libraries
+
+| Library | Source | This project | Notes |
+| --- | --- | --- | --- |
+| EZ GUI | Unity plugin (C# source) | Recovered in `Assets/Packages/EZGUI/` | Compiled into `Assembly-CSharp.dll` and matched method by method like the game code |
+| LitJSON | Third-party managed library (built with Microsoft csc) | Original file in `Assets/3rd_party/LitJSON.dll` | Out of scope; used as is for compile references and AOT |
+| Unity engine library, Mono runtime | `libiPhone-lib.a` from the Unity 3.5.7 installer | Taken from the installer at build time | Linked directly |
+| Tapjoy, Kontagent, Flurry, MobileAppTracking, PlayHaven, Facebook SDK | Prebuilt libraries | **Stubs** in `native_stubs/` | Ad / analytics SDKs; **not original code**, only there so the game links and runs. The calls on the C# side are kept |
+| In-app purchase, purchase verification | Glu plugins relying on online services | **Stubs** in `native_stubs/` | Same as above |
+
+## Results
+
+![CKZ2 2.0.2 Recovery Overview](docs/piechart/overview.en.png)
+
+All 9,894 methods of the C# layer have IL identical to the original; with the MVID and timestamp backfilled, `Assembly-CSharp.dll` is byte-identical to the original.
+
+Function-by-function comparison of the executable: of the 159,348 checked functions, 159,346 match the original. The 2 that differ are COM interop wrappers in mscorlib: the AOT compiler wrote a heap address from the build machine's process into the code as a constant. That value cannot be reproduced, and iOS never calls these wrappers. Third-party SDKs and glue stubs are out of scope and not counted in the percentages.
+
+See the [progress page](docs/progress.en.html) for the full page.
+
+## Build
+
+The build runs on Linux. On Windows, the scripts create a dedicated WSL distro in the repository's `.wsl\` folder; it does not use the C: drive and does not touch existing WSL distros. The build does not need any original game files.
+
+### Requirements
+
+| Item | Requirement |
 | --- | --- |
-| `python tools/build_dll.py [--windows]` | 按 Unity 的规则收集 `Assets/` 下的 .cs，按路径排序，用 smcs 2.6.5 和 Unity 原始参数编译到 `build/vanilla/`。默认在 WSL `ckre` 里用 Unity 的 Mac 版 Mono 编（`toolchain/smcs_mac.sh`，约 25 秒），产物除 MVID 和时间戳外与原版逐字节相同，门禁用它；`--windows` 用 Windows 版 mono（约 1 秒），方法 IL 相同，但 mscorlib 版本和同一目标上多个特性的排列不同，只适合快速试写法 |
-| `python tools/il_compare.py [dll]` | 和原版逐方法比对 IL，报告写到 `recovery/il_compare/`（`methods.csv`、`diffs.txt`） |
-| `python tools/gate.py <轮名> [--advance]` | 正式门禁：编译 + 比对 + 回退锁（`recovery/gate/lock.json`）+ 每轮报告 `recovery/rounds/` + 刷新饼图 |
-| `python tools/il_triage.py [dll]` | 差异分诊：每个方法归类（编号错位、局部变量、写法不同……），并找出编译器生成名编号从哪个类型开始错位 |
-| `python tools/status_page.py` | 生成饼图页 `recovery/status/progress.cn.html`：上面是 IL 逐方法比对，下面是主程序逐函数比对（有 `recovery/link/summary.json` 时） |
-| `python tools/build_main.py [--skip-dll]` | 链出完整主程序 `build/tuned/ckzombies2`：编 DLL → 回填 MVID 并核对与原版逐字节相同 → 生成 `RegisterMonoModules.cpp`（`tools/register_mono_modules/`）→ WSL 里 `toolchain/build_main.sh` 做 AOT、原生编译、链接 → 签名并复制到 `bin/`。见 `docs/link.md` |
-| `python tools/sign_adhoc.py <输入> <输出>` | 给主程序加 ad-hoc 签名，identifier 和 entitlements 取自原版；不签名就没有钥匙串权限，启动会弹“无法连接服务器”。`build_main.py` 自动调用 |
-| `python tools/link_compare.py [产物]` | 链接产物与原版逐函数比对（L1，地址相关字段按指向的东西比，带比较器自测），报告写到 `recovery/link/` |
-| `python tools/link_datadiff.py [产物]` | 数据比对（L2）：代码以外的所有节，指针按指向的东西比，只在原版里有的顺着指针归属到 SDK / 胶水；依赖 L1 的 `functions.csv` |
-| `python tools/link_layout.py [产物]` | 结构核对（L3）：Mach-O 头、加载命令、段与节、dylib、入口、导入、符号可见性、函数与数据的排列顺序 |
-| `python tools/native_compare.py <.o 或目录>... [--show 函数名]` | 原生代码与原版主程序逐函数比对（复用 skill 的 `macho_objdiff.py`，补上 ARM 模式的数据引用核对和链接器分支岛）；`.o` 由 `toolchain/build_native.sh` 编出 |
-| `python tools/native_disasm.py <源文件名>...` | 导出原版某个编译单元的带注释反汇编（selector、字符串、类引用、GOT 都解析出名字）和 ObjC 类、分类元数据，写到 `recovery/native/disasm/` |
-| `python tools/file_map.py` | 重新生成 `recovery/file_map.csv` |
-| `python tools/import_decompiled.py` | 按 `tools/layout.csv` 一次性导入，自动删除接口代理方法、修正 using 歧义；`Assets/` 已有源码时拒绝运行 |
+| OS | Windows 10 / 11 (x64) with WSL 2, or x86_64 Ubuntu 24.04 |
+| WSL | If not installed, run `wsl --install --no-distribution` in an administrator PowerShell and reboot |
+| Xcode 4.5 | **Bring your own**: `xcode_4.5.dmg` (4G182, 1.6 GB, SHA-256 `f7c8e0cd…54194dec440`); downloading it requires an Apple ID, see below |
+| Downloaded automatically | Ubuntu 24.04 WSL image (about 350 MB); Unity 3.5.7 macOS installer (about 980 MB); apt packages; maloader source |
+| Disk | About 10 GB: the WSL distro's virtual disk takes about 7 GB (it does not shrink after the temporary unpacking files are deleted), the installers about 3 GB |
 
-Python 用上一级的 `.venv`：`../.venv/Scripts/python.exe`。
+To download Xcode 4.5, sign in to Apple Developer, then open this address in the same browser:
 
-## 两套产物
+```
+https://developer.apple.com/services-account/download?path=/Developer_Tools/xcode_4.5/xcode_4.5.dmg
+```
 
-- `vanilla`：只用 `Assets/` 和原版资源，逐字节校验。`Assembly-CSharp.dll` 已做到除 MVID 和时间戳外与原版逐字节相同（`d013-mac-build`）。同一目标上多个特性的源码顺序要按 Mac 构建定，不要为 `--windows` 构建调换。
-- `tuned`：在 `vanilla` 上叠加 `tweaks/`。只改数据时，不用重新 AOT，也不用重新链接，换资源包、重新签名即可。
+Or search for `Xcode 4.5` on [More Downloads](https://developer.apple.com/download/all/) and pick **Xcode 4.5** (not 4.5.1 or 4.5.2). Rename the file to `Xcode_4.5.dmg` and put it in `toolchain\downloads\`.
 
-数值写死在 C# 里的，改动放在单独的分支或补丁里，主线源码保持原样。
+### Steps (Windows)
+
+1. **Set up the environment** (once): double-click `setup.bat`. If the dmg is somewhere else, run `setup.bat <path to dmg>` from a command prompt. The script:
+   - downloads the Ubuntu 24.04 WSL image, checks its SHA-256 and imports it as the distro `ckz2-build` (disk in `.wsl\ckz2-build\`);
+   - downloads the Unity 3.5.7 macOS installer to `toolchain\downloads\`;
+   - installs the build dependencies and builds a 64-bit and a 32-bit maloader from a pinned commit plus patches;
+   - checks the SHA-256 of both dmgs and unpacks what is needed, then runs smcs, mono-xcompiler, clang, as and ld once and AOT-compiles and assembles one assembly as a self-check.
+2. **Build**: double-click `build.bat`. It compiles `Assembly-CSharp.dll` and checks that it matches the original, then runs AOT, compiles the native code and links `ckzombies2`.
+3. The output is in `bin\`: `bin\ckzombies2` and the 8 assemblies in `bin\Data\Managed\`, laid out like `ckzombies2.app`. Intermediate files are in `build\`.
+
+`bin\ckzombies2` carries an ad-hoc signature with the original entitlements. Without a signature the executable gets no keychain access, and the game shows "cannot connect to server" on launch.
+
+### Steps (Linux)
+
+On x86_64 Ubuntu 24.04, run the same scripts directly:
+
+```bash
+sudo bash toolchain/setup_distro.sh /path/to/Xcode_4.5.dmg
+```
+
+```bash
+sudo bash toolchain/build.sh
+```
+
+The build uses `/work` and creates the original build path under `/Applications/buildAgent/...`, so a dedicated virtual machine or container is recommended.
+
+### Running
+
+You need a jailbroken iOS device with *Contract Killer: Zombies 2* version 2.0.2 installed. Copy the contents of `bin/` over `ckzombies2.app`.
+
+## Where the source directories come from
+
+The original source tree was not preserved. Unity passes the source files to smcs in alphabetical path order, and the type order follows the paths, so directory names affect verification: the inferred paths must sort in the same order as the original, or the DLL will not match. Conversely, as long as the order is the same, the comparison cannot tell whether a name is right. The evidence level of each type:
+
+| Level | Types | Meaning |
+| --- | ---: | --- |
+| `po` | 63 | Full path from a localization PO comment |
+| `bracketed` | 64 | MonoBehaviour subclass (file name = class name) enclosed by two anchors in the same directory |
+| `anchor` | 136 | Directory known from an anchor; file name inferred from the class-name rule or the order |
+| `evidence` | 1 | `Packages/ABTesting/Examples/`; the DLL contains this path string |
+| `package` | 276 | Package directory `Packages/<name>/` from the log name `Package.<name>` and the original order; subdirectories inside packages and EZ GUI's internal layout are guesses |
+| `guess` | 164 | Directory name is a guess (e.g. `Scripts/Camera`, `Scripts/Utils`) |
+
+The guessed parts are only guaranteed to sort correctly; whether the names match the original cannot be verified.
+
+## Layout
+
+| Path | Contents |
+| --- | --- |
+| `Assets/` | Recovered sources, laid out like the original Unity project: `Packages/` (Glu's shared packages and EZ GUI), `Scripts/` (game code), `Plugins/iOS/` (the 14 recovered Glu native plugins, plus `AppController.mm`, the template file Glu modified), `3rd_party/LitJSON.dll` (original third-party managed library) |
+| `native_stubs/` | Stubs for the 11 ad, analytics and networking native plugins (not original code) |
+| `toolchain/` | Setup and build scripts, maloader patches, the link order and entitlements exported from the original; see [`toolchain/README.md`](toolchain/README.md) (Chinese) |
+| `docs/` | Progress pages (English / Chinese) and pie charts |
+| `setup.bat` / `build.bat` | One-click entry points for Windows |
+
+## Disclaimer
+
+- This project is not affiliated with, authorized or endorsed by Glu Mobile or its affiliates.
+- The name, trademarks, art, audio, levels and other game content of the Contract Killer series, as well as the original program, are the property of their respective owners.
+- This repository contains the recovered source code and build scripts, plus the original file of the third-party managed library `LitJSON.dll`. It does not contain the original executable, game data files, Unity or Xcode. Running it requires a legally obtained copy of the game.
+- This project is for learning, research and preservation only, and may not be used commercially.
+- The code is provided "as is", without warranty of any kind; use at your own risk.

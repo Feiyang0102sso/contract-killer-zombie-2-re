@@ -1,0 +1,199 @@
+--- a/ld-mac.cc
++++ b/ld-mac.cc
+@@ -648,6 +648,12 @@
+ 
+           // ret
+           pushTrampolineCode(0xc3);
++        } else if (bind->is_jump_stub) {
++          // ckz2: patch the 5-byte stub into jmp rel32, as dyld does for __jump_table
++          unsigned char* stub = (unsigned char*)ptr;
++          int32_t rel = (int32_t)((intptr_t)sym - ((intptr_t)stub + 5));
++          stub[0] = 0xe9;
++          memcpy(stub + 1, &rel, sizeof(rel));
+         } else {
+           *ptr = sym;
+         }
+@@ -841,7 +847,7 @@
+                    " push %%eax;\n"
+                    " jmp *%0;\n"
+                    // TODO(hamaji): Fix parameters
+-                   ::"r"(entry), "r"(argc), "r"(argv + argc), "g"(envp)
++                   ::"r"((uint32_t)entry), "r"(argc), "r"(argv + argc), "g"(envp)
+                    :"%eax", "%edx");
+ #endif
+ }
+@@ -973,12 +979,26 @@
+   strcpy(loader_path, mypath);
+ }
+ 
++
+ static string ld_mac_dlerror_buf;
+ static bool ld_mac_dlerror_is_set;
+ 
+ static void* ld_mac_dlopen(const char* filename, int flag) {
++  // ckz2: dlopen(NULL) means the main program. mono-xcompiler only asks it for
++  // "__Internal" P/Invoke targets and never calls them; an empty export table is enough.
++  if (filename == NULL) {
++    return new Exports();
++  }
+   LOG << "ld_mac_dlopen: " << filename << " " << flag << endl;
+ 
++  // ckz2: like the real dlopen, a missing file is a soft failure. Mac mono probes
++  // CoreFoundation at startup and skips the workaround when dlopen returns NULL.
++  if (access(filename, F_OK) != 0) {
++    ld_mac_dlerror_is_set = true;
++    ld_mac_dlerror_buf = string(filename) + ": cannot open shared object file";
++    return NULL;
++  }
++
+   Timer timer;
+   timer.start();
+ 
+--- a/libmac/mac.c
++++ b/libmac/mac.c
+@@ -117,10 +117,11 @@
+   struct __darwin_timespec st_atimespec;
+   struct __darwin_timespec st_mtimespec;
+   struct __darwin_timespec st_ctimespec;
+-  off_t st_size;
++  /* ckz2: Darwin off_t and blkcnt_t are 64-bit even on i386; blksize_t is 32-bit */
++  int64_t st_size;
+   // TODO(hamaji): the size is not checked after this field.
+-  blkcnt_t st_blocks;
+-  blksize_t st_blksize;
++  int64_t st_blocks;
++  int32_t st_blksize;
+   __uint32_t st_flags;
+   __uint32_t st_gen;
+   __int32_t st_lspare;
+@@ -586,8 +587,37 @@
+       buf[cnt] = '\0';
+       ret = 0;
+     }
++  } else if (cmd == F_GETFL) {
++    /* ckz2: access mode bits are equal; O_NONBLOCK/O_APPEND differ (Darwin 0x4/0x8) */
++    int flags = fcntl(fildes, F_GETFL);
++    ret = flags;
++    if (flags >= 0) {
++      ret = flags & O_ACCMODE;
++      if (flags & O_NONBLOCK) {
++        ret |= 0x4;
++      }
++      if (flags & O_APPEND) {
++        ret |= 0x8;
++      }
++    }
++  } else if (cmd == F_SETFL) {
++    int darwin_flags = va_arg(ap, int);
++    int flags = darwin_flags & O_ACCMODE;
++    if (darwin_flags & 0x4) {
++      flags |= O_NONBLOCK;
++    }
++    if (darwin_flags & 0x8) {
++      flags |= O_APPEND;
++    }
++    ret = fcntl(fildes, F_SETFL, flags);
++  } else if (cmd == F_DUPFD || cmd == F_SETFD) {
++    /* ckz2: same numbers and argument meaning on both systems (FD_CLOEXEC is 1) */
++    int arg = va_arg(ap, int);
++    ret = fcntl(fildes, cmd, arg);
++  } else if (cmd == F_GETFD) {
++    ret = fcntl(fildes, F_GETFD);
+   } else {
+-    fprintf(stderr, "fcntl only supports F_GETPATH\n");
++    fprintf(stderr, "fcntl: unsupported cmd %d\n", cmd);
+   }
+   va_end(ap);
+   return ret;
+--- a/mach-o.cc
++++ b/mach-o.cc
+@@ -136,7 +136,13 @@
+                        uint32_t* symtab,
+                        const char* symstrtab) {
+     uint32_t indirect_offset = sec.reserved1;
+-    int count = sec.size / ptrsize_;
++    // ckz2: self-modifying symbol stubs (i386 __jump_table) are reserved2 bytes each
++    bool is_jump_stub = (sec.flags & SECTION_TYPE) == S_SYMBOL_STUBS;
++    uint32_t stride = ptrsize_;
++    if (is_jump_stub) {
++      stride = sec.reserved2;
++    }
++    int count = sec.size / stride;
+     for (int i = 0; i < count; i++) {
+       uint32_t dysym = dysyms[indirect_offset + i];
+       uint32_t index = dysym & 0x3fffffff;
+@@ -144,13 +150,18 @@
+ 
+       MachO::Bind* bind = new MachO::Bind();
+       bind->name = symstrtab + sym->n_strx;
+-      bind->vmaddr = sec.addr + i * ptrsize_;
++      bind->vmaddr = sec.addr + i * stride;
+       bind->value = sym->n_value;
+       bind->type = BIND_TYPE_POINTER;
+       bind->ordinal = 1;
+       // b107: on an undefined symbol 0x80 is N_REF_TO_WEAK, not N_WEAK_DEF
+       bind->is_weak = ((sym->n_type & 0x0e) != 0x0 /* N_TYPE, N_UNDF */) && ((sym->n_desc & N_WEAK_DEF) != 0);
+       bind->is_classic = true;
++      bind->is_jump_stub = is_jump_stub;
++      if (is_jump_stub) {
++        // imports of an executable are never weak definitions
++        bind->is_weak = false;
++      }
+       LOGF("add classic bind! %s type=%d sect=%d desc=%d value=%lld "
+            "vmaddr=%p is_weak=%d\n",
+            bind->name, sym->n_type, sym->n_sect, sym->n_desc, (ll)sym->n_value,
+@@ -222,12 +233,20 @@
+       bind_sections->push_back(sections + j);
+       break;
+     }
++    case S_SYMBOL_STUBS:
++      // ckz2: only the old i386 self-modifying stubs need binding; dyld writes jmp rel32
++      if ((sec.flags & S_ATTR_SELF_MODIFYING_CODE) && sec.reserved2 == 5) {
++        bind_sections->push_back(sections + j);
++        break;
++      }
++      LOGF("FIXME: section type %d will not be handled for %s in %s\n",
++           section_type, sec.sectname, sec.segname);
++      break;
+     case S_ZEROFILL:
+     case S_CSTRING_LITERALS:
+     case S_4BYTE_LITERALS:
+     case S_8BYTE_LITERALS:
+     case S_LITERAL_POINTERS:
+-    case S_SYMBOL_STUBS:
+     case S_MOD_TERM_FUNC_POINTERS:
+       // TODO(hamaji): Support term_funcs.
+     case S_COALESCED:
+--- a/mach-o.h
++++ b/mach-o.h
+@@ -55,6 +55,8 @@
+     uint8_t ordinal;
+     bool is_weak;
+     bool is_classic;
++    // ckz2: i386 __IMPORT,__jump_table slot (5-byte self-modifying stub), not a pointer
++    bool is_jump_stub;
+   };
+ 
+   struct Export {
+--- a/rename.tab
++++ b/rename.tab
+@@ -171,3 +171,19 @@
+ WRAP(gethostuuid)
+ 
+ WRAP(_ZNSt3__15mutex4lockEv)
++WRAP(pthread_cond_init)
++WRAP(pthread_cond_destroy)
++WRAP(pthread_cond_signal)
++WRAP(pthread_cond_broadcast)
++WRAP(pthread_cond_wait)
++WRAP(pthread_cond_timedwait)
++
++// ckz2: Mac libiconv exports libiconv*, glibc has the same API as iconv*
++RENAME(libiconv, iconv)
++RENAME(libiconv_open, iconv_open)
++RENAME(libiconv_close, iconv_close)
++// ckz2: Darwin off_t is 64-bit on i386; use the 64-bit glibc entry points
++RENAME(lseek, lseek64)
++RENAME(ftruncate, ftruncate64)
++// ckz2: Mac libc qsort is the unstable BSD quicksort; darwin_shim provides it
++RENAME(qsort, darwin_bsd_qsort)

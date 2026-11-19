@@ -1,2 +1,18 @@
+# Keep LF everywhere: the scripts run inside Linux and the sources must stay byte-identical on every checkout
+* text=auto eol=lf
+
+# Windows launchers need CRLF
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.ps1 text eol=crlf
+
 # Assets/Plugins/iOS/AppController.mm must match the Unity template byte for byte (LF line endings); no EOL conversion
 Assets/Plugins/iOS/AppController.mm -text
+# Exported verbatim from the original signature; its SHA-1 goes into the code signature
+toolchain/entitlements.plist -text
+
+# Binary files
+*.dll binary
+*.png binary
+*.dmg binary
+*.patch text eol=lf

@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CKZ2 还原进度</title>
+<style>
+:root { --bg: #f7f8fa; --text: #1d2330; --muted: #6b7385; --line: #e3e6ec; }
+@media (prefers-color-scheme: dark) {
+  :root:not(.shot) { --bg: #14171d; --text: #e4e7ee; --muted: #8d95a7; --line: #2c323d; }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text);
+  font: 14px/1.5 system-ui, -apple-system, "Segoe UI", "Microsoft YaHei", sans-serif; }
+main { max-width: 1200px; margin: 0 auto; padding: 20px 16px 60px; }
+a { color: inherit; }
+.head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; }
+h1 { font-size: 20px; margin: 0 0 4px; }
+.note { font-size: 13px; color: var(--muted); margin-bottom: 4px; }
+.pie-title { font-size: 13px; color: var(--muted); padding-bottom: 6px; margin: 24px 0 10px; border-bottom: 1px solid var(--line); }
+.pie-grid { display: grid; column-gap: 28px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.tier-block { display: grid; grid-row: span 3; grid-template-rows: subgrid; row-gap: 2px; margin-bottom: 20px; }
+.tier-title { font-size: 13px; font-weight: 600; }
+.tier-sub { font-size: 12px; color: var(--muted); }
+.pie-wrap { display: flex; gap: 16px; margin-top: 4px; align-items: flex-start; }
+.pie { width: 96px; height: 96px; flex: none; }
+.pie path, .pie circle { stroke: var(--bg); stroke-width: 0.025; }
+.pie path:hover, .pie circle:hover { opacity: 0.85; }
+.pie-keys { display: flex; flex-direction: column; gap: 3px; font-size: 12px; color: var(--muted); min-width: 0; }
+.pie-keys i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; vertical-align: -1px; }
+.pie-keys b { color: var(--text); font-weight: 600; margin-left: 4px; }
+@media (max-width: 860px) {
+  .pie-grid { grid-template-columns: minmax(0, 1fr); }
+  .pie-wrap { flex-direction: column; }
+}
+/* Snapshot for the README: white card, fixed width, no hover/dark mode */
+.shot { --bg: #ffffff; }
+.shot main { max-width: none; width: 1000px; padding: 24px 32px 8px; }
+.shot .pie { width: 110px; height: 110px; }
+</style>
+</head>
+<body>
+<main>
+<div class="head"><h1>CKZ2 还原进度</h1><div class="note"><a href="progress.en.html">English</a></div></div>
+<div class="note">生成于 2026-11-18 20:10 · C# 用 smcs 2.6.5（Unity 3.5.7 原始参数）重编；主程序用 mono-xcompiler AOT + Xcode 4.5 编译、ld64-134.9 链接，逐函数比较机器码</div>
+<div class="pie-title">Assembly-CSharp.dll · IL 逐方法比对</div><div class="pie-grid"><div class="tier-block"><div class="tier-title">按方法数 · 一致 100.00%</div><div class="tier-sub">原版 9894 个方法（另有重编多出 0 个，不计入）</div><div class="pie-wrap"><svg class="pie" viewBox="-1.05 -1.05 2.1 2.1" role="img"><circle r="1" fill="#1f8a3b"><title>IL 一致 9894 (100.00%)</title></circle></svg><div class="pie-keys"><div><i style="background:#1f8a3b"></i>IL 一致<b>9894</b> · 100.00%</div></div></div></div><div class="tier-block"><div class="tier-title">按 IL 字节 · 一致 100.00%</div><div class="tier-sub">原版方法体共 690.1 KB（按原版方法 IL 长度加权）</div><div class="pie-wrap"><svg class="pie" viewBox="-1.05 -1.05 2.1 2.1" role="img"><circle r="1" fill="#1f8a3b"><title>IL 一致 690.1 KB (100.00%)</title></circle></svg><div class="pie-keys"><div><i style="background:#1f8a3b"></i>IL 一致<b>690.1 KB</b> · 100.00%</div></div></div></div></div><div class="note">整个 DLL：大小相同（1597440 字节），20 字节不同，全在 MVID 和 PE 时间戳；回填这两处后与原版逐字节相同（build_main.py 每次构建都核对）。</div><div class="pie-title">主程序 ckzombies2 · 函数比对 L1（tuned，2026-11-18 19:54）</div><div class="pie-grid"><div class="tier-block"><div class="tier-title">原版 __text 全部代码（按字节） · 一致 99.99%</div><div class="tier-sub">原版函数共 24.82 MB；有意不还原的 1.35 MB 不计入百分比</div><div class="pie-wrap"><svg class="pie" viewBox="-1.05 -1.05 2.1 2.1" role="img"><path d="M0 0 L0.00000 -1.00000 A1 1 0 1 1 -0.33606 -0.94184 Z" fill="#1f8a3b"><title>一致 23.47 MB (94.55%)</title></path><path d="M0 0 L-0.33606 -0.94184 A1 1 0 0 1 -0.33596 -0.94188 Z" fill="#e5484d"><title>不同 0.4 KB (&lt;0.01%)</title></path><path d="M0 0 L-0.33596 -0.94188 A1 1 0 0 1 -0.32600 -0.94537 Z" fill="#c99a06"><title>胶水空实现（不比） 42.7 KB (0.17%)</title></path><path d="M0 0 L-0.32600 -0.94537 A1 1 0 0 1 -0.00000 -1.00000 Z" fill="#0e9fb0"><title>第三方 SDK（tuned 不链接） 1.31 MB (5.29%)</title></path></svg><div class="pie-keys"><div><i style="background:#1f8a3b"></i>一致<b>23.47 MB</b> · 94.55%</div><div><i style="background:#e5484d"></i>不同<b>0.4 KB</b> · <0.01%</div><div><i style="background:#c99a06"></i>胶水空实现（不比）<b>42.7 KB</b> · 0.17%</div><div><i style="background:#0e9fb0"></i>第三方 SDK（tuned 不链接）<b>1.31 MB</b> · 5.29%</div></div></div></div><div class="tier-block"><div class="tier-title">计入校验的函数（按函数数） · 一致 99.99%</div><div class="tier-sub">159348 个函数，另有 4637 个有意不还原的不计入</div><div class="pie-wrap"><svg class="pie" viewBox="-1.05 -1.05 2.1 2.1" role="img"><path d="M0 0 L0.00000 -1.00000 A1 1 0 1 1 -0.00008 -1.00000 Z" fill="#1f8a3b"><title>一致 159346 (99.99%)</title></path><path d="M0 0 L-0.00008 -1.00000 A1 1 0 0 1 -0.00000 -1.00000 Z" fill="#e5484d"><title>不同 2 (&lt;0.01%)</title></path></svg><div class="pie-keys"><div><i style="background:#1f8a3b"></i>一致<b>159346</b> · 99.99%</div><div><i style="background:#e5484d"></i>不同<b>2</b> · <0.01%</div></div></div></div></div>
+</main>
+</body>
+</html>

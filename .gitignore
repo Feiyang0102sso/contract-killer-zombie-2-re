@@ -1,4 +1,4 @@
-# Local workspace: analysis output, notes, ledgers (never committed)
+# Local workspace: comparison tools, analysis output, notes, ledgers (never committed)
 recovery/
 
 # Build output: vanilla/ (matches the original) and tuned/ (with tweaks applied)
@@ -7,10 +7,18 @@ build/
 # Final product: main executable + Data/Managed/, laid out like the .app; copy over it directly
 bin/
 
+# Local build environment: WSL distro disk and downloaded Ubuntu image (created by setup.bat)
+.wsl/
+.cache/
+
+# Installers: Xcode needs an Apple ID and Unity's license forbids redistribution (put your own copies here)
+toolchain/downloads/*
+!toolchain/downloads/.gitkeep
+# Windows Mono extracted for the quick dev build (recovery/tools/setup_windows.py)
+toolchain/unity357_win/
+
 # Misc
 __pycache__/
 *.pyc
 Thumbs.db
 .DS_Store
-docs/
-tools/
