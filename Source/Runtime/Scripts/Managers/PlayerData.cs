@@ -1643,14 +1643,8 @@ public class PlayerData : MonoBehaviourAndLog
 		{
 			_data = (Data)StorageManager.ReadXml(Const.SaveFileName, _data.GetType());
 		}
-		catch (Exception ex)
+		catch (Exception)
 		{
-			if (ex is StorageManager.StorageManagerException)
-			{
-			}
-			else
-			{
-			}
 			flag = false;
 		}
 		if (!flag)

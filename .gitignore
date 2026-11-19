@@ -32,6 +32,8 @@ toolchain/unity357_win/
 
 # PC port build output, run logs and reports
 /Builds/
+# Saves written when playing in the editor (StorageManager.PersistentDataPath = <project>/Save)
+/Save/
 /RunLogs/
 /PcPilotAudit.txt
 # Rebuilt by PcPilotBuild.Build before every build (PcAssetBundleRebuild)

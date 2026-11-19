@@ -1,8 +1,8 @@
-// 试点诊断（临时）：启动后每 2 秒打印动态内容流程各环节的状态，共 30 秒。
-// Glu 自己的日志在发布版里被关掉了，用它来判断启动卡在哪个环节。
-// 另外支持自动截图：启动参数 -pcShots 20,45,70 -pcShotDir <目录>，到点截游戏自己的画面
-// （不截屏幕，窗口被遮挡也能截到，也不会截到其他程序）。
-// 全部用真实时间：游戏加载时会把 timeScale 设成 0。
+// Pilot diagnostics (temporary): after launch, prints the state of each stage of the dynamic content pipeline every 2 seconds for 30 seconds.
+// Glu's own logging is disabled in release builds; this shows where startup gets stuck.
+// Also takes automatic screenshots: launch arguments -pcShots 20,45,70 -pcShotDir <dir> capture the game's own frame at those times
+// (not the screen, so it works even when the window is covered and never captures other programs).
+// Everything uses real time: the game sets timeScale to 0 while loading.
 using System.Collections;
 using System.Reflection;
 using System.Text;
@@ -46,8 +46,8 @@ public class PcBootDiagnostics : MonoBehaviour
 	}
 
 	/// <summary>
-	/// 测试用：-pcSaveCheck <存档文件路径> 启动时不经校验直接用 PlayerData.Data 反序列化这个文件，
-	/// 打印完整的异常链。PlayerData.Load 会吞掉异常、当成新档，用这个查存档为什么读不回来。
+	/// Test: -pcSaveCheck <save file path> deserializes that file as PlayerData.Data right at launch
+	/// and prints the full exception chain. PlayerData.Load swallows exceptions and starts a new game; use this to find out why a save does not load.
 	/// </summary>
 	private static void CheckSaveFile()
 	{
@@ -58,14 +58,14 @@ public class PcBootDiagnostics : MonoBehaviour
 		}
 		try
 		{
-			object data = StorageManager.ReadXmlFromLocationWithoutChecking(path, typeof(PlayerData.Data));
+			object data = StorageManager.ReadXmlFromLocation(path, typeof(PlayerData.Data));
 			Debug.Log("[PcDiag] save check ok: " + path + " -> " + data);
 		}
 		catch (System.Exception e)
 		{
 			Debug.Log("[PcDiag] save check failed: " + path + "\n" + e);
 		}
-		// 往返测试：两个键的 XmlDictionary<KeyValuePair<string, string>, int>（PlayerStatistics 的写法）
+		// Round-trip test: XmlDictionary<KeyValuePair<string, string>, int> with two keys (as PlayerStatistics uses it)
 		XmlDictionary<System.Collections.Generic.KeyValuePair<string, string>, int> original = new XmlDictionary<System.Collections.Generic.KeyValuePair<string, string>, int>();
 		original.Add(new System.Collections.Generic.KeyValuePair<string, string>("Zombie", "Pistols0"), 23);
 		original.Add(new System.Collections.Generic.KeyValuePair<string, string>("Zombie", "Melee0"), 4);
@@ -83,8 +83,8 @@ public class PcBootDiagnostics : MonoBehaviour
 	}
 
 	/// <summary>
-	/// 测试用：-pcTaskTap "melee=0.746:0.09|melee=0.5:0.3" 当前任务名包含“=”前的文字时，每 2.5 秒（真实时间）点一下，
-	/// 同一任务匹配多项就轮流点。不用固定时间点，适合流程快慢不定的教程。文字里不能有空格（启动参数按空格拆分）。
+	/// Test: -pcTaskTap "melee=0.746:0.09|melee=0.5:0.3" taps once every 2.5 s (real time) while the current task name contains the text before "=";
+	/// several entries matching the same task are tapped in turn. No fixed times, so it suits tutorials whose pace varies. The text cannot contain spaces (launch arguments are split on spaces).
 	/// </summary>
 	private static IEnumerator TaskTaps()
 	{
@@ -127,9 +127,9 @@ public class PcBootDiagnostics : MonoBehaviour
 	}
 
 	/// <summary>
-	/// 测试用：-pcAutoMove 90:400 从 90 秒到 400 秒（真实时间），用手指 3（PcInput.MoveFinger）按住左摇杆，
-	/// 朝 Player.GetCurrentMissionTarget()（HUD 任务箭头指的点，沿导航路径前进）走；离目标 1 米以内或没有目标时松开。
-	/// 摇杆方向按 Player.UpdateMovement 的换算反过来算：摇杆 y 是镜头前方，x 是镜头右方。
+	/// Test: -pcAutoMove 90:400 from 90 s to 400 s (real time) holds the left stick with finger 3 (PcInput.MoveFinger)
+	/// towards Player.GetCurrentMissionTarget() (the point the HUD mission arrow points at, following the navigation path); releases within 1 m of the target or when there is none.
+	/// The stick direction inverts the conversion in Player.UpdateMovement: stick y is camera forward, x is camera right.
 	/// </summary>
 	private static IEnumerator AutoMove()
 	{
@@ -170,7 +170,7 @@ public class PcBootDiagnostics : MonoBehaviour
 				finger.Active = false;
 				continue;
 			}
-			// 沿导航网格路径走：朝第一个离玩家超过 0.5 米的拐点，免得直线撞在柱角上卡住
+			// Follow the navmesh path: head for the first corner more than 0.5 m from the player, so a straight line does not get stuck on a pillar corner
 			UnityEngine.AI.NavMeshPath navPath = new UnityEngine.AI.NavMeshPath();
 			if (UnityEngine.AI.NavMesh.CalculatePath(player.transform.position, target.position, -1, navPath))
 			{
@@ -215,8 +215,8 @@ public class PcBootDiagnostics : MonoBehaviour
 	}
 
 	/// <summary>
-	/// 随 -pcCameraWatch：RunSurvivalMode 出现的那一帧和之后几帧，记录 Singleton.UI.MapWindow 下能找到的地图点
-	/// （默认只找 active 的 / 含 inactive 的 / 带任务的），查生存模式教程提示为什么没出现。
+	/// With -pcCameraWatch: on the frame RunSurvivalMode appears and a few frames after, logs the map points found under Singleton.UI.MapWindow
+	/// (active only / including inactive / with a mission), to find out why the survival mode tutorial hint does not show.
 	/// </summary>
 	private static IEnumerator WatchSurvivalTutorialStart()
 	{
@@ -262,8 +262,8 @@ public class PcBootDiagnostics : MonoBehaviour
 	}
 
 	/// <summary>
-	/// 测试用：-pcCameraWatch 2 每隔 2 秒（真实时间）列出所有启用的相机（深度、清屏方式、渲染目标、位置）
-	/// 和 PostEffectManager 的状态，查过场之后画面全白之类的问题。
+	/// Test: -pcCameraWatch 2 lists every enabled camera (depth, clear flags, render target, position) every 2 s (real time)
+	/// plus the PostEffectManager state, for problems such as the screen turning white after a cutscene.
 	/// </summary>
 	private static IEnumerator WatchCameras()
 	{
@@ -277,7 +277,7 @@ public class PcBootDiagnostics : MonoBehaviour
 		{
 			yield return new WaitForSecondsRealtime(interval);
 			StringBuilder report = new StringBuilder("[PcDiag] cameras t=" + Time.realtimeSinceStartup.ToString("F1") + " timeScale=" + Time.timeScale);
-			// 关卡里才有任务；Scene.Mission 在关卡外会抛空引用，所以先看有没有 Mission 对象
+			// Only levels have missions; Scene.Mission throws a null reference outside a level, so check for a Mission object first
 			Mission mission = Object.FindAnyObjectByType<Mission>();
 			if (mission != null && mission.GetCurrentTask() != null)
 			{
@@ -288,7 +288,7 @@ public class PcBootDiagnostics : MonoBehaviour
 			{
 				report.Append(" fader active=" + fader.gameObject.activeInHierarchy + " fading=" + fader.IsFading() + " in=" + fader.IsFadingIn());
 			}
-			// 教程状态和当前挂着的教程脚本（地图上的教程提示没出现时用）
+			// Tutorial state and the tutorial scripts currently attached (for when the tutorial hint on the map does not show)
 			if (Singleton.Exists() && (bool)Singleton.Tutorial)
 			{
 				report.Append(" tutorialState=" + Singleton.PlayerData.TutorialState);
@@ -325,7 +325,7 @@ public class PcBootDiagnostics : MonoBehaviour
 					report.Append(" mapWindow activeSelf=" + Singleton.UI.MapWindow.gameObject.activeSelf + " inHierarchy=" + Singleton.UI.MapWindow.gameObject.activeInHierarchy);
 				}
 			}
-			// 30 米内的 ActivateItem（补给点、终端等）：玩家离触发球多远、是否算进入、图标按钮是否显示
+			// ActivateItems within 30 m (supply points, terminals, etc.): player distance to the trigger sphere, whether it counts as inside, whether the icon button shows
 			Player watchPlayer = Object.FindAnyObjectByType<Player>();
 			if (watchPlayer != null)
 			{
@@ -376,10 +376,10 @@ public class PcBootDiagnostics : MonoBehaviour
 	}
 
 	/// <summary>
-	/// 测试用：-pcAutoAim 45:300 从 45 秒到 300 秒（真实时间），场景里有活着、在镜头前的敌人时，
-	/// 用手指 2（PcInput.AimFinger.Active）按住屏幕右半边：先静止 0.3 秒（游戏规定按下后 0.2 秒内不拖动才算开火），
-	/// 再按目标偏离屏幕中心的方向拖动视角，把准星拉到离中心最近的敌人身上，一直按着开火。
-	/// 手指拖出右半边或按满 5 秒就松开重按。没有敌人时松开。用来在无人值守时把关卡真正打一遍。
+	/// Test: -pcAutoAim 45:300 from 45 s to 300 s (real time), while the scene has a living enemy in front of the camera,
+	/// holds the right half of the screen with finger 2 (PcInput.AimFinger.Active): first stays still for 0.3 s (the game only fires if the touch does not drag within 0.2 s of going down),
+	/// then drags the view in the direction of the target's offset from the screen center, pulling the crosshair onto the enemy nearest the center, and keeps firing.
+	/// Releases and presses again when the finger leaves the right half or after 5 s. Releases when there are no enemies. Used to actually play through levels unattended.
 	/// </summary>
 	private static IEnumerator AutoAim()
 	{
@@ -427,7 +427,7 @@ public class PcBootDiagnostics : MonoBehaviour
 			{
 				continue;
 			}
-			// 往目标方向拖：每帧移动偏移量的一小部分，限幅，避免来回过冲
+			// Drag towards the target: move a small, clamped fraction of the offset each frame to avoid overshooting back and forth
 			Vector2 step = aimOffset.Value * 0.05f;
 			step = Vector2.ClampMagnitude(step, 12f);
 			PcInput.AimFinger.Position += step;
@@ -449,8 +449,8 @@ public class PcBootDiagnostics : MonoBehaviour
 	}
 
 	/// <summary>
-	/// 选一个敌人瞄准，返回它的中心在屏幕上相对中心的偏移（像素）；没有就返回 null。
-	/// 优先选没被遮挡（镜头到它中心的连线先碰到它自己）的，其次离玩家近的；被挡住的只在没有可见敌人时才选。
+	/// Picks an enemy to aim at and returns the screen offset of its center from the screen center (pixels); null if there is none.
+	/// Prefers enemies that are not occluded (the line from the camera to their center hits them first), then the ones closest to the player; occluded ones are picked only when no enemy is visible.
 	/// </summary>
 	private static Vector2? FindAimOffset(Vector2 screenCenter)
 	{
@@ -495,7 +495,7 @@ public class PcBootDiagnostics : MonoBehaviour
 		}
 		if (best == null)
 		{
-			// 没有敌人时，把镜头转向玩家已进入触发区的 ActivateItem 图标（补给点等），方便 TapActivateItems 点它
+			// With no enemies, turn the camera towards the icon of an ActivateItem whose trigger the player is in (supply points, etc.), so TapActivateItems can tap it
 			Transform button = FindEnteredActivateButton();
 			if (button != null)
 			{
@@ -506,7 +506,7 @@ public class PcBootDiagnostics : MonoBehaviour
 				}
 				else
 				{
-					// 在身后：往右转
+					// Behind: turn right
 					best = new Vector2(Screen.width, 0f);
 				}
 			}
@@ -514,7 +514,7 @@ public class PcBootDiagnostics : MonoBehaviour
 		return best;
 	}
 
-	/// <summary>玩家已进入触发区、图标按钮正显示的 ActivateItem 的按钮；没有就返回 null。</summary>
+	/// <summary>The button of an ActivateItem whose trigger the player is in and whose icon button is showing; null if there is none.</summary>
 	private static Transform FindEnteredActivateButton()
 	{
 		FieldInfo enteredField = typeof(ActivateItem).GetField("_entered", BindingFlags.Instance | BindingFlags.NonPublic);
@@ -534,7 +534,7 @@ public class PcBootDiagnostics : MonoBehaviour
 	}
 
 	/// <summary>
-	/// -pcAutoAim 期间每 2.5 秒：玩家已进入某个 ActivateItem 的触发区、它的图标在画面里，就点一下图标（补给弹药、启动终端等）。
+	/// During -pcAutoAim, every 2.5 s: if the player is inside an ActivateItem's trigger and its icon is on screen, tap the icon (refill ammo, start a terminal, etc.).
 	/// </summary>
 	private static IEnumerator TapActivateItems()
 	{
@@ -571,8 +571,8 @@ public class PcBootDiagnostics : MonoBehaviour
 	}
 
 	/// <summary>
-	/// 测试用：-pcZombieWatch 2 每隔 2 秒（真实时间）打印场景里每个 Unit（僵尸等）的状态机状态、位置、
-	/// NavMeshAgent 的状态（是否在网格上、目标点、路径状态、速度）和当前任务，查“僵尸站着不动”。
+	/// Test: -pcZombieWatch 2 prints, every 2 s (real time), each Unit's (zombies, etc.) state machine state and position,
+	/// its NavMeshAgent state (on the mesh, destination, path status, speed) and the current task, to debug "zombies standing still".
 	/// </summary>
 	private static IEnumerator WatchUnits()
 	{
@@ -586,7 +586,7 @@ public class PcBootDiagnostics : MonoBehaviour
 		FieldInfo stateField = typeof(Character).GetField("state", flags);
 		FieldInfo targetField = typeof(Character).GetField("targetToAttack", flags);
 		FieldInfo speedField = typeof(Character).GetField("speed", flags);
-		// 每帧检查状态机，状态一变就记一条（带目标的位置和距离），查清楚是从哪个状态掉回 Staying 的
+		// Check the state machine every frame and log each state change (with the target's position and distance), to see which state falls back to Staying
 		System.Collections.Generic.Dictionary<int, string> lastStates = new System.Collections.Generic.Dictionary<int, string>();
 		float nextReport = Time.realtimeSinceStartup + interval;
 		while (true)
@@ -619,7 +619,7 @@ public class PcBootDiagnostics : MonoBehaviour
 			}
 			nextReport = Time.realtimeSinceStartup + interval;
 			Unit[] units = Object.FindObjectsByType<Unit>(FindObjectsSortMode.None);
-			// 关卡还没加载时 Scene.Mission 会抛空引用，这时不报告
+			// Scene.Mission throws a null reference while the level is not loaded yet; skip the report then
 			if (units.Length == 0)
 			{
 				continue;
@@ -655,7 +655,7 @@ public class PcBootDiagnostics : MonoBehaviour
 					+ " pos=" + unit.transform.position.ToString("F2") + " charSpeed=" + ((float)speedField.GetValue(unit)).ToString("F2")
 					+ " target=" + targetName + " obstacled=" + unit.Obstacled + " " + agentText);
 			}
-			// 不走导航网格、只靠 CharacterController 站在地上的角色（Human 等）：看是否着地、脚下有什么碰撞体
+			// Characters that do not use the navmesh and only stand on the ground through a CharacterController (Human, etc.): grounded or not, and which collider is underfoot
 			foreach (Character character in Object.FindObjectsByType<Character>(FindObjectsSortMode.None))
 			{
 				if (character is Unit)
@@ -692,8 +692,8 @@ public class PcBootDiagnostics : MonoBehaviour
 	}
 
 	/// <summary>
-	/// 测试用：-pcPathCheck 88 到点重放 PlayerProgress.BuildPath 的每一段（相邻路径节点之间的 CalculatePath），
-	/// 记录状态、拐点数，以及节点离导航网格多远，查玩家路线上落在网格外的点是怎么来的。
+	/// Test: -pcPathCheck 88 replays each segment of PlayerProgress.BuildPath (CalculatePath between adjacent path nodes) at that time,
+	/// logging the status, corner count and how far the nodes are from the navmesh, to find out how off-mesh points end up on the player route.
 	/// </summary>
 	private static IEnumerator CheckPlayerPath()
 	{
@@ -740,7 +740,7 @@ public class PcBootDiagnostics : MonoBehaviour
 		}
 	}
 
-	/// <summary>测试用：-pcPerf 30 每隔 30 秒（真实时间）记录这段时间的平均帧率、托管堆和 Unity 分配的内存，查泄漏和卡顿。</summary>
+	/// <summary>Test: -pcPerf 30 logs the average frame rate, managed heap and Unity-allocated memory for each 30 s (real time) window, to look for leaks and stutter.</summary>
 	private static IEnumerator ReportPerformance()
 	{
 		string argument = GetArgument("-pcPerf");
@@ -763,7 +763,7 @@ public class PcBootDiagnostics : MonoBehaviour
 		}
 	}
 
-	/// <summary>测试用：-pcAddMoney 45:5000 到点给软货币加钱（与作弊窗口的加钱按钮相同的做法），测成功购买和扣款。</summary>
+	/// <summary>Test: -pcAddMoney 45:5000 adds soft currency at that time (same as the add-money button in the cheat window), to test successful purchases and charges.</summary>
 	private static IEnumerator AddMoney()
 	{
 		string argument = GetArgument("-pcAddMoney");
@@ -782,7 +782,7 @@ public class PcBootDiagnostics : MonoBehaviour
 		Debug.Log("[PcDiag] add money +" + amount + " soft=" + Singleton.PlayerData.SoftCurrency);
 	}
 
-	/// <summary>测试用：-pcCompleteMission 95 到点调用游戏作弊窗口里的 Cheat.CompleteMission，测任务结算、奖励、写存档和回地图的流程。</summary>
+	/// <summary>Test: -pcCompleteMission 95 calls Cheat.CompleteMission from the game's cheat window at that time, to test mission results, rewards, saving and the return to the map.</summary>
 	private static IEnumerator CompleteMission()
 	{
 		string argument = GetArgument("-pcCompleteMission");
@@ -800,7 +800,7 @@ public class PcBootDiagnostics : MonoBehaviour
 		Cheat.CompleteMission();
 	}
 
-	/// <summary>测试用：-pcAudioCheck 60,90 到点列出正在播放的 AudioSource（声音听不到，只能这样确认有在播）。</summary>
+	/// <summary>Test: -pcAudioCheck 60,90 lists the AudioSources playing at those times (sound cannot be heard here, so this is the only way to confirm playback).</summary>
 	private static IEnumerator CheckAudio()
 	{
 		string argument = GetArgument("-pcAudioCheck");
@@ -841,7 +841,7 @@ public class PcBootDiagnostics : MonoBehaviour
 		}
 	}
 
-	/// <summary>测试用：-pcShopDump 50 到点列出商店配置的分组、条目和 readyToShow（查商店打开时没有可选分组的问题）。</summary>
+	/// <summary>Test: -pcShopDump 50 lists the shop config's groups, entries and readyToShow at that time (for the shop opening with no selectable group).</summary>
 	private static IEnumerator DumpShop()
 	{
 		string argument = GetArgument("-pcShopDump");
@@ -891,8 +891,8 @@ public class PcBootDiagnostics : MonoBehaviour
 	}
 
 	/// <summary>
-	/// 测试用：-pcNavCheck 85 到点检查当前关卡每个出生点到玩家路径点的寻路（与 SmartSpawnPoint.CalcPathsLength 相同的调用），
-	/// 失败时再看两端离导航网格多远、贴到网格上以后能否算出路径，用来区分“偏离网格”和“网格不连通”。
+	/// Test: -pcNavCheck 85 checks pathfinding from every spawn point of the current level to the player's path points at that time (the same call as SmartSpawnPoint.CalcPathsLength);
+	/// on failure it also checks how far both ends are from the navmesh and whether a path exists after snapping them onto it, to tell "off the mesh" from "mesh not connected".
 	/// </summary>
 	private IEnumerator CheckNavigation()
 	{
@@ -948,8 +948,8 @@ public class PcBootDiagnostics : MonoBehaviour
 	}
 
 	/// <summary>
-	/// 测试用：-pcEffects 60 从 60 秒起的 3 秒内，在屏幕中心射线的命中点每 0.1 秒发射一组击中特效：
-	/// 火花、灰尘、碎片、闪光、弹壳、血花（EffectsManager 的私有发射函数用反射调用），用来检查旧版粒子的转换结果。
+	/// Test: -pcEffects 60 for 3 s from 60 s emits a set of hit effects every 0.1 s at the hit point of a ray through the screen center:
+	/// sparks, dust, debris, flashes, shells and blood (EffectsManager's private emit functions, called via reflection), to check the converted legacy particles.
 	/// </summary>
 	private IEnumerator EmitTestEffects()
 	{
@@ -994,8 +994,8 @@ public class PcBootDiagnostics : MonoBehaviour
 	}
 
 	/// <summary>
-	/// 测试用：-pcMission 50:27 到点调用游戏自己的 AppGame.GoToGameLevel(GameData.Missions[27])，
-	/// 直接进入某个任务的关卡（相当于在地图上选了这个任务），用来逐个检查各关卡。需要存档已过教程。
+	/// Test: -pcMission 50:27 calls the game's own AppGame.GoToGameLevel(GameData.Missions[27]) at that time,
+	/// entering that mission's level directly (as if it were picked on the map), to check levels one by one. Needs a save that is past the tutorial.
 	/// </summary>
 	private IEnumerator StartMission()
 	{
@@ -1018,8 +1018,8 @@ public class PcBootDiagnostics : MonoBehaviour
 	}
 
 	/// <summary>
-	/// 测试用：-pcPostEffect 60:LowHealth,80:Dying,100:Normal 到点调用 PostEffectManager.SetPostEffect，
-	/// 直接触发全屏后处理（低血量、濒死色差等），验证 PcBlit 与翻译后的后处理着色器。
+	/// Test: -pcPostEffect 60:LowHealth,80:Dying,100:Normal calls PostEffectManager.SetPostEffect at those times,
+	/// triggering full-screen post effects directly (low health, dying chromatic aberration, etc.), to verify PcBlit and the translated post-effect shaders.
 	/// </summary>
 	private IEnumerator ForcePostEffects()
 	{
@@ -1044,15 +1044,15 @@ public class PcBootDiagnostics : MonoBehaviour
 				continue;
 			}
 			Debug.Log("[PcDiag] post effect t=" + target + " " + effect);
-			// SetPostEffect 在已有效果时不切换，所以先切回 Normal
+			// SetPostEffect does not switch while an effect is active, so switch back to Normal first
 			manager.SetPostEffect(PostEffectManager.PostEffect.Normal, 0f);
 			manager.SetPostEffect(effect, 5f);
 		}
 	}
 
 	/// <summary>
-	/// 测试用：-pcFinishTutorial <秒> 到点调用游戏自带作弊窗口里 "Finish tutorial" 的同一套接口
-	/// （Singleton.Tutorial.Finish + Cheat.CompleteMission），跳过教程关，用来测教程之后的地图、菜单和其他关卡。
+	/// Test: -pcFinishTutorial <seconds> calls, at that time, the same interface as "Finish tutorial" in the game's built-in cheat window
+	/// (Singleton.Tutorial.Finish + Cheat.CompleteMission), skipping the tutorial level, to test the map, menus and other levels after the tutorial.
 	/// </summary>
 	private IEnumerator FinishTutorial()
 	{
@@ -1100,7 +1100,7 @@ public class PcBootDiagnostics : MonoBehaviour
 		}
 	}
 
-	/// <summary>按 -pcShots / -pcShotDir 启动参数在指定的真实时间点截图。</summary>
+	/// <summary>Takes screenshots at the real times given by the -pcShots / -pcShotDir launch arguments.</summary>
 	private IEnumerator CaptureShots()
 	{
 		string times = GetArgument("-pcShots");
@@ -1117,7 +1117,7 @@ public class PcBootDiagnostics : MonoBehaviour
 			{
 				yield return null;
 			}
-			// 等这一帧渲染完再截
+			// Wait until this frame has finished rendering before capturing
 			yield return new WaitForEndOfFrame();
 			string path = System.IO.Path.Combine(directory, "shot_" + ((int)target).ToString("D3") + "s.png");
 			ScreenCapture.CaptureScreenshot(path);
@@ -1126,10 +1126,10 @@ public class PcBootDiagnostics : MonoBehaviour
 	}
 
 	/// <summary>
-	/// 按 -pcAutoTap 启动参数在指定的真实时间点注入手势（自动测试用，人不在时也能点过界面）。
-	/// 格式：逗号分隔，每项是 "秒[@x:y][>x2:y2][~时长]"。x、y 是 0～1 的屏幕比例（左下角为原点），默认屏幕中心；
-	/// ">x2:y2" 表示拖到该处，"~时长" 表示按住的秒数，默认 0（点击）；"~时长+按住" 表示拖到终点后再按住若干秒（摇杆用）。
-	/// 例：-pcAutoTap 40,50@0.8:0.15,60@0.5:0.5>0.7:0.5~3
+	/// Injects gestures at the real times given by the -pcAutoTap launch argument (for automated tests, gets through the UI unattended).
+	/// Format: comma separated, each item "seconds[@x:y][>x2:y2][~duration]". x and y are screen fractions from 0 to 1 (origin bottom left), default screen center;
+	/// ">x2:y2" drags there, "~duration" is the hold time in seconds, default 0 (tap); "~duration+hold" keeps holding that many more seconds after reaching the end point (for sticks).
+	/// Example: -pcAutoTap 40,50@0.8:0.15,60@0.5:0.5>0.7:0.5~3
 	/// </summary>
 	private IEnumerator AutoTaps()
 	{
@@ -1149,7 +1149,7 @@ public class PcBootDiagnostics : MonoBehaviour
 			{
 				string timing = rest.Substring(tilde + 1);
 				rest = rest.Substring(0, tilde);
-				// "~移动时长+按住时长"：拖到终点后继续按住
+				// "~move duration+hold duration": keep holding after reaching the end point
 				int plus = timing.IndexOf('+');
 				if (plus >= 0)
 				{
@@ -1189,7 +1189,7 @@ public class PcBootDiagnostics : MonoBehaviour
 		}
 	}
 
-	/// <summary>解析 "x:y"（0～1 的屏幕比例）。</summary>
+	/// <summary>Parses "x:y" (screen fractions from 0 to 1).</summary>
 	private static Vector2 ParsePoint(string text)
 	{
 		System.Globalization.CultureInfo invariant = System.Globalization.CultureInfo.InvariantCulture;
@@ -1210,7 +1210,7 @@ public class PcBootDiagnostics : MonoBehaviour
 		return null;
 	}
 
-	/// <summary>列出对象的简单公开属性（枚举、字符串、数值、布尔）。</summary>
+	/// <summary>Lists the object's simple public properties (enums, strings, numbers, booleans).</summary>
 	private static string Describe(object target)
 	{
 		if (target == null)

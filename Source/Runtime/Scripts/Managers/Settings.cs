@@ -158,14 +158,8 @@ public class Settings : MonoBehaviourAndLog
 			string pathName = Path.Combine(StorageManager.PersistentDataPath, Const.SettingsFileName);
 			_data = (SavedData)StorageManager.ReadXmlFromLocation(pathName, _data.GetType());
 		}
-		catch (Exception ex)
+		catch (Exception)
 		{
-			if (ex is StorageManager.StorageManagerException)
-			{
-			}
-			else
-			{
-			}
 		}
 	}
 

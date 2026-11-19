@@ -1,24 +1,21 @@
 ﻿using System;
 using System.IO;
-using System.Runtime.InteropServices;
-using System.Security.Cryptography;
 using System.Xml;
 using System.Xml.Serialization;
 using UnityEngine;
 
+// Two changes for the PC port:
+// 1. The original save verification is gone. The original stored the SHA-256 of every save in the iOS keychain
+//    (keyed by the sandbox-relative path) and compared it on load; on a mismatch it threw StorageManagerException
+//    and PlayerData treated the save as a new game. Neither the PC port nor later ports need this, so reading and
+//    writing now touch only the file itself. Writes still go to a temporary file first and are then renamed,
+//    so an interrupted write cannot corrupt the save.
+// 2. Saves live in a Save folder next to the exe (portable) instead of the system folder persistentDataPath
+//    (AppData\LocalLow\<company>\<product>).
 public class StorageManager
 {
-	public class StorageManagerException : Exception
-	{
-		public StorageManagerException()
-		{
-		}
-
-		public StorageManagerException(string message)
-			: base(message)
-		{
-		}
-	}
+	/// <summary>Name of the save folder, next to the exe.</summary>
+	private const string SaveDirName = "Save";
 
 	public static Version Version
 	{
@@ -28,11 +25,19 @@ public class StorageManager
 		}
 	}
 
+	/// <summary>
+	/// Save folder: the Save folder in the exe's directory (the Save folder in the project root when playing in the editor).
+	/// How: in a build Application.dataPath points to the ckz2_Data folder next to the exe, in the editor to the project's
+	/// Assets folder; its parent is therefore the exe's directory or the project root. Created if missing.
+	/// </summary>
 	public static string PersistentDataPath
 	{
 		get
 		{
-			return Application.persistentDataPath;
+			string rootDir = Path.GetDirectoryName(Application.dataPath);
+			string saveDir = Path.Combine(rootDir, SaveDirName);
+			Directory.CreateDirectory(saveDir);
+			return saveDir;
 		}
 	}
 
@@ -46,20 +51,10 @@ public class StorageManager
 
 	public static void WriteToLocation(string pathName, string temporaryPathName, byte[] data)
 	{
-		string text = pathName + ".check";
-		string text2 = temporaryPathName + ".check.tmp";
 		temporaryPathName += ".tmp";
-		SHA256Managed sHA256Managed = new SHA256Managed();
-		byte[] inArray = sHA256Managed.ComputeHash(data);
 		using (FileStream fileStream = File.Create(temporaryPathName))
 		{
 			fileStream.Write(data, 0, data.Length);
-		}
-		string data2 = Convert.ToBase64String(inArray);
-		string key = PathToKey(pathName);
-		if (!SetSafeDataForKey(key, data2))
-		{
-			throw new StorageManagerException("Error setting keychain value");
 		}
 		if (File.Exists(pathName))
 		{
@@ -70,40 +65,13 @@ public class StorageManager
 
 	public static void Write(string fileName, byte[] data)
 	{
-		string temporaryPathName = Path.Combine(TemporaryCachePath, fileName);
+		// Keep the temporary file in the same folder as the save: the system temp folder may be on another drive,
+		// and a rename across drives degrades into a copy
 		string pathName = Path.Combine(PersistentDataPath, fileName);
-		WriteToLocation(pathName, temporaryPathName, data);
+		WriteToLocation(pathName, pathName, data);
 	}
 
 	public static byte[] ReadFromLocation(string pathName)
-	{
-		byte[] array = File.ReadAllBytes(pathName);
-		SHA256Managed sHA256Managed = new SHA256Managed();
-		byte[] strB = sHA256Managed.ComputeHash(array);
-		byte[] array2 = null;
-		string key = PathToKey(pathName);
-		string text = Marshal.PtrToStringAnsi(GetSafeDataForKey(key));
-		if (text.Equals(string.Empty))
-		{
-			array2 = File.ReadAllBytes(pathName + ".check");
-			sHA256Managed = null;
-		}
-		else
-		{
-			array2 = Convert.FromBase64String(text);
-		}
-		if (!ByteArrayEquals(array2, strB))
-		{
-			throw new StorageManagerException("File " + pathName + " is corrupted");
-		}
-		if (sHA256Managed == null)
-		{
-			SetSafeDataForKey(key, Convert.ToBase64String(array2));
-		}
-		return array;
-	}
-
-	public static byte[] ReadFromLocationWithoutChecking(string pathName)
 	{
 		return File.ReadAllBytes(pathName);
 	}
@@ -112,12 +80,6 @@ public class StorageManager
 	{
 		string pathName = Path.Combine(PersistentDataPath, fileName);
 		return ReadFromLocation(pathName);
-	}
-
-	public static byte[] ReadWithoutChecking(string fileName)
-	{
-		string path = Path.Combine(PersistentDataPath, fileName);
-		return File.ReadAllBytes(path);
 	}
 
 	public static void WriteXmlToLocation(string pathName, string temporaryPathName, object data)
@@ -130,18 +92,9 @@ public class StorageManager
 #else
 		PcXmlPairs.Serialize(XmlWriter.Create(memoryStream), data);
 #endif
-		SHA256Managed sHA256Managed = new SHA256Managed();
-		memoryStream.Position = 0L;
-		byte[] inArray = sHA256Managed.ComputeHash(memoryStream);
 		using (FileStream stream = File.Create(temporaryPathName))
 		{
 			memoryStream.WriteTo(stream);
-		}
-		string data2 = Convert.ToBase64String(inArray);
-		string key = PathToKey(pathName);
-		if (!SetSafeDataForKey(key, data2))
-		{
-			throw new StorageManagerException("Error setting keychain value");
 		}
 		if (File.Exists(pathName))
 		{
@@ -152,50 +105,21 @@ public class StorageManager
 
 	public static void WriteXml(string fileName, object data)
 	{
-		string temporaryPathName = Path.Combine(TemporaryCachePath, fileName);
+		// Temporary file next to the save, same reason as in Write
 		string pathName = Path.Combine(PersistentDataPath, fileName);
-		WriteXmlToLocation(pathName, temporaryPathName, data);
+		WriteXmlToLocation(pathName, pathName, data);
 	}
 
 	public static object ReadXmlFromLocation(string pathName, Type type)
 	{
 		object obj = null;
-		MemoryStream memoryStream = null;
-		using (FileStream fileStream = File.OpenRead(pathName))
-		{
-			byte[] array = new byte[fileStream.Length];
-			fileStream.Read(array, 0, array.Length);
-			memoryStream = new MemoryStream(array);
-		}
-		SHA256Managed sHA256Managed = new SHA256Managed();
-		byte[] strB = sHA256Managed.ComputeHash(memoryStream);
-		byte[] array2 = null;
-		string key = PathToKey(pathName);
-		string text = Marshal.PtrToStringAnsi(GetSafeDataForKey(key));
-		if (text.Equals(string.Empty))
-		{
-			array2 = File.ReadAllBytes(pathName + ".check");
-			sHA256Managed = null;
-		}
-		else
-		{
-			array2 = Convert.FromBase64String(text);
-		}
-		if (!ByteArrayEquals(array2, strB))
-		{
-			throw new StorageManagerException("File " + pathName + " is corrupted");
-		}
-		memoryStream.Position = 0L;
+		MemoryStream memoryStream = new MemoryStream(File.ReadAllBytes(pathName));
 #if UNITY_IOS
 		XmlSerializer xmlSerializer = new XmlSerializer(type);
 		obj = xmlSerializer.Deserialize(XmlReader.Create(memoryStream));
 #else
 		obj = PcXmlPairs.Deserialize(XmlReader.Create(memoryStream), type);
 #endif
-		if (sHA256Managed == null)
-		{
-			SetSafeDataForKey(key, Convert.ToBase64String(array2));
-		}
 		return obj;
 	}
 
@@ -204,89 +128,4 @@ public class StorageManager
 		string pathName = Path.Combine(PersistentDataPath, fileName);
 		return ReadXmlFromLocation(pathName, type);
 	}
-
-	public static object ReadXmlFromLocationWithoutChecking(string pathName, Type type)
-	{
-		object obj = null;
-		using (StreamReader textReader = new FileInfo(pathName).OpenText())
-		{
-#if UNITY_IOS
-			XmlSerializer xmlSerializer = new XmlSerializer(type);
-			obj = xmlSerializer.Deserialize(textReader);
-#else
-			obj = PcXmlPairs.Deserialize(XmlReader.Create(textReader), type);
-#endif
-		}
-		return obj;
-	}
-
-	public static object ReadXmlWithoutChecking(string fileName, Type type)
-	{
-		string pathName = Path.Combine(PersistentDataPath, fileName);
-		return ReadXmlFromLocationWithoutChecking(pathName, type);
-	}
-
-	private static bool ByteArrayEquals(byte[] strA, byte[] strB)
-	{
-		int num = strA.Length;
-		if (num != strB.Length)
-		{
-			return false;
-		}
-		for (int i = 0; i < num; i++)
-		{
-			if (strA[i] != strB[i])
-			{
-				return false;
-			}
-		}
-		return true;
-	}
-
-	private static string PathToKey(string path)
-	{
-#if !UNITY_IOS
-		return PcNative.StoragePathToKey(path);
-#else
-		if (Path.IsPathRooted(path))
-		{
-			string[] array = new string[3] { "/Documents/", "/Library/", "/tmp/" };
-			int num = -1;
-			foreach (string value in array)
-			{
-				num = path.IndexOf(value);
-				if (num >= 0)
-				{
-					break;
-				}
-			}
-			if (num == -1)
-			{
-				throw new StorageManagerException("The file path " + path + " is invalid on iOS");
-			}
-			return path.Substring(num);
-		}
-		throw new StorageManagerException("Cannot use relative file path for access on iOS");
-#endif
-	}
-
-#if UNITY_IOS
-	[DllImport("__Internal")]
-	private static extern IntPtr GetSafeDataForKey(string key);
-#else
-	private static IntPtr GetSafeDataForKey(string key)
-	{
-		return PcNative.GetSafeDataForKey(key);
-	}
-#endif
-
-#if UNITY_IOS
-	[DllImport("__Internal")]
-	private static extern bool SetSafeDataForKey(string key, string data);
-#else
-	private static bool SetSafeDataForKey(string key, string data)
-	{
-		return PcNative.SetSafeDataForKey(key, data);
-	}
-#endif
 }

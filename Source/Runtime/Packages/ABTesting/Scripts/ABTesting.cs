@@ -54,7 +54,7 @@ namespace Glu.ABTesting
 		{
 			get
 			{
-				return Path.Combine(Application.persistentDataPath, "ABTestingParameters.dat");
+				return Path.Combine(StorageManager.PersistentDataPath, "ABTestingParameters.dat");
 			}
 		}
 
