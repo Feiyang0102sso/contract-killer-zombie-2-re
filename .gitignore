@@ -1,0 +1,16 @@
+# Local workspace: analysis output, notes, ledgers (never committed)
+recovery/
+
+# Build output: vanilla/ (matches the original) and tuned/ (with tweaks applied)
+build/
+
+# Final product: main executable + Data/Managed/, laid out like the .app; copy over it directly
+bin/
+
+# Misc
+__pycache__/
+*.pyc
+Thumbs.db
+.DS_Store
+docs/
+tools/
