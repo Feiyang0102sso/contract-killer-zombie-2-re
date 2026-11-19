@@ -416,7 +416,8 @@ public class Player : Human
 						}
 					}
 				}
-				if (Singleton.Settings.MiniZombieControls)
+				// PC port: hold LMB for manual fire, no target lock needed (like MiniZombieControls)
+				if (Singleton.Settings.MiniZombieControls || hud.IsPcManualFiring())
 				{
 					isShooting = true;
 				}

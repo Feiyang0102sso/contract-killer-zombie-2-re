@@ -4,7 +4,8 @@ using System.Linq;
 using Glu.Localization;
 using UnityEngine;
 
-public class HudController : MonoBehaviourAndLog
+// PC port: partial; keyboard/mouse controls in PcPort/HudController.Pc.cs
+public partial class HudController : MonoBehaviourAndLog
 {
 	private struct ScopeData
 	{
@@ -317,6 +318,8 @@ public class HudController : MonoBehaviourAndLog
 		AimTipEnabled = false;
 		Singleton.Settings.OnSettingsChanged += new Action(UpdateSticksSetup);
 		_hudWeaponSelector.OnWeaponSelected += new Action<PlayerData.Slots>(SelectWeapon);
+		// PC port: key hint labels
+		CreatePcKeyHints();
 	}
 
 	private void NextConsumable(int shift)
@@ -433,6 +436,12 @@ public class HudController : MonoBehaviourAndLog
 	public Vector2 GetCharacterMovementInput()
 	{
 		var result = _leftStick.GetVector();
+		// PC port: WASD overrides the stick while held
+		Vector2 pcMovement = GetPcMovementInput();
+		if (pcMovement != Vector2.zero)
+		{
+			result = pcMovement;
+		}
 		return result;
 	}
 
@@ -445,6 +454,8 @@ public class HudController : MonoBehaviourAndLog
 			delta = _fireStick.GetDelta();
 			_fireStick.ResetDelta();
 		}
+		// PC port: add mouse look
+		delta += GetPcMouseLookDelta();
 		if (Singleton.Settings.InvertYAxis)
 		{
 			delta.y = -delta.y;
@@ -996,6 +1007,8 @@ public class HudController : MonoBehaviourAndLog
 		{
 			_aimMode = false;
 		}
+		// PC port: keyboard/mouse controls (may override _aimMode)
+		UpdatePcControls();
 		if (MoveTipEnabled)
 		{
 			if (_moveTip)
@@ -1223,6 +1236,8 @@ public class HudController : MonoBehaviourAndLog
 		{
 			UIManager.instance.RemoveMouseTouchPtrListener(AllInputDelegate);
 		}
+		// PC port: release the cursor when leaving the level
+		SetPcCursorLocked(false);
 	}
 
 	private void UpdateAnimation()

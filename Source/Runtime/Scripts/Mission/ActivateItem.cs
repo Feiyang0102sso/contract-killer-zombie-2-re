@@ -79,6 +79,11 @@ public class ActivateItem : MonoBehaviourAndLog
 		_text.Text = "[#FFFF00]" + text;
 		_text.transform.position = _text.transform.position + Vector3.up * 0.1f * text.Where((char c) => c == '\n').Count();
 		_text2 = this.QuickFindChild("ButtonCenter/Text2").GetComponent<SpriteText>();
+		// PC port: pick-up key under player-usable icons (not for NPC-activated ones)
+		if (!activateByNpc)
+		{
+			PcKeyHints.AttachPickUpHint(_text, _button);
+		}
 		if (activateByNpc)
 		{
 			GameObject gameObject2 = this.QuickFindChild("ButtonCenter/HintArrow");

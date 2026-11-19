@@ -1,14 +1,14 @@
-// PC 桥接：用鼠标模拟触摸（做法参考 SvZ 的 PCInput：鼠标合成 Touch，替换游戏里读 Input.touchCount / GetTouch 的地方）。
-// 游戏的界面和操作都走 EZ GUI 的触摸轮询（UIManager.PollTouchpad），PC 上 Input.touchCount 恒为 0，什么都点不了。
-// 规则：
-//   - 鼠标左键按住 = 手指 0（按下 Began，移动 Moved，不动 Stationary，松开 Ended）；
-//   - InjectGesture 注入的手势 = 手指 1（自动测试用，见 PcBootDiagnostics 的 -pcAutoTap）：
-//     第一帧 Began，之后按真实时间从起点线性移到终点（Moved / Stationary），到时长后一帧 Ended。
-//     点击就是时长为 0 的手势：Began、Stationary、Ended 各一帧；
-//   - 程序控制的手指 AimFinger = 手指 2、MoveFinger = 手指 3（自动测试用，见 PcBootDiagnostics 的 -pcAutoAim / -pcAutoMove）：
-//     Active 变成 true 的那帧 Began，之后跟着 Position 走（Moved / Stationary），变回 false 的那帧 Ended；
-//   - 真实触摸屏的触摸原样保留，排在后面。
-// 每帧只合成一次，同一帧内多次读取结果一致。
+// PC bridge: mouse as touch (based on SvZ's PCInput: synthesize Touch from the mouse, replacing reads of Input.touchCount / GetTouch).
+// The game's UI and controls go through EZ GUI touch polling (UIManager.PollTouchpad); on PC Input.touchCount is always 0.
+// Rules:
+//   - LMB held = finger 0 (press Began, move Moved, still Stationary, release Ended); not synthesized while the cursor is locked (in gameplay);
+//   - gestures from InjectGesture = finger 1 (auto tests, see PcBootDiagnostics -pcAutoTap):
+//     Began on the first frame, then moves linearly from start to end in real time (Moved / Stationary), Ended after the duration.
+//     A tap is a zero-length gesture: one frame each of Began, Stationary, Ended;
+//   - steered fingers AimFinger = finger 2, MoveFinger = finger 3 (auto tests, see PcBootDiagnostics -pcAutoAim / -pcAutoMove):
+//     Began when Active turns true, then follows Position (Moved / Stationary), Ended when Active turns false;
+//   - real touchscreen touches are kept as is, after the synthesized ones.
+// Built once per frame; repeated reads in the same frame return the same result.
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,7 +18,7 @@ public static class PcInput
 
 	private const int InjectedFingerId = 1;
 
-	/// <summary>由程序控制的一根手指（自动测试用）：Active 为 true 时按在 Position（屏幕像素坐标）上。</summary>
+	/// <summary>A program-controlled finger (auto tests): pressed at Position (screen pixels) while Active.</summary>
 	public class SteeredFinger
 	{
 		public readonly int FingerId;
@@ -33,19 +33,19 @@ public static class PcInput
 		}
 	}
 
-	/// <summary>自动瞄准用的手指（右半边视角 / 开火）。</summary>
+	/// <summary>Finger for auto aim (right-side look / fire).</summary>
 	public static readonly SteeredFinger AimFinger = new SteeredFinger(2);
 
-	/// <summary>自动行走用的手指（左摇杆）。</summary>
+	/// <summary>Finger for auto move (left stick).</summary>
 	public static readonly SteeredFinger MoveFinger = new SteeredFinger(3);
 
-	/// <summary>一个注入的手势：从 start 移到 end，持续 duration 秒（真实时间）。</summary>
+	/// <summary>An injected gesture: moves from start to end over duration seconds (real time).</summary>
 	private struct Gesture
 	{
 		public Vector2 start;
 		public Vector2 end;
 		public float duration;
-		/// <summary>到达终点后继续按住的秒数。</summary>
+		/// <summary>Seconds to keep holding after reaching the end.</summary>
 		public float hold;
 	}
 
@@ -65,12 +65,12 @@ public static class PcInput
 
 	private static float _currentStartTime;
 
-	/// <summary>当前手势已经输出了几帧（0 表示还没输出 Began）。</summary>
+	/// <summary>Frames already output for the current gesture (0 = Began not output yet).</summary>
 	private static int _currentFrames;
 
 	private static Vector2 _currentPosition;
 
-	/// <summary>替代 Input.touchCount。</summary>
+	/// <summary>Replaces Input.touchCount.</summary>
 	public static int touchCount
 	{
 		get
@@ -80,14 +80,14 @@ public static class PcInput
 		}
 	}
 
-	/// <summary>替代 Input.GetTouch。</summary>
+	/// <summary>Replaces Input.GetTouch.</summary>
 	public static Touch GetTouch(int index)
 	{
 		Build();
 		return _touches[index];
 	}
 
-	/// <summary>替代 Input.touches。</summary>
+	/// <summary>Replaces Input.touches.</summary>
 	public static Touch[] touches
 	{
 		get
@@ -97,19 +97,19 @@ public static class PcInput
 		}
 	}
 
-	/// <summary>在屏幕像素坐标 position 处注入一次点击（自动测试用）。</summary>
+	/// <summary>Injects a tap at screen pixel position (auto tests).</summary>
 	public static void InjectTap(Vector2 position)
 	{
 		InjectGesture(position, position, 0f);
 	}
 
-	/// <summary>注入一个按住 / 拖动手势：从 start 移到 end（屏幕像素坐标），持续 duration 秒。</summary>
+	/// <summary>Injects a hold / drag gesture from start to end (screen pixels) over duration seconds.</summary>
 	public static void InjectGesture(Vector2 start, Vector2 end, float duration)
 	{
 		InjectGesture(start, end, duration, 0f);
 	}
 
-	/// <summary>注入一个拖动后按住的手势：duration 秒内从 start 移到 end，再在 end 按住 hold 秒（摇杆要这样操作）。</summary>
+	/// <summary>Injects a drag then hold: start to end in duration seconds, then hold at end for hold seconds (needed for sticks).</summary>
 	public static void InjectGesture(Vector2 start, Vector2 end, float duration, float hold)
 	{
 		Gesture gesture = new Gesture();
@@ -142,7 +142,9 @@ public static class PcInput
 	private static void AddMouseTouch()
 	{
 		Vector2 position = Input.mousePosition;
-		bool down = Input.GetMouseButton(0);
+		// In gameplay the cursor is locked (see HudController.Pc.cs) and LMB is manual fire, so no fake touch;
+		// if it was held at the moment of locking, an Ended frame is still emitted below
+		bool down = Input.GetMouseButton(0) && Cursor.lockState != CursorLockMode.Locked;
 		Vector2 delta = position - _lastMousePosition;
 		_lastMousePosition = position;
 		bool wasDown = _mouseWasDown;
@@ -179,7 +181,7 @@ public static class PcInput
 		_touches.Add(touch);
 	}
 
-	/// <summary>按 finger.Active / finger.Position 合成一根手指。</summary>
+	/// <summary>Synthesizes one finger from finger.Active / finger.Position.</summary>
 	private static void AddSteeredTouch(SteeredFinger finger)
 	{
 		bool active = finger.Active;
@@ -250,7 +252,7 @@ public static class PcInput
 		}
 		else if (_currentFrames == 1 || elapsed < _current.duration + _current.hold)
 		{
-			// 至少保持一帧，再按时间插值位置
+			// Hold for at least one frame, then interpolate the position by time
 			float progress = 1f;
 			if (_current.duration > 0f)
 			{
