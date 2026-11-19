@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: katana
+  m_Shader: {fileID: 4800000, guid: c1e4ae0d5b8bf3940af5a74ed6439f78, type: 3}
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+    - first:
+        name: _MainTex
+      second:
+        m_Texture: {fileID: 2800000, guid: e80a7450086cc7c43bc676ac723841b2, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _BumpMap
+      second:
+        m_Texture: {fileID: 2800000, guid: cb090f00ed1bad94fa668d2012e4cb25, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - first:
+        name: _ProbeIntensity
+      second: 2.3537314
+    - first:
+        name: _ProbeShininess
+      second: 1
+    - first:
+        name: _RimIntensity
+      second: 1
+    - first:
+        name: _RimPower
+      second: 3
+    - first:
+        name: _ProbeSpecStr
+      second: 0.6492537
+    - first:
+        name: _ProbeSpecSub
+      second: 0
+    m_Colors:
+    - first:
+        name: _Color
+      second: {r: 0.5882353, g: 0.5882353, b: 0.5882353, a: 1}

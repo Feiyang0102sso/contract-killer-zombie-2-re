@@ -1,0 +1,1277 @@
+<ShopConfig>
+<!--
+
+PLEASE READ ALL COMMENTS IN GREEN AFTER CANADA-L TO MAKE SURE ALL CHANGES ARE REVERTED!	
+
+slot=
+handgun
+shotgund
+assault
+sniper
+exotic
+
+powerup
+grenade
+
+weaponItem
+item = Prefab name = XLS name
+nameId = Shop Name	
+	-->
+	
+	<items>
+		<getMoreShopItem id="GetMore"
+				prefab="GetMoreItemPlate"
+		/>
+		
+		<weaponItem id="AssaultRifle3b"
+			item="AssaultRifle3b" price="1900"
+			nameId="AR-19 BASIC" currency="soft"
+			slot="assault"
+			prefab="WeaponItemPlate"
+			image="Assets/UI/Shop/Weapons/AssaultRifle3b.png"
+			unlockLevel="3"
+			power="90"
+			dmg="10"
+			acc="53"
+			range="70"
+			rate="58"
+			cap="25"
+		/>
+		
+		<weaponItem id="AssaultRifle1"
+			item="AssaultRifle1" price="4350"
+			nameId="HP-K5" currency="soft"
+			slot="assault"
+			prefab="WeaponItemPlate"
+			image="Assets/UI/Shop/Weapons/AssaultRifle1.png"
+			unlockLevel="6"
+			power="125"
+			dmg="15"
+			acc="63"
+			range="72"
+			rate="58"
+			cap="32"
+		/>
+				
+		<weaponItem id="AssaultRifle2"
+			item="AssaultRifle2" price="10000"
+			nameId="TECHNIC 9MM" currency="soft"
+			slot="assault"
+			prefab="WeaponItemPlate"
+			image="Assets/UI/Shop/Weapons/AssaultRifle2.png"
+			unlockLevel="7"
+			power="150"
+			dmg="20"
+			acc="64"
+			range="75"
+			rate="58"
+			cap="32"
+		/>
+				
+		<weaponItem id="AssaultRifle3"
+			item="AssaultRifle3" price="330"
+			nameId="K7 YUGOSLAVIAN" currency="hard"
+			slot="assault"
+			prefab="WeaponItemPlate"
+			image="Assets/UI/Shop/Weapons/AssaultRifle3.png"
+			unlockLevel="1"
+			power="300"
+			dmg="75"
+			acc="61"
+			range="75"
+			rate="67"
+			cap="55"
+		/>
+		
+		<weaponItem id="AssaultRifle4"
+			item="AssaultRifle4" price="600"
+			nameId="C16 AUTO" currency="hard"
+			slot="assault"
+			prefab="WeaponItemPlate"
+			color="00E5B7"
+			image="Assets/UI/Shop/Weapons/AssaultRifle4.png"
+			unlockLevel="1"
+			power="350"
+			dmg="92"
+			acc="62"
+			range="80"
+			rate="58"
+			cap="55"
+		/>
+
+		
+		<weaponItem id="AssaultRifle4b"
+			item="AssaultRifle4b" price="70"
+			nameId="ZRU-12" currency="hard"
+			slot="assault"
+			prefab="WeaponItemPlate"
+			image="Assets/UI/Shop/Weapons/ZRU_12_base.png"
+			unlockLevel="1"
+			power="200"
+			dmg="32"
+			acc="67"
+			range="73"
+			rate="67"
+			cap="40"				
+		/>		
+		
+		<weaponItem id="AssaultRifle5"
+			item="AssaultRifle5" price="160"
+			nameId="ZRU-12 ADVANCED" currency="hard"
+			slot="assault"
+			prefab="WeaponItemPlate"
+			image="Assets/UI/Shop/Weapons/ZRU_12.png"
+			unlockLevel="1"
+			power="260"
+			dmg="52"
+			acc="70"
+			range="80"
+			rate="75"
+			cap="40"				
+		/>
+		
+		<weaponItem id="AssaultRifle6"
+			item="AssaultRifle6" price="1200"
+			nameId="AKA-47" currency="hard"
+			slot="assault"
+			prefab="WeaponItemPlate"
+			color="FDE800"
+			image="Assets/UI/Shop/Weapons/aka47.png"
+			unlockLevel="1"
+			power="450"
+			dmg="95"
+			acc="68"
+			range="85"
+			rate="75"
+			cap="60"				
+		/>
+		
+		<!-- MACHINE GUNZ -->
+		
+		<weaponItem id="Machinegun1"
+			item="Machinegun1" price="50000"
+			nameId=".30 LIGHT MACHINEGUN" currency="soft"
+			slot="assault"
+			prefab="WeaponItemPlate"
+			image="Assets/UI/Shop/Weapons/machinegun_war1.png"
+			unlockLevel="10"
+			power="300"
+			dmg="60"
+			acc="28"
+			range="90"
+			rate="85"
+			cap="75"				
+		/>
+		
+		<weaponItem id="Machinegun2"
+			item="Machinegun2" price="2600"
+			nameId="MORTARA M75" currency="hard"
+			slot="assault"
+			prefab="WeaponItemPlate"
+			color="FDE800"
+			modifier="best rifle"
+			image="Assets/UI/Shop/Weapons/machinegun_war2.png"
+			unlockLevel="1"
+			power="650"
+			dmg="92"
+			acc="37"
+			range="92"
+			rate="85"
+			cap="95"				
+		/>
+		
+		<!--
+        <weaponItem id="Pistols1" 
+			item="Pistols1" price="500" 
+			nameId="Default Pistols" currency="soft" 
+			slot="handgun" 
+			prefab="WeaponItemPlate" 
+			image="Assets/UI/Shop/Weapons/Replace_Pistols4.png" 
+			isSale="0"
+			unlockLevel="1"
+			power="37"
+			dmg="31"
+			acc="60"
+			range="67"
+			rate="50"
+			cap="14"
+		/>	
+		-->
+		
+		<!--
+		<weaponItem id="Pistols3" 
+			item="Pistols3" price="45" 
+			nameId="Pistols3" currency="hard" 
+			slot="handgun" 
+			prefab="WeaponItemPlate" 
+			image="Assets/UI/Shop/Weapons/Replace_Pistols4.png" 
+			isSale="0"
+			unlockLevel="1" 
+			power="90"
+			dmg="56"
+			acc="74"
+			range="80"
+			rate="67"
+			cap="18"
+		/>
+		-->
+		
+		<!--
+        <weaponItem id="Pistols2" 
+			item="Pistols2" price="4350" 
+			nameId="Pistols2" currency="soft" 
+			slot="handgun" 
+			prefab="WeaponItemPlate" 
+			image="Assets/UI/Shop/Weapons/Replace_Pistols4.png" 
+			isSale="0"
+			unlockLevel="6"
+			power="52"				
+			dmg="44"
+			acc="67"
+			range="73"
+			rate="50"
+			cap="17"
+		/>
+		-->
+		<weaponItem id="Pistols0" 
+			item="Pistols0" price="500" 
+			nameId="DEFAULT PISTOLS" currency="soft" 
+			slot="handgun" 
+			prefab="WeaponItemPlate" 
+			image="Assets/UI/Shop/Weapons/icon_walter_old.png"
+			hidden="1"				
+			isSale="0"
+			unlockLevel="1" 
+			power="50"
+			dmg="10"
+			acc="65"
+			range="45"
+			rate="10"
+			cap="10"
+		/>		
+		
+		<weaponItem id="Pistols4" 
+			item="Pistols4" price="230" 
+			nameId=".50 DESERT HAWK" currency="hard" 
+			slot="handgun" 
+			prefab="WeaponItemPlate" 
+			color="00E5B7"
+			image="Assets/UI/Shop/Weapons/Pistols4.png" 
+			isSale="0"
+			unlockLevel="1" 
+			power="260"
+			dmg="70"
+			acc="75"
+			range="54"
+			rate="13"
+			cap="20"
+		/>
+
+		<weaponItem id="Pistols5" 
+			item="Pistols5" price="500" 
+			nameId="GOLDEN HAWK" currency="hard" 
+			slot="handgun" 
+			prefab="WeaponItemPlate" 
+			color="FDE800"
+			modifier="best gun"
+			image="Assets/UI/Shop/Weapons/golden_hawk.png" 
+			isSale="0"
+			unlockLevel="1" 
+			power="390"
+			dmg="90"
+			acc="80"
+			range="58"
+			rate="20"
+			cap="20"
+		/>
+		
+		<weaponItem id="Pistols6" 
+			item="Pistols6" price="7000" 
+			nameId="BLOCK-19" currency="soft" 
+			slot="handgun" 
+			prefab="WeaponItemPlate" 
+			image="Assets/UI/Shop/Weapons/Pistols6.png" 
+			isSale="0"
+			unlockLevel="8" 
+			power="180"
+			dmg="45"
+			acc="70"
+			range="54"
+			rate="35"
+			cap="30"
+		/>
+
+        <weaponItem id="Uzi1"
+			item="Uzi1" price="500"
+			nameId="DUAL SMG-MICRO" currency="soft"
+			slot="handgun"
+			prefab="WeaponItemPlate"
+			image="Assets/UI/Shop/Weapons/Uzi1.png"
+			hidden="1"			
+			isSale="0"
+			unlockLevel="1"
+			power="60"
+			dmg="20"
+			acc="60"
+			range="50"
+			rate="67"
+			cap="50"
+		/>
+		
+        <weaponItem id="Uzi2"
+			item="Uzi2" price="3800"
+			nameId="DUAL MP-924" currency="soft"
+			slot="handgun"
+			prefab="WeaponItemPlate"
+			modifier="rapid fire"
+			image="Assets/UI/Shop/Weapons/Uzi2.png"
+			isSale="0"
+			unlockLevel="5"
+			power="100"
+			dmg="30"
+			acc="65"
+			range="50"
+			rate="65"
+			cap="60"
+		/>
+
+        <weaponItem id="Uzi3"
+			item="Uzi3" price="80"
+			nameId="DUAL MP-643" currency="hard"
+			slot="handgun"
+			prefab="WeaponItemPlate"
+			modifier="rapid fire"
+			image="Assets/UI/Shop/Weapons/Uzi3.png"
+			isSale="0"
+			unlockLevel="1"
+			power="220"
+			dmg="60"
+			acc="70"
+			range="55"
+			rate="67"
+			cap="80"
+		/>
+		
+		<weaponItem id="SniperRifle1" 
+			item="SniperRifle1" price="1000" 
+			nameId="COMMANDO ELITE" currency="soft" 
+			slot="sniper" 
+			prefab="WeaponItemPlate" 
+			image="Assets/UI/Shop/Weapons/SniperRifle1.png" 
+			isSale="0"
+			unlockLevel="4" 
+			power="125"
+			dmg="33"
+			acc="75"
+			range="60"
+			rate="42"
+			cap="12"
+		/>
+		
+		
+		<weaponItem id="SniperRifle2" 
+			item="SniperRifle2" price="60" 
+			nameId="30-06 RONTRON" currency="hard" 
+			slot="sniper" 
+			prefab="WeaponItemPlate" 
+			image="Assets/UI/Shop/Weapons/SniperRifle2.png" 
+			isSale="0"
+			unlockLevel="1" 
+			power="190"
+			dmg="50"
+			acc="80"
+			range="75"
+			rate="42"
+			cap="24"
+		/>
+				
+		<weaponItem id="SniperRifle3" 
+			item="SniperRifle3" price="25000" 
+			nameId="DEMO X400" currency="soft" 
+			slot="sniper" 
+			prefab="WeaponItemPlate" 
+			modifier="steady aim"
+			image="Assets/UI/Shop/Weapons/SniperRifle3.png" 
+			isSale="0"
+			unlockLevel="8" 
+			power="250"
+			dmg="85"
+			acc="80"
+			range="68"
+			rate="42"
+			cap="36"
+		/>
+		
+		<weaponItem id="SniperRifle4" 
+			item="SniperRifle4" price="270" 
+			nameId="BOARLES .50 SNIPER" currency="hard" 
+			slot="sniper" 
+			prefab="WeaponItemPlate" 
+			color="00E5B7"
+			modifier="headshot"
+			image="Assets/UI/Shop/Weapons/SniperRifle4.png" 
+			isSale="0"
+			unlockLevel="1" 
+			power="280"
+			dmg="75"
+			acc="90"
+			range="85"
+			rate="42"
+			cap="36"
+		/>
+
+		<weaponItem id="SniperRifle6" 
+			item="SniperRifle6" price="1800" 
+			nameId="AUTO SNIPER" currency="hard" 
+			slot="sniper" 
+			prefab="WeaponItemPlate" 
+			color="FDE800"
+			modifier="best rifle"
+			image="Assets/UI/Shop/Weapons/SniperRifle6.png" 
+			isSale="0"
+			unlockLevel="1" 
+			power="450"
+			dmg="90"
+			acc="90"
+			range="70"
+			rate="44"
+			cap="72"
+		/>
+		
+		<weaponItem id="Arbalest"
+			item="Arbalest" price="450"
+			nameId="WIDOWMAKER K-13" currency="hard"
+			slot="exotic"
+			prefab="WeaponItemPlate"
+			image="Assets/UI/Shop/Weapons/Crossbow1.png"
+			isSale="0"
+			unlockLevel="1" 
+			power="350"
+			dmg="80"
+			acc="90"
+			range="70"
+			rate="40"
+			cap="30"
+		/>		
+		
+<!-- should unlock on level 4 IN GLOBAL LAUNCH!!-->
+		<weaponItem id="Shotgun1" 
+			item="Shotgun1" price="25" 
+			nameId="12-GAUGE PUMP" currency="hard" 
+			slot="shotgun" 
+			prefab="WeaponItemPlate" 
+			image="Assets/UI/Shop/Weapons/Shotgun1.png" 
+			isSale="0"
+			unlockLevel="1" 
+			power="120"
+			dmg="20"
+			acc="10"
+			range="51"
+			rate="33"
+			cap="20"
+		/>
+		
+		<weaponItem id="Shotgun2" 
+			item="Shotgun2" price="10000" 
+			nameId="POLICE MODEL-500" currency="soft" 
+			slot="shotgun" 
+			prefab="WeaponItemPlate" 
+			image="Assets/UI/Shop/Weapons/Shotgun2.png" 
+			isSale="0"
+			unlockLevel="9" 
+			power="180"
+			dmg="40"
+			acc="15"
+			range="55"
+			rate="33"
+			cap="35"
+		/>		
+<!--
+		<weaponItem id="Shotgun3" 
+			item="Shotgun3" price="60" 
+			nameId="10-GAUGE SUPERSHOT" currency="hard" 
+			slot="shotgun" 
+			prefab="WeaponItemPlate" 
+			image="Assets/UI/Shop/Weapons/Shotgun3.png" 
+			isSale="0"
+			unlockLevel="1" 
+			power="200"
+			dmg="50"
+			acc="17"
+			range="58"
+			rate="33"
+			cap="40"
+		/>
+-->
+		<weaponItem id="Shotgun3" 
+			item="Shotgun3" price="250" 
+			nameId="10-GAUGE SUPERSHOT" currency="hard" 
+			slot="shotgun" 
+			prefab="WeaponItemPlate" 
+			color="00E5B7"
+			image="Assets/UI/Shop/Weapons/Shotgun3.png" 
+			isSale="0"
+			unlockLevel="1" 
+			power="250"
+			dmg="55"
+			acc="25"
+			range="60"
+			rate="42"
+			cap="45"
+		/>
+		
+		<weaponItem id="Shotgun5" 
+			item="Shotgun5" price="1300" 
+			nameId="STREETSWEEPER AUTO" currency="hard" 
+			slot="shotgun" 
+			prefab="WeaponItemPlate" 
+			color="FDE800"
+			modifier="rapid fire"
+			image="Assets/UI/Shop/Weapons/Shotgun5.png" 
+			isSale="0"
+			unlockLevel="1" 
+			power="420"
+			dmg="80"
+			acc="40"
+			range="70"
+			rate="75"
+			cap="65"
+		/>
+		
+		<weaponItem id="DoubleShotgun" 
+			item="DoubleShotgun" price="750" 
+			nameId="WONDER TWINS" currency="hard" 
+			slot="shotgun" 
+			prefab="WeaponItemPlate" 
+			color="FDE800"
+			image="Assets/UI/Shop/Weapons/DualShotguns1.png" 
+			isSale="0"
+			unlockLevel="1" 
+			power="360"
+			dmg="85"
+			acc="20"
+			range="50"
+			rate="25"
+			cap="30"
+		/>		
+
+		<weaponItem id="RocketLauncher"
+			item="RocketLauncher" price="1500"
+			nameId="THE COMRADE" currency="hard"
+			slot="exotic"
+			prefab="WeaponItemPlate"
+			image="Assets/UI/Shop/Weapons/RocketLauncher.png"
+			isSale="0"
+			unlockLevel="1" 
+			power="550"
+			dmg="50"
+			acc="45"
+			range="80"
+			rate="33"
+			cap="15"
+		/>
+		
+		<weaponItem id="GrenadeLauncher1"
+			item="GrenadeLauncher1" price="2000"
+			nameId="ANNIHILATOR" currency="hard"
+			slot="exotic"
+			prefab="WeaponItemPlate"
+			color="00E5B7"
+			modifier="full auto"
+			image="Assets/UI/Shop/Weapons/GrenadeLauncher1.png"
+			isSale="0"
+			unlockLevel="1" 
+			power="750"
+			dmg="75"
+			acc="25"
+			range="50"
+			rate="50"
+			cap="40"
+		/>
+		
+		<weaponItem id="GrenadeLauncher2"
+			item="GrenadeLauncher2" price="3200"
+			nameId="EXTERMINATOR" currency="hard"
+			slot="exotic"
+			prefab="WeaponItemPlate"
+			color="FDE800"
+			modifier="big boom"
+			image="Assets/UI/Shop/Weapons/GrenadeLauncher2.png"
+			isSale="0"
+			unlockLevel="1" 
+			power="1500"
+			dmg="90"
+			acc="30"
+			range="65"
+			rate="60"
+			cap="80"
+		/>
+
+		<weaponItem id="FireAxe"
+			item="FireAxe" price="40"
+			nameId="FIREAXE" currency="hard"
+			slot="melee"
+			prefab="WeaponItemPlate"
+			modifier="hack n slash"
+			image="Assets/UI/Shop/Weapons/FireAxe1.png"
+			isSale="0"
+			unlockLevel="1" 
+			power="100"
+			dmg="25"
+			speed="50"
+		/>
+		
+		<weaponItem id="Katana1"
+			item="Katana1" price="270"
+			nameId="ANCIENT KATANA" currency="hard"
+			slot="melee"
+			prefab="WeaponItemPlate"
+			color="FDE800"
+			modifier="instakill"
+			image="Assets/UI/Shop/Weapons/Katana1.png"
+			isSale="0"
+			unlockLevel="1" 
+			power="170"
+			dmg="55"
+			speed="65"
+		/>
+
+		<weaponItem id="Katana2"
+			item="Katana2" price="35"
+			nameId="BLACK KATANA" currency="hard"
+			lockedTextId="REWARD FOR DAY 15"
+			slot="melee"
+			prefab="WeaponItemPlate"
+			color="00E5B7"
+			image="Assets/UI/Shop/Weapons/Katana2.png"
+			isSale="0"
+			unlockLevel="1" 
+			power="150"
+			dmg="40"
+			speed="65"
+		/>		
+		
+		<weaponItem id="BaseballBat1"
+			item="BaseballBat1" price="200"
+			nameId="BASEBALL BAT" currency="soft"
+			slot="melee"
+			prefab="WeaponItemPlate"
+			image="Assets/UI/Shop/Weapons/BaseballBat1.png"
+			isSale="0"
+			unlockLevel="1" 
+			power="50"
+			dmg="10"
+			speed="40"
+		/>
+		
+		<weaponItem id="Chainsaw"
+			item="Chainsaw" price="1100"
+			nameId="CHAINSAW" currency="hard"
+			slot="melee"
+			prefab="WeaponItemPlate"
+			color="dd0000"
+			image="Assets/UI/Shop/Weapons/Chainsaw1.png"
+			isSale="0"
+			unlockLevel="1" 
+			power="370"
+			dmg="80"
+			speed="50"
+		/>
+		
+<!--
+		<weaponItem id="Axe2"
+			item="Axe2" price="50"
+			nameId="IMPROVED FIRE AXE" currency="hard"
+			slot="melee"
+			prefab="WeaponItemPlate"
+			image="Assets/UI/Shop/Weapons/FireAxe1.png"
+			isSale="0"
+			unlockLevel="1" 
+			power="112"
+			dmg="75"
+			acc="100"
+			range="5"
+			rate="15"
+			cap="100"
+		/>
+-->
+		<!--	
+		<weaponItem id="Axe3"
+			item="Axe3" price="125"
+			nameId="PERFECT FIRE AXE" currency="hard"
+			slot="melee"
+			prefab="WeaponItemPlate"
+			image="Assets/UI/Shop/Weapons/FireAxe1.png"
+			isSale="0"
+			unlockLevel="1" 
+			power="225"
+			dmg="150"
+			acc="100"
+			range="5"
+			rate="15"
+			cap="100"
+		/>
+		-->
+
+		<consumableItem id="MedkitLarge"
+			item="MedkitLarge" price="3"
+			nameId="MEDKIT" currency="hard"
+			prefab="ConsumableItemPlate"
+			image="Assets/UI/Shop/Consumables/MedkitShop.png"
+			isSale="0" salePrice="3" saleDiscount="0"	saleStart="2012-07-30T19:02:00+03:00" saleEnd="2012-08-04T20:02:00+03:00"
+			unlockLevel="1" 
+		/>
+		
+		<consumableItem id="MedkitLargeX3"
+			item="MedkitLarge" price="7"
+			count = "3"
+			nameId="MEDKITS" currency="hard"
+			prefab="ConsumableItemPlate"
+			image="Assets/UI/Shop/Consumables/MedkitShop.png"
+			isSale="0" salePrice="3" saleDiscount="0"	saleStart="2012-07-30T19:02:00+03:00" saleEnd="2012-08-04T20:02:00+03:00"
+			unlockLevel="1" 
+		/>		
+		
+		<consumableItem id="GrenadeBeacon"
+			item="GrenadeBeacon" price="7"
+			nameId="BEACON GRENADE" currency="hard"
+			prefab="ConsumableItemPlate"
+			image="Assets/UI/Shop/Consumables/GrenadeBeacon.png"
+			isSale="0"
+			unlockLevel="1" 
+		/>
+		
+		<consumableItem id="GrenadeBeaconX3"
+			item="GrenadeBeacon" price="20"
+			count = "3"			
+			nameId="BEACON GRENADES" currency="hard"
+			prefab="ConsumableItemPlate"
+			color="FFFF00"
+			image="Assets/UI/Shop/Consumables/GrenadeBeacon.png"
+			isSale="0"
+			unlockLevel="1" 
+		/>		
+		
+		<consumableItem id="GrenadeExplosive"
+			item="GrenadeExplosive" price="300"
+			nameId="EXPLOSIVE GRENADE" currency="soft"
+			prefab="ConsumableItemPlate"
+			image="Assets/UI/Shop/Consumables/GrenadeExplosive.png"
+			isSale="0"
+			unlockLevel="3" 
+		/>
+		
+		<consumableItem id="GrenadeExplosiveX3"
+			item="GrenadeExplosive" price="800"
+			count = "3"				
+			nameId="EXPLOSIVE GRENADES" currency="soft"
+			prefab="ConsumableItemPlate"
+			image="Assets/UI/Shop/Consumables/GrenadeExplosive.png"
+			isSale="0"
+			unlockLevel="3" 
+		/>		
+		
+		<consumableItem id="Defibrillator"
+			item="Defibrillator" price="10"
+			nameId="DEFIBRILLATOR" currency="hard"
+			prefab="ConsumableItemPlate"
+			color="FFFF00"
+			image="Assets/UI/Shop/Consumables/DefibrillatorShop.png"
+			isSale="0"
+			unlockLevel="1" 
+		/>		
+		
+		<consumableItem id="ZombieBomb"
+			item="ZombieBomb" price="10"
+			nameId="ZOMBIE BOMB" currency="hard"
+			prefab="ConsumableItemPlate"
+			image="Assets/UI/Shop/Consumables/DefibrillatorShop.png"
+			isSale="0"
+			unlockLevel="1" 
+		/>
+		
+		<consumableItem id="Toolbox"
+			item="Toolbox" price="10"
+			nameId="TOOLBOX" currency="hard"
+			prefab="ConsumableItemPlate"
+			image="Assets/UI/Shop/Consumables/Toolbox.png"
+			isSale="0"
+			unlockLevel="1" 
+		/>		
+		
+		<consumableItem id="Mercenary"
+			item="Mercenary" price="10"
+			nameId="MERCENARY" currency="hard"
+			prefab="ConsumableItemPlate"
+			image="Assets/UI/Shop/Consumables/Mercenary.png"
+			isSale="0"
+			unlockLevel="1" 
+		/>		
+		
+		<consumableItem id="DamageBoost"
+			item="DamageBoost" price="3"
+			nameId="DAMAGE BOOST" currency="hard"
+			prefab="ConsumableItemPlate"
+			image="Assets/UI/Shop/Consumables/DamageBoost.png"
+			isSale="0"
+			unlockLevel="1" 
+		/>
+
+		<consumableItem id="DamageBoostX3"
+			item="DamageBoost" price="7"
+			count = "3"					
+			nameId="DAMAGE BOOST" currency="hard"
+			prefab="ConsumableItemPlate"
+			image="Assets/UI/Shop/Consumables/DamageBoost.png"
+			isSale="0"
+			unlockLevel="1" 
+		/>	
+		
+		<consumableItem id="AmmoRefill"
+			item="AmmoRefill" price="3"
+			nameId="AMMO REFILL" currency="hard"
+			prefab="ConsumableItemPlate"
+			image="Assets/UI/Shop/Consumables/AmmoRefillShop.png"
+			isSale="0"
+			unlockLevel="1" 
+		/>			
+		
+<!--BUNDLES-->
+		<bundleItem id="Bundle1"
+			price="104" currency="hard"
+
+			shopItem1="AssaultRifle4b"
+			shopItem2="Defibrillator:2"		
+			shopItem3="MedkitLarge:2"
+			
+			bonusTextId="25% SAVE!"				
+				
+			hiddenForDonators="0"
+			notifyWhenAvailable = "1"
+				
+			nameId="BEGINNER BUNDLE" 
+			prefab="BundleItemPlate"
+			image="Assets/UI/Shop/Consumables/DamageBoost.png"
+			isSale="1"
+			salePrice="75"
+			saleDiscount="25"
+			
+			minLevel="3"
+			maxLevel="6"
+		/>
+
+		<bundleItem id="Bundle2"
+			price="431" currency="hard"
+
+			shopItem1="AssaultRifle5"
+			shopItem2="Shotgun3"		
+			shopItem3="MedkitLarge:3"
+			
+			bonusTextId="10% SAVE!"				
+				
+			hiddenForDonators="0"
+			notifyWhenAvailable = "1"
+				
+			nameId="PRO BUNDLE" 
+			prefab="BundleItemPlate"
+			image="Assets/UI/Shop/Consumables/DamageBoost.png"
+			isSale="1"
+			salePrice="380"
+			saleDiscount="10"			
+				
+			minLevel="4"
+			maxLevel="7"
+		/>
+
+		<bundleItem id="Bundle3"
+			price="2310" currency="hard"
+
+			shopItem1="GrenadeLauncher1"
+			shopItem2="Katana1"		
+			shopItem3="GrenadeBeacon:2"
+			
+			bonusTextId="10% SAVE!"				
+				
+			hiddenForDonators="0"
+			notifyWhenAvailable = "0"
+				
+			nameId="DEMOMAN BUNDLE" 
+			prefab="BundleItemPlate"
+			image="Assets/UI/Shop/Consumables/DamageBoost.png"
+			isSale="1"
+			salePrice="1999"
+			saleDiscount="10"
+			
+			minLevel="5"
+			maxLevel="7"
+		/>			
+
+		<bundleItem id="Bundle4"
+			price="2814" currency="hard"
+
+			shopItem1="RocketLauncher"
+			shopItem2="Shotgun5"
+			shopItem3="DamageBoost:2"			
+			
+			bonusTextId="10% SAVE!"				
+				
+			hiddenForDonators="0"
+			notifyWhenAvailable = "0"
+				
+			nameId="SOLDIER BUNDLE" 
+			prefab="BundleItemPlate"
+			image="Assets/UI/Shop/Consumables/DamageBoost.png"
+			isSale="1"
+			salePrice="2500"
+			saleDiscount="10"			
+				
+			minLevel="7"
+			maxLevel="9"
+		/>
+
+		<bundleItem id="Bundle5"
+			price="1660" currency="hard"
+
+			shopItem1="AssaultRifle3"
+			shopItem2="Pistols4"		
+			shopItem3="Chainsaw"
+			
+			bonusTextId="10% SAVE!"				
+				
+			hiddenForDonators="0"
+			notifyWhenAvailable = "0"
+				
+			nameId="ZOMBIE HUNTER BUNDLE" 
+			prefab="BundleItemPlate"
+			image="Assets/UI/Shop/Consumables/DamageBoost.png"
+			isSale="1"
+			salePrice="1500"
+			saleDiscount="10"
+			
+			minLevel="8"
+			maxLevel="11"
+		/>		
+
+		<bundleItem id="Bundle6"
+			price="5600" currency="hard"
+
+			shopItem1="AssaultRifle4"
+			shopItem2="SniperRifle6"		
+			shopItem3="GrenadeLauncher2"
+			
+			bonusTextId="20% SAVE!"				
+				
+			hiddenForDonators="0"
+			notifyWhenAvailable = "1"
+				
+			nameId="SHOOTER BUNDLE" 
+			prefab="BundleItemPlate"
+			image="Assets/UI/Shop/Consumables/DamageBoost.png"
+			isSale="1"
+			salePrice="4450"
+			saleDiscount="20"
+			
+			minLevel="10"
+			maxLevel="30"
+		/>
+
+		<bundleItem id="Bundle7"
+			price="102" currency="hard"
+
+			shopItem1="GrenadeBeacon:6"
+			shopItem2="MedkitLarge:6"		
+			shopItem3="DamageBoost:6"
+			
+			bonusTextId="10% SAVE!"				
+				
+			hiddenForDonators="0"
+			notifyWhenAvailable = "1"
+				
+			nameId="PACK-RAT BUNDLE" 
+			prefab="BundleItemPlate"
+			image="Assets/UI/Shop/Consumables/DamageBoost.png"
+			isSale="1"
+			salePrice="90"
+			saleDiscount="10"			
+				
+			minLevel="12"
+			maxLevel="30"
+		/>
+<!--
+		<bundleItem id="Bundle8"
+			price="58" currency="hard"
+
+			shopItem1="MedkitLarge:5"
+			shopItem2="Defibrillator:5"		
+			
+			bonusTextId="10% SAVE!"				
+				
+			hiddenForDonators="0"
+			notifyWhenAvailable = "0"
+				
+			nameId="MEDIC BUNDLE" 
+			prefab="BundleItemPlate"
+			image="Assets/UI/Shop/Consumables/DamageBoost.png"
+			isSale="0"
+				
+			minLevel="3"
+			maxLevel="30"
+		/>		
+-->		
+		<bundleItem id="Bundle9"
+			price="120" currency="hard"
+
+			shopItem1="AssaultRifle4b"
+			shopItem2="FireAxe"
+			shopItem3="Defibrillator:1"				
+			
+			bonusTextId="50% SAVE!"				
+				
+			hiddenForDonators="1"
+			notifyWhenAvailable = "1"
+				
+			nameId="EXCLUSIVE OFFER!" 
+			prefab="BundleItemPlate"
+			image="Assets/UI/Shop/Consumables/DamageBoost.png"
+			isSale="1"
+			salePrice="60"
+			saleDiscount="50"
+			
+			minLevel="8"
+			maxLevel="11"
+		/>		
+		
+		<bundleItem id="Bundle10"
+			price="510" currency="hard"
+
+			shopItem1="Katana1"	
+			shopItem2="AssaultRifle5"
+			shopItem3="Uzi3"		
+						
+			bonusTextId="85% SAVE!"				
+				
+			hiddenForDonators="1"
+			notifyWhenAvailable = "1"
+				
+			nameId="IRRESISTIBLE OFFER!" 
+			prefab="BundleItemPlate"
+			image="Assets/UI/Shop/Consumables/DamageBoost.png"
+			isSale="1"
+			salePrice="77"
+			saleDiscount="85"			
+				
+			minLevel="12"
+			maxLevel="30"
+		/>
+
+
+	<bundleItem id="BundleLTO1"
+			price="0" currency="hard"
+
+			shopItem1="Defibrillator:4"
+			shopItem2="GrenadeBeacon:6"		
+			shopItem3="MedkitLarge:6"
+			
+			hiddenForDonators="0"
+			notifyWhenAvailable = "1"
+				
+			nameId="LIMITED TIME OFFER" 
+			prefab="BundleItemPlate"
+			image="Assets/UI/Shop/Consumables/DamageBoost.png"
+		/>
+
+		<bundleItem id="BundleLTO2"
+			price="0" currency="hard"
+
+			shopItem1="Defibrillator:4"
+			shopItem2="GrenadeBeacon:6"		
+			shopItem3="MedkitLarge:6"
+			
+			hiddenForDonators="0"
+			notifyWhenAvailable = "1"
+				
+			nameId="LIMITED TIME BUNDLE" 
+			prefab="BundleItemPlate"
+			image="Assets/UI/Shop/Consumables/DamageBoost.png"
+		/>		
+		
+		<iapShopItem id="medium_glucredits_pack" productId="com.glu.ckzombies2.medium_glucredits_pack" iTunesHash="8315f9094a974cfd04dae132134516d24116c5c970d3d4a33e2d62705d3f1d61" image="Assets/UI/Shop/IAPs/gold_02.png" amount="100" currency="hard" defaultPrice="4.99" defaultCurrencySymbol="$" prefab="IAPItemPlate"/>
+		<iapShopItem id="large_glucredits_pack" productId="com.glu.ckzombies2.large_glucredits_pack" iTunesHash="957c8de03aba03b65d1c34e407b99a5b77922d0a43b29d297195a7e5cd190df7" image="Assets/UI/Shop/IAPs/gold_03.png" amount="260" currency="hard" defaultPrice="9.99" bonusTextId="30% BONUS" defaultCurrencySymbol="$" prefab="IAPItemPlate"/>
+		<iapShopItem id="xl_glucredits_pack" productId="com.glu.ckzombies2.xl_glucredits_pack" iTunesHash="f33459e3e5ff8f3ce38ab52f5c92e14d8e92e27b3b4d90509b14680631d85d71" image="Assets/UI/Shop/IAPs/gold_04.png" amount="640" currency="hard" defaultPrice="19.99"  bonusTextId="60% BONUS" defaultCurrencySymbol="$" prefab="IAPItemPlate"/>
+		<iapShopItem id="huge_glucredits_pack" productId="com.glu.ckzombies2.huge_glucredits_pack" iTunesHash="f157392279d9c2343273f322b3f705dab37b6b41be7e9c248e7ec413e77f3fd9" image="Assets/UI/Shop/IAPs/gold_05.png" amount="2000" currency="hard" defaultPrice="49.99" bonusTextId="100% BONUS" defaultCurrencySymbol="$" prefab="IAPItemPlate"/>
+		<iapShopItem id="giant_glucredits_pack" productId="com.glu.ckzombies2.giant_glucredits_pack" iTunesHash="93250f269114723bee0bf3212a45783c8506774c5d39c0091609a18e151396a0" image="Assets/UI/Shop/IAPs/gold_05.png" amount="5200" currency="hard" defaultPrice="99.99" bonusTextId="160% BONUS" defaultCurrencySymbol="$" prefab="IAPItemPlate"/>
+
+		<iapShopItem id="medium_cash_stack" productId="com.glu.ckzombies2.medium_cash_stack" iTunesHash="b8e7279cd57ab65c7c7daecd6cbcdc0adca2f664885d3b15ddc033953b445da0" image="Assets/UI/Shop/IAPs/bucks_02.png" amount="5000" currency="soft" defaultPrice="4.99" defaultCurrencySymbol="$" prefab="IAPItemPlate"/>
+		<iapShopItem id="large_cash_stack" productId="com.glu.ckzombies2.large_cash_stack" iTunesHash="25a4c2cf495309810859d324443d31adbd95bfd0d7fa1cf7b63d68cdb1ce5f06" image="Assets/UI/Shop/IAPs/bucks_03.png" amount="13000" currency="soft" defaultPrice="9.99" bonusTextId="30% BONUS" defaultCurrencySymbol="$" prefab="IAPItemPlate"/>
+		<iapShopItem id="xl_cash_stack" productId="com.glu.ckzombies2.xl_cash_stack" iTunesHash="c6e725afe64152ab955dc1c151b0062e58d52e9132c5ac5070d8184608fbb3ae" image="Assets/UI/Shop/IAPs/bucks_04.png" amount="32000" currency="soft" defaultPrice="19.99" bonusTextId="60% BONUS" defaultCurrencySymbol="$" prefab="IAPItemPlate"/>
+		<iapShopItem id="huge_cash_stack" productId="com.glu.ckzombies2.huge_cash_stack" iTunesHash="f4437d9727baa64c63b88b0e98550c41ed312418ca22443db0f7203d608b64ed" image="Assets/UI/Shop/IAPs/bucks_05.png" amount="100000" currency="soft" defaultPrice="49.99" bonusTextId="100% BONUS" defaultCurrencySymbol="$" prefab="IAPItemPlate"/>
+		<iapShopItem id="giant_cash_stack" productId="com.glu.ckzombies2.giant_cash_stack" iTunesHash="daf2d290de9665bfecf2c94539d17088833737f3ed2a886ec66cbf29d07c3c7e" image="Assets/UI/Shop/IAPs/bucks_05.png" amount="260000" currency="soft" defaultPrice="99.99" bonusTextId="160% BONUS" defaultCurrencySymbol="$" prefab="IAPItemPlate"/>
+		
+		<iapShopItem id="vgp_pack_1" productId="com.glu.ckzombies2.PACK_1" iTunesHash="741efd46807401016183303823b3394922084eb807c3e18b8bd2ac4b149254a1" image="Assets/UI/Shop/IAPs/bucks_05.png" amount="20" currency="hard" defaultPrice="0.99" bonusTextId="" defaultCurrencySymbol="$" prefab="IAPItemPlate"/>
+		<iapShopItem id="vgp_pack_2" productId="com.glu.ckzombies2.PACK_2" iTunesHash="7494d643c2cf1989d652a14cfb4957a1242a626dc5656f4e5e17731471d7df9e" image="Assets/UI/Shop/IAPs/bucks_05.png" amount="40" currency="hard" defaultPrice="1.99" bonusTextId="" defaultCurrencySymbol="$" prefab="IAPItemPlate"/>
+		<iapShopItem id="vgp_pack_3" productId="com.glu.ckzombies2.PACK_3" iTunesHash="0600a3e2ee7bf31bcb324f62c7440d4912ab3ddbe493bbaaa7fb5f3ad5eb9b10" image="Assets/UI/Shop/IAPs/bucks_05.png" amount="60" currency="hard" defaultPrice="2.99" bonusTextId="" defaultCurrencySymbol="$" prefab="IAPItemPlate"/>
+		<iapShopItem id="vgp_pack_4" productId="com.glu.ckzombies2.PACK_4" iTunesHash="71216d2c1818f9f125075be7401a868b9d0e304839448a468777d9415ec2c721" image="Assets/UI/Shop/IAPs/bucks_05.png" amount="80" currency="hard" defaultPrice="3.99" bonusTextId="" defaultCurrencySymbol="$" prefab="IAPItemPlate"/>
+		<iapShopItem id="vgp_pack_5" productId="com.glu.ckzombies2.PACK_5" iTunesHash="062496488e9414e94448b068e920e7a9e142fedac451c69b488f695317c9e601" image="Assets/UI/Shop/IAPs/bucks_05.png" amount="100" currency="hard" defaultPrice="4.99" bonusTextId="" defaultCurrencySymbol="$" prefab="IAPItemPlate"/>
+		<iapShopItem id="vgp_pack_6" productId="com.glu.ckzombies2.PACK_6" iTunesHash="f9385a78ce95a135b0f71be732ce7037c49f4c0c69fb27e21e8ed327dac8eb90" image="Assets/UI/Shop/IAPs/bucks_05.png" amount="120" currency="hard" defaultPrice="5.99" bonusTextId="" defaultCurrencySymbol="$" prefab="IAPItemPlate"/>
+		<iapShopItem id="vgp_pack_7" productId="com.glu.ckzombies2.PACK_7" iTunesHash="6a22b832a97eda278860b7d70c3beeb0004a3380e62ff50787a32a0b0836fcbe" image="Assets/UI/Shop/IAPs/bucks_05.png" amount="140" currency="hard" defaultPrice="6.99" bonusTextId="" defaultCurrencySymbol="$" prefab="IAPItemPlate"/>
+		<iapShopItem id="vgp_pack_8" productId="com.glu.ckzombies2.PACK_8" iTunesHash="683e7f06ed1ccd828e023f963e2e294c3bc3790495ab941c7839bf2cb7ed9a5e" image="Assets/UI/Shop/IAPs/bucks_05.png" amount="160" currency="hard" defaultPrice="7.99" bonusTextId="" defaultCurrencySymbol="$" prefab="IAPItemPlate"/>
+		<iapShopItem id="vgp_pack_9" productId="com.glu.ckzombies2.PACK_9" iTunesHash="8fdaedf2967cd4c96708886189afa0d0e84780bcc16898680771ede26b78c757" image="Assets/UI/Shop/IAPs/bucks_05.png" amount="180" currency="hard" defaultPrice="8.99" bonusTextId="" defaultCurrencySymbol="$" prefab="IAPItemPlate"/>
+		<iapShopItem id="vgp_pack_10" productId="com.glu.ckzombies2.PACK_10" iTunesHash="2b0b3168707e7325e19d0fd477bcc6cc1d26b661f0500a8472a3c6aa1701a797" image="Assets/UI/Shop/IAPs/bucks_05.png" amount="200" currency="hard" defaultPrice="9.99" bonusTextId="" defaultCurrencySymbol="$" prefab="IAPItemPlate"/>
+		<iapShopItem id="vgp_pack_11" productId="com.glu.ckzombies2.PACK_11" iTunesHash="ab2f7d031b5e020d3bb32ece4a81b2e119e92605fdffa7853155de9cae40c1b5" image="Assets/UI/Shop/IAPs/bucks_05.png" amount="400" currency="hard" defaultPrice="19.99" bonusTextId="" defaultCurrencySymbol="$" prefab="IAPItemPlate"/>
+		<iapShopItem id="vgp_pack_12" productId="com.glu.ckzombies2.PACK_12" iTunesHash="c05f814c948d80c2ff9884d53d19df61b32a6ee11b6dc091280937e94a53545d" image="Assets/UI/Shop/IAPs/bucks_05.png" amount="500" currency="hard" defaultPrice="24.99" bonusTextId="" defaultCurrencySymbol="$" prefab="IAPItemPlate"/>
+		<iapShopItem id="vgp_pack_13" productId="com.glu.ckzombies2.PACK_13" iTunesHash="42b18089265d39a93f1a1ae8cb026e2842de6537238acd8112f8520b296753e9" image="Assets/UI/Shop/IAPs/bucks_05.png" amount="1000" currency="hard" defaultPrice="49.99" bonusTextId="" defaultCurrencySymbol="$" prefab="IAPItemPlate"/>
+    </items>
+	
+    <groups>
+		<group id="featured" nameId="FEATURED" prefab="GroupButton">
+            <itemRefs>
+                <itemRef id="Bundle10" itemId="Bundle10" order="1"/>
+                <itemRef id="Bundle9" itemId="Bundle9" order="2"/>
+				<itemRef id="Bundle1" itemId="Bundle1" order="3"/>
+				<itemRef id="Bundle2" itemId="Bundle2" order="4"/>
+                <itemRef id="Bundle3" itemId="Bundle3" order="5"/>
+                <itemRef id="Bundle4" itemId="Bundle4" order="6"/>
+                <itemRef id="Bundle5" itemId="Bundle5" order="7"/>
+                <itemRef id="Bundle6" itemId="Bundle6" order="8"/>				
+                <itemRef id="Bundle7" itemId="Bundle7" order="9"/>
+		</itemRefs>
+        </group>
+        <!--
+		<group id="all" nameId="ALL" prefab="GroupButton">
+            <itemRefs>
+				<itemRef id="GetMore" itemId="GetMore"		 order="0"/>
+				<itemRef id="All1" itemId="Uzi1" 			 order="1"/>
+				<itemRef id="All2" itemId="Uzi2" 		 	 order="2"/>
+				<itemRef id="All3" itemId="Uzi3" 		 	 order="3"/>				
+				<itemRef id="All4" itemId="Pistols4" 		 order="4"/>
+				<itemRef id="All5" itemId="Shotgun1" 		 order="5"/>
+				<itemRef id="All6" itemId="Shotgun2" 		 order="6"/>
+				<itemRef id="All7" itemId="Shotgun3" 		 order="7"/>
+				<itemRef id="All8" itemId="Shotgun5" 		 order="8"/>
+				<itemRef id="All9" itemId="AssaultRifle3b" 	 order="9"/>
+				<itemRef id="All10" itemId="AssaultRifle1" 	 order="10"/>
+				<itemRef id="All11" itemId="AssaultRifle2"	 order="11"/>
+				<itemRef id="All12" itemId="AssaultRifle4b"	 order="12"/>
+				<itemRef id="All13" itemId="AssaultRifle5"	 order="13"/>				
+				<itemRef id="All14" itemId="AssaultRifle3"	 order="14"/>
+				<itemRef id="All15" itemId="AssaultRifle4"	 order="15"/>
+				<itemRef id="All16" itemId="SniperRifle1" 	 order="16"/>
+                <itemRef id="All17" itemId="SniperRifle2" 	 order="17"/>
+				<itemRef id="All18" itemId="SniperRifle3" 	 order="18"/>
+                <itemRef id="All19" itemId="SniperRifle4" 	 order="19"/>
+				<itemRef id="All20" itemId="SniperRifle6"    order="20"/>
+				<itemRef id="All21" itemId="RocketLauncher"  order="21"/>
+				<itemRef id="All22" itemId="GrenadeLauncher1" order="22"/>
+				<itemRef id="All23" itemId="GrenadeLauncher2" order="23"/>
+				<itemRef id="All24" itemId="BaseballBat1" 	 order="24"/>
+				<itemRef id="All25" itemId="FireAxe" 		 order="25"/>
+                <itemRef id="All26" itemId="Katana1" 		 order="26"/>
+                <itemRef id="All27" itemId="Katana2" 		 order="27"/>
+				<itemRef id="All28" itemId="Chainsaw" 		 order="28"/>
+				<itemRef id="All29" itemId="MedkitLarge" order="29"/>
+                <itemRef id="All30" itemId="GrenadeBeacon" order="30"/>
+				<itemRef id="All31" itemId="GrenadeExplosive" order="31"/>
+                <itemRef id="All32" itemId="Defibrillator" order="32"/>
+                <itemRef id="All33" itemId="DamageBoost" order="33"/>		
+			</itemRefs>
+        </group>
+		-->
+		
+        <group id="handguns" nameId="HANDGUNS" prefab="GroupButton">
+            <itemRefs>
+				<itemRef id="GetMore" itemId="GetMore" order="0"/>
+                <itemRef id="handguns1" itemId="Uzi1" order="6"/>
+				<itemRef id="handguns3" itemId="Uzi3" order="1"/>
+				<itemRef id="handguns2" itemId="Uzi2" order="2"/>
+				<itemRef id="handguns4" itemId="Pistols4" order="3"/>
+				<itemRef id="handguns5" itemId="Pistols5" order="5"/>
+				<itemRef id="handguns6" itemId="Pistols6" order="4"/>					
+				<itemRef id="handguns7" itemId="Pistols0" order="7"/>
+				</itemRefs>
+        </group>
+        <group id="assault" nameId="ASSAULT RIFLES" prefab="GroupButton">
+            <itemRefs>
+				<itemRef id="GetMore" itemId="GetMore" order="0"/>
+				<itemRef id="assault1" itemId="AssaultRifle3b" order="1"/>
+				<itemRef id="assault4" itemId="AssaultRifle4b" order="2"/>				
+                <itemRef id="assault2" itemId="AssaultRifle1" order="3"/>
+				<itemRef id="assault5" itemId="AssaultRifle5" order="4"/>				
+				<itemRef id="assault3" itemId="AssaultRifle2" order="5"/> 
+				<itemRef id="assault6" itemId="AssaultRifle3" order="6"/>
+				<itemRef id="assault8" itemId="Machinegun1" order="7"/>					
+				<itemRef id="assault7" itemId="AssaultRifle4" order="8"/>
+				<itemRef id="assault9" itemId="Machinegun2" order="9"/>	
+				<itemRef id="assault10" itemId="AssaultRifle6" order="10"/>
+            </itemRefs>
+        </group>
+        <group id="shotgun" nameId="SHOTGUNS" prefab="GroupButton">
+            <itemRefs>
+				<itemRef id="GetMore" itemId="GetMore" order="0"/>
+                <itemRef id="shotgun2" itemId="Shotgun2" order="1"/>				
+                <itemRef id="shotgun3" itemId="Shotgun3" order="2"/>
+                <itemRef id="shotgun5" itemId="Shotgun5" order="3"/>					
+                <itemRef id="shotgun1" itemId="Shotgun1" order="4"/>
+				<itemRef id="shotgun4" itemId="DoubleShotgun" order="5"/>
+			</itemRefs>
+        </group>
+        <group id="sniper" nameId="SNIPER RIFLES" prefab="GroupButton">
+            <itemRefs>
+				<itemRef id="GetMore" itemId="GetMore" order="0"/>
+                <itemRef id="sniper1" itemId="SniperRifle1" order="1"/>				
+                <itemRef id="sniper2" itemId="SniperRifle2" order="2"/>	
+				<itemRef id="sniper3" itemId="SniperRifle3" order="3"/>				
+                <itemRef id="sniper4" itemId="SniperRifle4" order="4"/>	
+				<itemRef id="sniper5" itemId="SniperRifle6" order="5"/>	
+			</itemRefs>
+        </group>
+        <group id="exotic" nameId="EXOTIC WEAPONS" prefab="GroupButton">
+            <itemRefs>
+				<itemRef id="GetMore" itemId="GetMore" order="0"/>
+                <itemRef id="exotic1" itemId="RocketLauncher" order="2"/>
+				<itemRef id="exotic2" itemId="GrenadeLauncher1" 	 	 order="3"/>
+				<itemRef id="exotic3" itemId="GrenadeLauncher2" 	 	 order="4"/>
+				<itemRef id="exotic4" itemId="Arbalest" order="1"/>					
+            </itemRefs>
+        </group>
+
+        <group id="melee" nameId="MELEE WEAPONS" prefab="GroupButton">
+            <itemRefs>
+				<itemRef id="GetMore" itemId="GetMore" order="0"/>
+				<itemRef id="melee1" itemId="BaseballBat1" order="5"/>
+                <itemRef id="melee2" itemId="FireAxe" order="1"/>
+                <itemRef id="melee3" itemId="Katana1" order="2"/>
+                <itemRef id="melee4" itemId="Katana2" order="3"/>
+				<itemRef id="melee5" itemId="Chainsaw" order="4"/>
+                	<!--<itemRef id="melee2" itemId="Axe2" order="1"/>-->
+			</itemRefs>
+        </group>
+		
+        <group id="consumables" nameId="CONSUMABLES" prefab="GroupButton">
+            <itemRefs>
+				<itemRef id="GetMore" itemId="GetMore" order="0"/>
+                <itemRef id="MedkitLarge" itemId="MedkitLargeX3" order="1"/>
+				<!-- <itemRef id="AmmoRefill" itemId="AmmoRefill" order="2"/> -->
+                <itemRef id="GrenadeBeacon" itemId="GrenadeBeaconX3" order="2"/>
+				<itemRef id="GrenadeExplosive" itemId="GrenadeExplosiveX3" order="3"/>
+                <itemRef id="Defibrillator" itemId="Defibrillator" order="4"/>
+                <!-- <itemRef id="Toolbox" itemId="Toolbox" order="5"/> -->
+                <itemRef id="DamageBoost" itemId="DamageBoostX3" order="5"/>
+			</itemRefs>
+        </group>
+		
+        <group id="currency" nameId="BANK" prefab="GroupButton">
+            <itemRefs>
+				<itemRef id="medium_glucredits_pack_ref" itemId="medium_glucredits_pack" order="3"/>
+                <itemRef id="medium_cash_stack_ref" itemId="medium_cash_stack" order="4"/>
+                <itemRef id="large_glucredits_pack_ref" itemId="large_glucredits_pack" order="5"/>
+                <itemRef id="large_cash_stack_ref" itemId="large_cash_stack" order="6"/>
+                <itemRef id="xl_glucredits_pack_ref" itemId="xl_glucredits_pack" order="7"/>
+                <itemRef id="xl_cash_stack_ref" itemId="xl_cash_stack" order="8"/>
+                <itemRef id="huge_glucredits_pack_ref" itemId="huge_glucredits_pack" order="9"/>
+                <itemRef id="huge_cash_stack_ref" itemId="huge_cash_stack" order="10"/>
+                <itemRef id="giant_glucredits_pack_ref" itemId="giant_glucredits_pack" order="11"/>
+                <itemRef id="giant_cash_stack_ref" itemId="giant_cash_stack" order="12"/>
+            </itemRefs>
+        </group>
+    </groups>
+</ShopConfig>

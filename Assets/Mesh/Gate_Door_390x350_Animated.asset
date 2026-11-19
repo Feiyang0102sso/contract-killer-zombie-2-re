@@ -1,0 +1,108 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!43 &4300000
+Mesh:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Gate_Door_390x350_Animated
+  m_SubMeshes:
+  - firstByte: 0
+    indexCount: 16
+    isTriStrip: 2
+    triangleCount: 6
+    firstVertex: 0
+    vertexCount: 12
+    localAABB:
+      m_Center: {x: 0, y: 2.2351742E-08, z: 1.7500684}
+      m_Extent: {x: 2, y: 0.2000004, z: 1.7499318}
+  m_MeshCompression: 0
+  m_IndexBuffer: 040005000000010001000900090007000800030003000b000b0006000a000200
+  m_Skin: []
+  m_BindPose: []
+  m_VertexData:
+    m_CurrentChannels: 59
+    m_VertexCount: 12
+    m_Streams[0]:
+      channelMask: 59
+      offset: 0
+      stride: 56
+      align: 16
+    m_Streams[1]:
+      channelMask: 0
+      offset: 0
+      stride: 0
+      align: 16
+    m_Streams[2]:
+      channelMask: 0
+      offset: 0
+      stride: 0
+      align: 16
+    m_Streams[3]:
+      channelMask: 0
+      offset: 0
+      stride: 0
+      align: 16
+    m_DataSize: 672
+    _typelessdata: 00000040e6cc4cbefeff5f40a3703db4000080bf00000000aa59e13c19da293f6374093f4ac9703f000080bfa3703d34ceb8af33000080bf00000040e0cc4cbe295c0f39a3703db4000080bf00000000aa59e13ce8a3aa3e6374093f4dc9f23e000080bfa3703d3400000000000080bf00000040b3cc4c3efeff5f40ec5138340000803f000000005674c53e92da293f0000803b49c9f03e0000803fec5138b4000040b4000080bf00000040b9cc4c3e295c0f390000000000000000000080bf5839623be6a6aa3e0000803b896e7f3f00000000000080bf000000000000803f000000c0b7cc4cbe01006040a3703db4000080bf000000005674c53e19da293f0000803b4cc9703f000080bfa3703d3400004034000080bf000000c0b0cc4cbe33330f39a3703db4000080bf000000005674c53ee8a3aa3e0000803b4cc9f23e000080bfa3703d343447d033000080bf000000c0e1cc4c3e01006040d8183b340000803f00000000b059e13c92da293f6374093f4cc9f03e0000803fd8183bb4ccb8afb3000080bf000000c0e9cc4c3e33330f390000000000000000000080bf5839623b45db293f6374093f8b6e7f3f09e8e235000080bf000000000000803f00000040e0cc4cbe295c0f390000000000000000000080bf0a78bc3ce6a6aa3e0000803b4cc9713f49f7f533000080bf000000000000803f000000c0b0cc4cbe33330f390000000000000000000080bf0a78bc3c46db293f6374093f4ec9713f7d47f235000080bf000000000000803f00000040b9cc4c3e295c0f39b8a93a340000803f000000005674c53ed9a4aa3e0000803b2200803b0000803fb8a93ab43247d0b3000080bf000000c0e9cc4c3e33330f39a3703d340000803f00000000b059e13cd9a4aa3e6374093f0000803b0000803fa3703db400000000000080bf
+  m_CompressedMesh:
+    m_Vertices:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data:
+      m_BitSize: 0
+    m_UV:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data:
+      m_BitSize: 0
+    m_BindPoses:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data:
+      m_BitSize: 0
+    m_Normals:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data:
+      m_BitSize: 0
+    m_Tangents:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data:
+      m_BitSize: 0
+    m_Weights:
+      m_NumItems: 0
+      m_Data:
+      m_BitSize: 0
+    m_NormalSigns:
+      m_NumItems: 0
+      m_Data:
+      m_BitSize: 0
+    m_TangentSigns:
+      m_NumItems: 0
+      m_Data:
+      m_BitSize: 0
+    m_BoneIndices:
+      m_NumItems: 0
+      m_Data:
+      m_BitSize: 0
+    m_Triangles:
+      m_NumItems: 0
+      m_Data:
+      m_BitSize: 0
+    m_Colors:
+      m_NumItems: 0
+      m_Data:
+      m_BitSize: 0
+  m_LocalAABB:
+    m_Center: {x: 0, y: 2.2351742E-08, z: 1.7500684}
+    m_Extent: {x: 2, y: 0.2000004, z: 1.7499318}
+  m_MeshUsageFlags: 0
+  m_MeshOptimized: 1

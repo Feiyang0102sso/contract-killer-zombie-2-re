@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: GUICityMap4
+  m_Shader: {fileID: 4800000, guid: 4e3aad4bd6f88cc4593eea16036b4134, type: 3}
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+    - first:
+        name: _MainTex
+      second:
+        m_Texture: {fileID: 2800000, guid: a019ff00016d7d442ba21ad98ab922c1, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - first:
+        name: _Multiplier
+      second: 0.2
+    - first:
+        name: _TimeDelayX
+      second: -0.17
+    - first:
+        name: _TimeDelayY
+      second: -0.17
+    - first:
+        name: _TimeShift
+      second: 2
+    - first:
+        name: _Duration
+      second: 4
+    - first:
+        name: _BlinkDuration
+      second: 0.2
+    m_Colors:
+    - first:
+        name: _Color
+      second: {r: 1, g: 1, b: 1, a: 1}

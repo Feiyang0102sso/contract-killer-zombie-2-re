@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  serializedVersion: 2
+  m_ObjectHideFlags: 1
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1049728328069992}
+  m_IsPrefabParent: 1
+  m_IsExploded: 0
+--- !u!1 &1049728328069992
+GameObject:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_Component:
+  - 4: {fileID: 4499589651446852}
+  - 114: {fileID: 114066002214262667}
+  m_Layer: 0
+  m_Name: WavesList
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4499589651446852
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1049728328069992}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 8.627647, y: 3.5016003, z: -1.4956819}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+--- !u!114 &114066002214262667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1049728328069992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13ba80f0e9957ded7b1ba627a7ee0e1b, type: 3}
+  m_Name:
+  waves:
+  - {fileID: 1385639415196910, guid: 4f0c299233501b546b7ce545f1aae015, type: 2}
+  - {fileID: 1631449935986121, guid: 8b120604e518b5f40a29fd80459685df, type: 2}
+  - {fileID: 1345110137545908, guid: 13f0015068237da4a96000a239cc9dea, type: 2}
+  - {fileID: 1462627159747829, guid: 32ed837a19ef05242b35d47641317f0f, type: 2}
+  - {fileID: 1414808108425743, guid: 37047382e8f6d3b49b7df3f701da3e6a, type: 2}
+  - {fileID: 1697786153033383, guid: 05afc3deab231b740afc0200003a5943, type: 2}
+  - {fileID: 1433316948405889, guid: 97eb0dc058988ce49bdaa6e76999258c, type: 2}
+  - {fileID: 1265479515371016, guid: baee9f61388e82c4ea8035d21d535bd1, type: 2}
+  - {fileID: 1866669018664010, guid: 0c5ebb60c9e0c8248ad76bbb69fa9654, type: 2}
+  - {fileID: 1984868734335324, guid: 806c871de775a2f408330f07782ef1e4, type: 2}
+  - {fileID: 1735322196611835, guid: cf46b998a760c77459f4a2d6f4fe30db, type: 2}
+  - {fileID: 1800564138154378, guid: d2eea752c37e00d468afc776634d7611, type: 2}

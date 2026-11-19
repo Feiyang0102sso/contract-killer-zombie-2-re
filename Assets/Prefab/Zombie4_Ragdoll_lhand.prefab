@@ -1,0 +1,195 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  serializedVersion: 2
+  m_ObjectHideFlags: 1
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1026578275198331}
+  m_IsPrefabParent: 1
+  m_IsExploded: 0
+--- !u!1 &1026578275198331
+GameObject:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_Component:
+  - 4: {fileID: 4692543304023718}
+  - 54: {fileID: 54057197135402831}
+  m_Layer: 12
+  m_Name: Zombie4_Ragdoll_lhand
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4692543304023718
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1026578275198331}
+  m_LocalRotation: {x: -0.4265408, y: 0.5769677, z: -0.5653827, w: 0.4068338}
+  m_LocalPosition: {x: 1.1032844, y: 0.5203283, z: -0.248631}
+  m_LocalScale: {x: -1.0012372, y: -0.9850706, z: -1.0150633}
+  m_Children:
+  - {fileID: 4120787568159059}
+  - {fileID: 4796198583190854}
+  - {fileID: 4710403283761474}
+  m_Father: {fileID: 0}
+--- !u!54 &54057197135402831
+Rigidbody:
+  serializedVersion: 2
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1026578275198331}
+  m_Mass: 7.5
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!1 &1699593164614139
+GameObject:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_Component:
+  - 4: {fileID: 4120787568159059}
+  - 136: {fileID: 136091779505951782}
+  m_Layer: 12
+  m_Name: Collider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4120787568159059
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1699593164614139}
+  m_LocalRotation: {x: 0.49324694, y: -0.5157757, z: 0.44158658, w: 0.54376864}
+  m_LocalPosition: {x: -0.44516432, y: -0.021390177, z: 0.012143182}
+  m_LocalScale: {x: -0.9852674, y: -0.9989249, z: -1.0148878}
+  m_Children: []
+  m_Father: {fileID: 4692543304023718}
+--- !u!136 &136091779505951782
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1699593164614139}
+  m_Material: {fileID: 13400000, guid: 8eb8bd3034842134695c69dd94597273, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.075
+  m_Height: 0.3
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &1586977217264125
+GameObject:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_Component:
+  - 4: {fileID: 4796198583190854}
+  - 136: {fileID: 136071331618250064}
+  m_Layer: 12
+  m_Name: Collider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4796198583190854
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1586977217264125}
+  m_LocalRotation: {x: 0.5552211, y: -0.45882785, z: 0.49183106, w: 0.48919195}
+  m_LocalPosition: {x: -0.18937324, y: -0.011428499, z: 0.012511034}
+  m_LocalScale: {x: -0.9853076, y: -0.9988145, z: -1.0149584}
+  m_Children: []
+  m_Father: {fileID: 4692543304023718}
+--- !u!136 &136071331618250064
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1586977217264125}
+  m_Material: {fileID: 13400000, guid: 8eb8bd3034842134695c69dd94597273, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.075
+  m_Height: 0.3
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &1121477408585580
+GameObject:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_Component:
+  - 4: {fileID: 4710403283761474}
+  - 33: {fileID: 33437067980356582}
+  - 23: {fileID: 23444784093976809}
+  m_Layer: 12
+  m_Name: zombie05_hand_l_st
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4710403283761474
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1121477408585580}
+  m_LocalRotation: {x: 0.01393495, y: -0.8077637, z: -0.0081918305, w: 0.58928484}
+  m_LocalPosition: {x: -1.3540549, y: 0.045714144, z: -0.57198274}
+  m_LocalScale: {x: -0.9864575, y: -1.0151267, z: -0.9974962}
+  m_Children: []
+  m_Father: {fileID: 4692543304023718}
+--- !u!33 &33437067980356582
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1121477408585580}
+  m_Mesh: {fileID: 4300000, guid: a0ce965d4f813714ab36ab1629a4ea88, type: 2}
+--- !u!23 &23444784093976809
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1121477408585580}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 2100000, guid: a0aae01e5737dbb4498a2ae3ed41b375, type: 2}
+  m_SubsetIndices: []
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 1
+  m_LightProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1

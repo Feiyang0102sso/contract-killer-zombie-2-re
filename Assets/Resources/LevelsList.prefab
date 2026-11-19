@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  serializedVersion: 2
+  m_ObjectHideFlags: 1
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1279664055163396}
+  m_IsPrefabParent: 1
+  m_IsExploded: 0
+--- !u!1 &1279664055163396
+GameObject:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_Component:
+  - 4: {fileID: 4514682254528079}
+  - 114: {fileID: 114784269551548089}
+  m_Layer: 0
+  m_Name: LevelsList
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4514682254528079
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1279664055163396}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+--- !u!114 &114784269551548089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1279664055163396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6687766f764d615fdd25848e875863b2, type: 3}
+  m_Name:
+  levels:
+  - title: 'Lab: Get Supplies'
+    description: Find 2 supply boxes inside the Lab.
+    sceneName: Lab_Green_Cloning1.1
+    missionType: 0
+  - title: 'Lab: KA'
+    description: Locate the infected
+    sceneName: Lab_Green_Cloning1.1
+    missionType: 1
+  - title: 'Lab: Save Survivor'
+    description: Find survivor and keep her safe.
+    sceneName: Lab_Green_Cloning1.1
+    missionType: 2

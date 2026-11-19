@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: floor_001
+  m_Shader: {fileID: 4800000, guid: d73c1b5b836f1b54c9eb88c8276499ea, type: 3}
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+    - first:
+        name: _MainTex
+      second:
+        m_Texture: {fileID: 2800000, guid: 308d67eeccbb39b479905e23c3477bff, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _EnvTex
+      second:
+        m_Texture: {fileID: 8900000, guid: 0e4c9e98a43a24a48823ff592fcee1b4, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - first:
+        name: _SpecRange
+      second: 58.22
+    - first:
+        name: _Shininess
+      second: 0.011833746
+    - first:
+        name: _ReflectionCoeff
+      second: 0.3202985
+    - first:
+        name: _ReflectionMagicShift
+      second: 0.6
+    - first:
+        name: _AlphaMult
+      second: 2
+    - first:
+        name: _Param1
+      second: -0.69402987
+    - first:
+        name: _Brightness
+      second: 1
+    - first:
+        name: _Parallax
+      second: 0.02
+    m_Colors:
+    - first:
+        name: _Color
+      second: {r: 0, g: 0, b: 0, a: 0}
+    - first:
+        name: _SpecOffset
+      second: {r: 0, g: 0.8, b: 5.16, a: 0}
+    - first:
+        name: _SpecColor
+      second: {r: 0.8117647, g: 0.78431374, b: 0.7529412, a: 1}
+    - first:
+        name: _SelfLumColor
+      second: {r: 0.738806, g: 0, b: 0, a: 1}
+    - first:
+        name: _Param1
+      second: {r: 1, g: 0.66, b: 1, a: 1}

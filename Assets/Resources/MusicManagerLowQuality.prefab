@@ -1,0 +1,69 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  serializedVersion: 2
+  m_ObjectHideFlags: 1
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1597118976375508}
+  m_IsPrefabParent: 1
+  m_IsExploded: 0
+--- !u!1 &1597118976375508
+GameObject:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_Component:
+  - 4: {fileID: 4219113006281441}
+  - 114: {fileID: 114472279604687167}
+  m_Layer: 0
+  m_Name: MusicManagerLowQuality
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4219113006281441
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1597118976375508}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+--- !u!114 &114472279604687167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1597118976375508}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4aa6310291f27d455dfe64af939628dd, type: 3}
+  m_Name:
+  AmbienceIndoor: {fileID: 8300000, guid: 5869ebb4e926d7c42bd0866a28260b3d, type: 3}
+  AmbienceOutdoor: {fileID: 8300000, guid: 672a914ee9c6a74408b23559b6462edb, type: 3}
+  Breaker: {fileID: 8300000, guid: 0d0f76e786e780a4190788ee796777bc, type: 3}
+  Calmness:
+  - {fileID: 8300000, guid: dbb974d858752dc4f9bf2376ad51bce8, type: 3}
+  - {fileID: 8300000, guid: 2b72dfa2a7faacb469b57355b202846e, type: 3}
+  Suspense:
+  - {fileID: 8300000, guid: 200747ad5350145409a576539d1c60e7, type: 3}
+  - {fileID: 8300000, guid: 6bba9bce15d84024094093314efc8c4f, type: 3}
+  - {fileID: 8300000, guid: 2f8a096a1e3014c4180aa37b7e93671f, type: 3}
+  Impedence:
+  - {fileID: 8300000, guid: af4be15cbf53b8541911011ec2058168, type: 3}
+  Violence:
+  - {fileID: 8300000, guid: e35c8da8accb009418210d9ad5ebade0, type: 3}
+  AmbienceVolume: 0.5
+  MusicVolume: 0.6
+  BreakerVolume: 0.7
+  HordeTreshold: 4

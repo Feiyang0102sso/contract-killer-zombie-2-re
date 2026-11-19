@@ -1,0 +1,51 @@
+Shader "CKZ2/Depth Mask Outline for Hidden Objects" {
+Properties {
+ _SilhouetteWidth ("Silhouette width", Float) = 0.05
+ _SilhouetteColor ("Silhouette color", Color) = (0.6,0.75,0.8,1)
+}
+SubShader { 
+ LOD 100
+ Tags { "QUEUE"="Overlay+1002" }
+ Pass {
+  Tags { "QUEUE"="Overlay+1002" }
+  ZTest Greater
+  ZWrite Off
+CGPROGRAM
+// UNITY_SHADER_NO_UPGRADE
+#pragma vertex vert
+#pragma fragment frag
+#pragma target 3.0
+// PC 移植：由 pc_pilot_tools/gles_to_hlsl.py 从原版 GLES 代码翻译
+float _SilhouetteWidth;
+float4 _SilhouetteColor;
+struct appdata_pc {
+	float3 _glesNormal : NORMAL;
+	float4 _glesVertex : POSITION;
+};
+struct v2f_pc {
+	float4 pos : SV_POSITION;
+};
+v2f_pc vert (appdata_pc v)
+{
+	v2f_pc o = (v2f_pc)0;
+  float4 tmpvar_1;
+  float4 tmpvar_2;
+  tmpvar_2 = (mul(UNITY_MATRIX_MVP, v._glesVertex));
+  tmpvar_1 = tmpvar_2;
+  float4 tmpvar_3;
+  tmpvar_3.w = 0.0;
+  tmpvar_3.xyz = normalize(v._glesNormal);
+  tmpvar_1.xy = (tmpvar_2.xy + (normalize((mul(UNITY_MATRIX_MVP, tmpvar_3)).xy) * (_SilhouetteWidth * tmpvar_2.w)));
+  o.pos = tmpvar_1;
+	return o;
+}
+float4 frag (v2f_pc i) : SV_Target
+{
+	float4 pc_FragColor = 0;
+  pc_FragColor = _SilhouetteColor;
+	return pc_FragColor;
+}
+ENDCG
+ }
+}
+}

@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: survivor_3
+  m_Shader: {fileID: 4800000, guid: ce0ccb7bbea7aa646afec641676657bb, type: 3}
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+    - first:
+        name: _MainTex
+      second:
+        m_Texture: {fileID: 2800000, guid: 2064eedfec2856441a7c2aad097a2371, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _BumpMap
+      second:
+        m_Texture: {fileID: 2800000, guid: 888dbc7a1d5fd534f8bda401558477df, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - first:
+        name: _ProbeStrength
+      second: 1
+    - first:
+        name: _ProbeIntensity
+      second: 1.1
+    - first:
+        name: _ProbeShininess
+      second: 2
+    - first:
+        name: _RimIntensity
+      second: 1
+    - first:
+        name: _RimPower
+      second: 3
+    m_Colors:
+    - first:
+        name: _Color
+      second: {r: 0.588, g: 0.588, b: 0.588, a: 1}

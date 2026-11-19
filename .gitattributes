@@ -6,8 +6,8 @@
 *.cmd text eol=crlf
 *.ps1 text eol=crlf
 
-# Assets/Plugins/iOS/AppController.mm must match the Unity template byte for byte (LF line endings); no EOL conversion
-Assets/Plugins/iOS/AppController.mm -text
+# Source/Plugins/iOS/AppController.mm must match the Unity template byte for byte (LF line endings); no EOL conversion
+Source/Plugins/iOS/AppController.mm -text
 # Exported verbatim from the original signature; its SHA-1 goes into the code signature
 toolchain/entitlements.plist -text
 
@@ -16,3 +16,15 @@ toolchain/entitlements.plist -text
 *.png binary
 *.dmg binary
 *.patch text eol=lf
+
+# PC port art assets: binaries under Assets/ go to Git LFS (code under Source/ and Unity YAML stay plain git)
+Assets/**/*.png filter=lfs diff=lfs merge=lfs -text
+Assets/**/*.tga filter=lfs diff=lfs merge=lfs -text
+Assets/**/*.jpg filter=lfs diff=lfs merge=lfs -text
+Assets/**/*.psd filter=lfs diff=lfs merge=lfs -text
+Assets/**/*.wav filter=lfs diff=lfs merge=lfs -text
+Assets/**/*.mp3 filter=lfs diff=lfs merge=lfs -text
+Assets/**/*.ogg filter=lfs diff=lfs merge=lfs -text
+Assets/**/*.ttf filter=lfs diff=lfs merge=lfs -text
+Assets/**/*.otf filter=lfs diff=lfs merge=lfs -text
+Assets/**/*.fbx filter=lfs diff=lfs merge=lfs -text

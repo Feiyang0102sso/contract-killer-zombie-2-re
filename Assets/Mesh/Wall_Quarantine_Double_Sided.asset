@@ -1,0 +1,108 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!43 &4300000
+Mesh:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Wall_Quarantine_Double_Sided
+  m_SubMeshes:
+  - firstByte: 0
+    indexCount: 46
+    isTriStrip: 2
+    triangleCount: 16
+    firstVertex: 0
+    vertexCount: 32
+    localAABB:
+      m_Center: {x: 4.339218E-05, y: 1.4901161E-07, z: 1.7349153}
+      m_Extent: {x: 4.17099, y: 0.7858455, z: 1.7382}
+  m_MeshCompression: 0
+  m_IndexBuffer: 060001000700000000000d000d000c000800020002000300030004000e000f000f0005000500100019001a001a000b000b00110009001b001b001c001c001d000a00120012001500150013001400160016001800180017001e001f00
+  m_Skin: []
+  m_BindPose: []
+  m_VertexData:
+    m_CurrentChannels: 31
+    m_VertexCount: 32
+    m_Streams[0]:
+      channelMask: 31
+      offset: 0
+      stride: 44
+      align: 16
+    m_Streams[1]:
+      channelMask: 0
+      offset: 0
+      stride: 0
+      align: 16
+    m_Streams[2]:
+      channelMask: 0
+      offset: 0
+      stride: 0
+      align: 16
+    m_Streams[3]:
+      channelMask: 0
+      offset: 0
+      stride: 0
+      align: 16
+    m_DataSize: 1408
+    _typelessdata: 027785c0292d49bfc94557bb000080bf7b9be1b87f25e737ffffffff8b13973e41c6983b0100803be753503f657885c0e925493fc94557bb000080bf37004bb93576b1b8ffffffff9885b63e41c6983b0000803b5c637d3f1b798540b71e49bfc94557bb5beac537679664bfa782e63effffffffebf1963e6e91973b482d703f0000803b337785c0ddfdb1be85475e40000080bf37004bb900000000ffffffffe8e9963e02ef9b3ece59c93e59e45c3f4d7885c066efb13e84475e40000080bf36004bb900000000ffffffffc398a53e02ef9b3ece59c93eebd2703f1b798540f9e0b1be85475e402ca6dd37000080bf00000000ffffffffe9f1963e2bdc9b3e5d2d703fd053cf3e4d7885c066efb13e10a65d3f000080bf37004bb93476b1b8ffffffff2bc1ad3efad2bb3dce59cf3debd2703f337785c0ddfdb1be10a65d3f000080bf37004bb93476b1b8ffffffff01d89f3eecd2bb3dce59cf3d59e45c3f1b798540f9e0b1be10a65d3f38eac537679664bfa782e63effffffffe9f1963e55cdbb3d5d2d703fd841e73d0c7285402e2d493fc94557bbf0ff7f3f7658a23aec86233affffffff9885b63e41c6983bce59493f8e627d3f0d728540edfdb13e84475e40f3ff7f3f7a58a23a00000000ffffffffc398a53e02ef9b3ece59cb3e1ed2703f0d728540edfdb13e10a65d3ff0ff7f3f7658a23aec86233affffffff2bc1ad3efad2bb3d946e303f1ed2703f027785c0292d49bfc94557bb38eac537679664bfa782e63effffffff3eb17e3f6e91973b140b803b0000803b337785c0ddfdb1be10a65d3f36eac537679664bfa582e63effffffff3eb17e3f55cdbb3d0000803bd841e73d337785c0ddfdb1be10a65d3f000080bf37004bb900000000ffffffffece9963eecd2bb3dce59cf3d59e45c3f4d7885c066efb13e10a65d3f000080bf37004bb900000000ffffffffc398a53efad2bb3dce59cf3debd2703f337785c0ddfdb1be85475e402ca6dd37000080bf00000000ffffffff3eb17e3f2bdc9b3e0000803bd053cf3e1b798540f9e0b1be10a65d3ff0ff7f3f7658a23aec86233affffffff01d89f3eecd2bb3d946e303f59e45c3f0d728540edfdb13e10a65d3ff3ff7f3f7858a23a00000000ffffffffc398a53efad2bb3d946e303f1ed2703f0c7285402e2d493fc94557bb420747b76796643fa282e63effffffff3eb17e3f6e91973b0000803bd053d13e4d7885c066efb13e10a65d3f420747b76796643fa382e63effffffffe9f1963e55cdbb3d0f28703f3a92043f0d728540edfdb13e10a65d3f400747b76796643fa282e63effffffff3eb17e3f55cdbb3da503803b2392043f657885c0e925493fc94557bbd13b47b76996643f9e82e63effffffffebf1963e6e91973b1c28703fff53d13e0d728540edfdb13e84475e4064e55eb70000803f00000000ffffffff3eb17e3f2bdc9b3e0000803bd0534f3f4d7885c066efb13e84475e4063e55eb70000803f00000000ffffffffe9f1963e2bdc9b3e0828703fe7534f3f1b798540f9e0b1be10a65d3f2ca6dd37000080bf00000000ffffffffe9f1963e55cdbb3d5d2d703fd841e73d337785c0ddfdb1be10a65d3f2ca6dd37000080bf00000000ffffffff3eb17e3f55cdbb3d0000803bd841e73d1b798540b71e49bfc94557bbfdff7f3f65b60f3adeeb90b9ffffffff8b13973e41c6983bce59493fe753503f1b798540f9e0b1be85475e40f3ff7f3f7958a23a00000000ffffffffe8e9963e02ef9b3ece59cb3e59e45c3f1b798540f9e0b1be10a65d3ff3ff7f3f7958a23a00000000ffffffffece9963eecd2bb3d946e303f59e45c3f4d7885c066efb13e10a65d3f63e55eb70000803f00000000ffffffffe9f1963e55cdbb3d0f28703f3a92043f0d728540edfdb13e10a65d3f63e55eb70000803f00000000ffffffff3eb17e3f55cdbb3da503803b2392043f
+  m_CompressedMesh:
+    m_Vertices:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data:
+      m_BitSize: 0
+    m_UV:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data:
+      m_BitSize: 0
+    m_BindPoses:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data:
+      m_BitSize: 0
+    m_Normals:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data:
+      m_BitSize: 0
+    m_Tangents:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data:
+      m_BitSize: 0
+    m_Weights:
+      m_NumItems: 0
+      m_Data:
+      m_BitSize: 0
+    m_NormalSigns:
+      m_NumItems: 0
+      m_Data:
+      m_BitSize: 0
+    m_TangentSigns:
+      m_NumItems: 0
+      m_Data:
+      m_BitSize: 0
+    m_BoneIndices:
+      m_NumItems: 0
+      m_Data:
+      m_BitSize: 0
+    m_Triangles:
+      m_NumItems: 0
+      m_Data:
+      m_BitSize: 0
+    m_Colors:
+      m_NumItems: 0
+      m_Data:
+      m_BitSize: 0
+  m_LocalAABB:
+    m_Center: {x: 4.339218E-05, y: 1.4901161E-07, z: 1.7349153}
+    m_Extent: {x: 4.17099, y: 0.7858455, z: 1.7382}
+  m_MeshUsageFlags: 8
+  m_MeshOptimized: 1

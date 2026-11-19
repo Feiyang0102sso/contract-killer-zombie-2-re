@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!74 &7400000
+AnimationClip:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: activate_item_loop
+  m_Compressed: 0
+  m_RotationCurves:
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: {x: 0, y: -0, z: -0.37055728, w: 0.92880964}
+        inSlope: {x: 0, y: 0, z: 0.36473158, w: 0.1455136}
+        outSlope: {x: 0, y: 0, z: 0.36473158, w: 0.1455136}
+        tangentMode: 0
+      - time: 1.6000013
+        value: {x: 0, y: 0, z: 0.24615398, w: 0.9692308}
+        inSlope: {x: 0, y: 0, z: 0.38058895, w: -0.096657544}
+        outSlope: {x: 0, y: 0, z: 0.38058895, w: -0.096657544}
+        tangentMode: 0
+      - time: 1.6333342
+        value: {x: 0, y: 0, z: 0.25881845, w: 0.965926}
+        inSlope: {x: 0, y: 0, z: -0.047613055, w: 0.012009326}
+        outSlope: {x: 0, y: 0, z: -0.047613055, w: 0.012009326}
+        tangentMode: 0
+      - time: 1.6999998
+        value: {x: 0, y: 0, z: 0.22707613, w: 0.973877}
+        inSlope: {x: 0, y: 0, z: -0.47802985, w: 0.1114605}
+        outSlope: {x: 0, y: 0, z: -0.47802985, w: 0.1114605}
+        tangentMode: 0
+      - time: 2.9333334
+        value: {x: 0, y: -0, z: -0.3675162, w: 0.9300171}
+        inSlope: {x: 0, y: 0, z: -0.45650107, w: -0.18039562}
+        outSlope: {x: 0, y: 0, z: -0.45650107, w: -0.18039562}
+        tangentMode: 0
+      - time: 2.9666662
+        value: {x: 0, y: 0, z: -0.38268346, w: 0.92387956}
+        inSlope: {x: 0, y: 0, z: -0.45502493, w: -0.18412931}
+        outSlope: {x: 0, y: 0, z: -0.45502493, w: -0.18412931}
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+    path: Object02/Object04
+  m_CompressedRotationCurves: []
+  m_PositionCurves: []
+  m_ScaleCurves: []
+  m_FloatCurves: []
+  m_SampleRate: 30
+  m_WrapMode: 2
+  m_Bounds:
+    m_Center: {x: -0.23399374, y: 1.7373307, z: 0.23605746}
+    m_Extent: {x: 0.48794195, y: 0.6598799, z: 0.51616883}
+  m_EditorCurves: []
+  m_EulerEditorCurves: []
+  m_Events: []

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Offers>
+	<limitedTimeOffer
+		version = "1"
+		minXP = "1430"
+		hours = "48"
+		mainBundle = "BundleLTO1"
+		mainBundlePrice = "100"
+		alternativeBundle = "BundleLTO2"
+		alternativeBundlePrice = "100"
+	/>
+	<specialHunt
+		version = "1"
+		minXP = "495"
+		missionIndex = "9"
+		availabilityInHours = "72"
+		pushNotification = "1"
+		saleWeapon = "AssaultRifle4"
+		discountPercents = "25"
+	/>
+</Offers>

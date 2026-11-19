@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!74 &7400000
+AnimationClip:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: full_open
+  m_Compressed: 0
+  m_RotationCurves:
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: {x: 0.7071068, y: -0, z: 0, w: -0.7071068}
+        inSlope: {x: 0.08423924, y: 0, z: 0, w: 0.084577195}
+        outSlope: {x: 0.08423924, y: 0, z: 0, w: 0.084577195}
+        tangentMode: 0
+      - time: 0.23333335
+        value: {x: 0.81160194, y: -0, z: 0, w: -0.5842108}
+        inSlope: {x: 0.7070831, y: 0, z: 0, w: 0.9858371}
+        outSlope: {x: 0.7070831, y: 0, z: 0, w: 0.9858371}
+        tangentMode: 0
+      - time: 0.4666667
+        value: {x: 0.956672, y: 0, z: 0, w: -0.29116789}
+        inSlope: {x: 0.4165964, y: 0, z: 0, w: 1.3654474}
+        outSlope: {x: 0.4165964, y: 0, z: 0, w: 1.3654474}
+        tangentMode: 0
+      - time: 0.7666667
+        value: {x: 0.9999921, y: 0, z: 0, w: -0.0039791516}
+        inSlope: {x: 0.0017926082, y: 0, z: 0, w: 0.23189332}
+        outSlope: {x: 0.0017926082, y: 0, z: 0, w: 0.23189332}
+        tangentMode: 0
+      - time: 0.8000001
+        value: {x: 1, y: 0, z: 0, w: -6.123234E-17}
+        inSlope: {x: 0.00023782233, y: 0, z: 0, w: 0.11937445}
+        outSlope: {x: 0.00023782233, y: 0, z: 0, w: 0.11937445}
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+    path: Way_Wall_150x101_Cup
+  m_CompressedRotationCurves: []
+  m_PositionCurves: []
+  m_ScaleCurves:
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: {x: 1, y: 1, z: 1}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+      - time: 0.8000001
+        value: {x: 1, y: 1, z: 1}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+    path: Way_Wall_150x101_Cup
+  m_FloatCurves: []
+  m_SampleRate: 30
+  m_WrapMode: 0
+  m_Bounds:
+    m_Center: {x: 5.9604645E-08, y: 0.014999479, z: 0.48016897}
+    m_Extent: {x: 0.7, y: 0.4649996, z: 0.45024857}
+  m_EditorCurves: []
+  m_EulerEditorCurves: []
+  m_Events: []

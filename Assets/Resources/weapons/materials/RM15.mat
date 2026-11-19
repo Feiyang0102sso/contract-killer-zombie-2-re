@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: RM15
+  m_Shader: {fileID: 4800000, guid: c1e4ae0d5b8bf3940af5a74ed6439f78, type: 3}
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+    - first:
+        name: _MainTex
+      second:
+        m_Texture: {fileID: 2800000, guid: 1c4501c90cabde64082a45bd906498d5, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _BumpMap
+      second:
+        m_Texture: {fileID: 2800000, guid: 5838db8c549afb448b2acd2ac53f5e4e, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - first:
+        name: _ProbeStrength
+      second: 0.9552238
+    - first:
+        name: _ProbeIntensity
+      second: 3.0850747
+    - first:
+        name: _ProbeShininess
+      second: 15.362686
+    - first:
+        name: _RimIntensity
+      second: 1.7761194
+    - first:
+        name: _RimPower
+      second: 4.2313433
+    m_Colors:
+    - first:
+        name: _Color
+      second: {r: 0.588, g: 0.588, b: 0.588, a: 1}

@@ -1,0 +1,76 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  serializedVersion: 2
+  m_ObjectHideFlags: 1
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1308338430914552}
+  m_IsPrefabParent: 1
+  m_IsExploded: 0
+--- !u!1 &1308338430914552
+GameObject:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_Component:
+  - 4: {fileID: 4862505860983566}
+  - 114: {fileID: 114031445659548967}
+  m_Layer: 0
+  m_Name: GrenadeLauncher2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4862505860983566
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1308338430914552}
+  m_LocalRotation: {x: -0.07534009, y: 0, z: 0, w: 0.99715793}
+  m_LocalPosition: {x: -47.122707, y: 1.0745583, z: -45.455864}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+--- !u!114 &114031445659548967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1308338430914552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4426a7500e44c4cf59a643ac19533834, type: 3}
+  m_Name:
+  HudIconTexturePath: WeaponIcons/GrenadeLauncher2
+  ScopeModelPath:
+  ZoomModeFov: 45
+  Operation: 1
+  Ammunition: 6
+  ModelPath: Weapons/exterminator
+  ModelTexturePath:
+  ModelTextureNormalMapPath:
+  IsAutomatic: 0
+  MaxAutofireDistance: Infinity
+  ReloadingTime: 3.5
+  ShotSound: grenadelauncher_shot
+  ReloadingSound: grenadelauncher_reload_1
+  AnimationPrefix: launcher
+  CriticalMultiplier: 1
+  DefragProbability: 0
+  MutilationProbability: 0
+  ProjectilePrefabPath: Grenade
+  DummyPrefabPath:
+  MuzzleFirePrefab: {fileID: 0}
+  MuzzleVelocity: 40
+  RateOfFire: 1.81
+  SpreadAngle: 9
+  MaxAmmo: 24
+  AmmoClip: 8

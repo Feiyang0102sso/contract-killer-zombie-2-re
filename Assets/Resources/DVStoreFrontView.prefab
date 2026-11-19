@@ -1,0 +1,229 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  serializedVersion: 2
+  m_ObjectHideFlags: 1
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1532482936582558}
+  m_IsPrefabParent: 1
+  m_IsExploded: 0
+--- !u!1 &1532482936582558
+GameObject:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_Component:
+  - 4: {fileID: 4774652947926582}
+  - 114: {fileID: 114737388402562268}
+  - 114: {fileID: 114786625015947326}
+  - 114: {fileID: 114868923441464894}
+  m_Layer: 8
+  m_Name: DVStoreFrontView
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4774652947926582
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1532482936582558}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 80}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 4674086786264595}
+  - {fileID: 4101557646471567}
+  m_Father: {fileID: 0}
+--- !u!114 &114737388402562268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1532482936582558}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9496b2f422f45d58d952cf18c06fa94, type: 3}
+  m_Name:
+--- !u!114 &114786625015947326
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1532482936582558}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 818253f1e948b776cd5a215e9ed6ea1e, type: 3}
+  m_Name:
+  blockInput: 01010101
+  index: 0
+  deactivateAllOnDismiss: 0
+  detargetOnDisable: 0
+  transitions:
+    list:
+    - name: Bring In Forward
+      animationTypes:
+      animParams: []
+      initialized: 0
+    - name: Bring In Back
+      animationTypes:
+      animParams: []
+      initialized: 0
+    - name: Dismiss Forward
+      animationTypes:
+      animParams: []
+      initialized: 0
+    - name: Dismiss Back
+      animationTypes:
+      animParams: []
+      initialized: 0
+    - name: Normal from Over
+      animationTypes:
+      animParams: []
+      initialized: 0
+    - name: Normal from Dragging
+      animationTypes:
+      animParams: []
+      initialized: 0
+    - name: Over from Normal
+      animationTypes:
+      animParams: []
+      initialized: 0
+    - name: Over from Dragging
+      animationTypes:
+      animParams: []
+      initialized: 0
+    - name: Dragging
+      animationTypes:
+      animParams: []
+      initialized: 0
+  draggable: 0
+  constrainDragArea: 0
+  dragBoundaryMin: {x: 0, y: 0, z: 0}
+  dragBoundaryMax: {x: 0, y: 0, z: 0}
+--- !u!114 &114868923441464894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1532482936582558}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c62af9941f3c39501fb515a5de65191, type: 3}
+  m_Name:
+  renderCamera: {fileID: 0}
+  screenPos: {x: 0, y: 0, z: 191}
+  ignoreZ: 1
+  relativeTo:
+    horizontal: 3
+    vertical: 3
+  relativeObject: {fileID: 0}
+  alwaysRecursive: 1
+  allowTransformDrag: 0
+  dependents: []
+--- !u!1 &1019469279181650
+GameObject:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_Component:
+  - 4: {fileID: 4674086786264595}
+  - 114: {fileID: 114259295110624982}
+  - 114: {fileID: 114851281416905499}
+  m_Layer: 8
+  m_Name: ComboStoreFrontGroupContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4674086786264595
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1019469279181650}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -133.33334, y: 100, z: -20}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4774652947926582}
+--- !u!114 &114259295110624982
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1019469279181650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name:
+--- !u!114 &114851281416905499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1019469279181650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c62af9941f3c39501fb515a5de65191, type: 3}
+  m_Name:
+  renderCamera: {fileID: 0}
+  screenPos: {x: 0, y: 0, z: 191}
+  ignoreZ: 1
+  relativeTo:
+    horizontal: 1
+    vertical: 1
+  relativeObject: {fileID: 0}
+  alwaysRecursive: 1
+  allowTransformDrag: 0
+  dependents: []
+--- !u!1 &1146913493945318
+GameObject:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_Component:
+  - 4: {fileID: 4101557646471567}
+  - 114: {fileID: 114976172266094542}
+  m_Layer: 8
+  m_Name: DVStoreFrontItemContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4101557646471567
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1146913493945318}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4774652947926582}
+--- !u!114 &114976172266094542
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1146913493945318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eaccf5a5edc2bfd843393604e4bf5672, type: 3}
+  m_Name:
+  width: 130
+  height: 140
+  FillerPrefab: {fileID: 0}

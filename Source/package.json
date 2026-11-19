@@ -1,0 +1,7 @@
+{
+  "name": "com.ckz2.game",
+  "version": "1.0.0",
+  "displayName": "CKZ2 Game",
+  "description": "Contract Killer: Zombies 2 game code: decompiled sources (Scripts, Glu packages, Rendering) plus the PC port bridges (PcPort) and editor tools.",
+  "unity": "6000.3"
+}

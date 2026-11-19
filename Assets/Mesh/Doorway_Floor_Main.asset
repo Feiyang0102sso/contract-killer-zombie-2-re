@@ -1,0 +1,108 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!43 &4300000
+Mesh:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Doorway_Floor_Main
+  m_SubMeshes:
+  - firstByte: 0
+    indexCount: 11
+    isTriStrip: 2
+    triangleCount: 4
+    firstVertex: 0
+    vertexCount: 6
+    localAABB:
+      m_Center: {x: -4.7683716E-07, y: 0, z: -6.3760126E-09}
+      m_Extent: {x: 8.269485, y: 2.6990075, z: 6.1982437E-06}
+  m_MeshCompression: 0
+  m_IndexBuffer: 04000100020000000300030004000400040002000500
+  m_Skin: []
+  m_BindPose: []
+  m_VertexData:
+    m_CurrentChannels: 27
+    m_VertexCount: 6
+    m_Streams[0]:
+      channelMask: 27
+      offset: 0
+      stride: 40
+      align: 16
+    m_Streams[1]:
+      channelMask: 0
+      offset: 0
+      stride: 0
+      align: 16
+    m_Streams[2]:
+      channelMask: 0
+      offset: 0
+      stride: 0
+      align: 16
+    m_Streams[3]:
+      channelMask: 0
+      offset: 0
+      stride: 0
+      align: 16
+    m_DataSize: 240
+    _typelessdata: d04f04c179bc2cc04731d0b62fed0bb52cbd3bb50000803f5cfd3f3faba4ea3e0000803b1902803bd04f04c152b8ce3a26d190b630ed0bb52ebd3bb50000803f60fd3f3f3008233f0000803b910a293ecd4f0441e17ace3a8576903630ed0bb52fbd3bb50000803fc1c996bd3508233feaaf7d3f8a0a293ecd4f04418abc2cc0bf2c22362fed0bb52cbd3bb50000803fe1c996bdafa4ea3eeaaf7d3f0000803bd04f04c18abc2c40dd0723b62fed0bb532bd3bb50000803f5cfd3f3faba4ea3e0000803be4f1a63ecf4f044182bc2c40bdc3cf362fed0bb531bd3bb50000803fe1c996bdafa4ea3eecaf7d3fe1f1a63e
+  m_CompressedMesh:
+    m_Vertices:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data:
+      m_BitSize: 0
+    m_UV:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data:
+      m_BitSize: 0
+    m_BindPoses:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data:
+      m_BitSize: 0
+    m_Normals:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data:
+      m_BitSize: 0
+    m_Tangents:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data:
+      m_BitSize: 0
+    m_Weights:
+      m_NumItems: 0
+      m_Data:
+      m_BitSize: 0
+    m_NormalSigns:
+      m_NumItems: 0
+      m_Data:
+      m_BitSize: 0
+    m_TangentSigns:
+      m_NumItems: 0
+      m_Data:
+      m_BitSize: 0
+    m_BoneIndices:
+      m_NumItems: 0
+      m_Data:
+      m_BitSize: 0
+    m_Triangles:
+      m_NumItems: 0
+      m_Data:
+      m_BitSize: 0
+    m_Colors:
+      m_NumItems: 0
+      m_Data:
+      m_BitSize: 0
+  m_LocalAABB:
+    m_Center: {x: -4.7683716E-07, y: 0, z: -6.3760126E-09}
+    m_Extent: {x: 8.269485, y: 2.6990075, z: 6.1982437E-06}
+  m_MeshUsageFlags: 4
+  m_MeshOptimized: 1

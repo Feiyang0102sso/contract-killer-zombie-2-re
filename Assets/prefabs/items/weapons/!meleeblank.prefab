@@ -1,0 +1,80 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  serializedVersion: 2
+  m_ObjectHideFlags: 1
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1396746624948077}
+  m_IsPrefabParent: 1
+  m_IsExploded: 0
+--- !u!1 &1396746624948077
+GameObject:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_Component:
+  - 4: {fileID: 4514668884721630}
+  - 114: {fileID: 114215530346408640}
+  m_Layer: 0
+  m_Name: '!meleeblank'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4514668884721630
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1396746624948077}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 77.83093, y: 202.71494, z: 152.25433}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+--- !u!114 &114215530346408640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1396746624948077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc0205a8547a516e55b95f5ed08343e0, type: 3}
+  m_Name:
+  HudIconTexturePath:
+  ScopeModelPath:
+  ZoomModeFov: 10
+  Operation: 0
+  Ammunition: 0
+  ModelPath: Weapons/fireaxe
+  ModelTexturePath:
+  ModelTextureNormalMapPath:
+  IsAutomatic: 0
+  MaxAutofireDistance: Infinity
+  ReloadingTime: 1
+  ShotSound:
+  ReloadingSound:
+  AnimationPrefix: melee
+  CriticalMultiplier: 1
+  DefragProbability: 100
+  MutilationProbability: 0
+  Damage: 75
+  Mass: 5
+  PushbackChance: 100
+  AttackSpeed: 1.5
+  MeleeAnimations: []
+  BroadMeleeAnimations: []
+  SpreadAngle: 1
+  HitSound:
+  DrawSound:
+  HideSound:
+  IdleLoopSound:
+  IdleLoopSoundFadeInTime: 0

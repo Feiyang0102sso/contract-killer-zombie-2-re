@@ -1,0 +1,108 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!43 &4300000
+Mesh:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Monorail_Column_90x350_Tech_08
+  m_SubMeshes:
+  - firstByte: 0
+    indexCount: 16
+    isTriStrip: 2
+    triangleCount: 6
+    firstVertex: 0
+    vertexCount: 12
+    localAABB:
+      m_Center: {x: -0.06374287, y: -4.4703484E-08, z: 1.75}
+      m_Extent: {x: 0.06374318, y: 0.45144624, z: 1.75}
+  m_MeshCompression: 0
+  m_IndexBuffer: 050006000100020002000900090007000800030003000b000b0004000a000000
+  m_Skin: []
+  m_BindPose: []
+  m_VertexData:
+    m_CurrentChannels: 27
+    m_VertexCount: 12
+    m_Streams[0]:
+      channelMask: 27
+      offset: 0
+      stride: 40
+      align: 16
+    m_Streams[1]:
+      channelMask: 0
+      offset: 0
+      stride: 0
+      align: 16
+    m_Streams[2]:
+      channelMask: 0
+      offset: 0
+      stride: 0
+      align: 16
+    m_Streams[3]:
+      channelMask: 0
+      offset: 0
+      stride: 0
+      align: 16
+    m_DataSize: 480
+    _typelessdata: a991a434f523e73e000000004023febecd3c5e3f000000003f3e713f806f07380000803b39f7993ee0bf56b5f823e7be000000009a23febeb33c5ebf000000008d82583f806f07380100803b0000803bb48b02bec2d1c1be000000009a23febeb33c5ebf0000000065e25b3f806f07380100803b65e6393d5d8b02bed5d1c13e00000000000080bf7fede5350000000065de6d3f806f07380100803b71ba843ea991a434f523e73e000060403d23febecf3c5e3f000000003f3e713fbdffa93e84147e3f39f7993e8ec756b5f823e7be000060409a23febeb33c5ebf000000008d82583fbdffa93e84147e3f0000803bb48b02bec2d1c1be000060409a23febeb33c5ebf0000000065e25b3fbdffa93e84147e3f65e6393d5f8b02bed5d1c13e00006040000080bfe38be2350000000065de6d3fbdffa93e84147e3f71ba843eb48b02bec2d1c1be00000000000080bfe38be2350000000065e25b3f806f07380100803b65e6393db48b02bec2d1c1be00006040000080bfe18be2350000000065e25b3fbdffa93e84147e3f65e6393d5d8b02bed5d1c13e000000003d23febece3c5e3f0000000065de6d3f806f07380100803b71ba843e5f8b02bed5d1c13e000060403d23febecf3c5e3f0000000065de6d3fbdffa93e84147e3f71ba843e
+  m_CompressedMesh:
+    m_Vertices:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data:
+      m_BitSize: 0
+    m_UV:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data:
+      m_BitSize: 0
+    m_BindPoses:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data:
+      m_BitSize: 0
+    m_Normals:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data:
+      m_BitSize: 0
+    m_Tangents:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data:
+      m_BitSize: 0
+    m_Weights:
+      m_NumItems: 0
+      m_Data:
+      m_BitSize: 0
+    m_NormalSigns:
+      m_NumItems: 0
+      m_Data:
+      m_BitSize: 0
+    m_TangentSigns:
+      m_NumItems: 0
+      m_Data:
+      m_BitSize: 0
+    m_BoneIndices:
+      m_NumItems: 0
+      m_Data:
+      m_BitSize: 0
+    m_Triangles:
+      m_NumItems: 0
+      m_Data:
+      m_BitSize: 0
+    m_Colors:
+      m_NumItems: 0
+      m_Data:
+      m_BitSize: 0
+  m_LocalAABB:
+    m_Center: {x: -0.06374287, y: -4.4703484E-08, z: 1.75}
+    m_Extent: {x: 0.06374318, y: 0.45144624, z: 1.75}
+  m_MeshUsageFlags: 4
+  m_MeshOptimized: 1

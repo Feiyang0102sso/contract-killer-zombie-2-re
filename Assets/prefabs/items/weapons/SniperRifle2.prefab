@@ -1,0 +1,94 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  serializedVersion: 2
+  m_ObjectHideFlags: 1
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1556964853751972}
+  m_IsPrefabParent: 1
+  m_IsExploded: 0
+--- !u!1 &1556964853751972
+GameObject:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_Component:
+  - 4: {fileID: 4644294650064818}
+  - 114: {fileID: 114001489928779546}
+  m_Layer: 0
+  m_Name: SniperRifle2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4644294650064818
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1556964853751972}
+  m_LocalRotation: {x: -0.05266106, y: 0.67341346, z: 0.048195336, w: 0.73581135}
+  m_LocalPosition: {x: -43.447163, y: 0.050902843, z: -40.07875}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+--- !u!114 &114001489928779546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1556964853751972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a8f58131ca59d2d351e9985264cb909, type: 3}
+  m_Name:
+  HudIconTexturePath: WeaponIcons/SniperRifle1
+  ScopeModelPath: Scopes/ScopeModel_01
+  ZoomModeFov: 15
+  Operation: 1
+  Ammunition: 3
+  ModelPath: Weapons/bolt_rifle
+  ModelTexturePath: Weapons/Textures/bolt_rifle_metal
+  ModelTextureNormalMapPath: Weapons/Textures/bolt_rifle_metal_nm
+  IsAutomatic: 0
+  MaxAutofireDistance: 101.1
+  ReloadingTime: 3
+  ShotSound: sniper_rifle_shots_oldtype
+  ReloadingSound: sniper_rifle_oldstyle_reload
+  AnimationPrefix: bolt_rifle
+  CriticalMultiplier: 3
+  DefragProbability: 75
+  MutilationProbability: 55
+  TracerMaterial: {fileID: 0}
+  TracerMesh: {fileID: 4300000, guid: 4042ed7e580854b4c9496959160e47ab, type: 2}
+  TracerWidth: 6.75
+  SmokeWidth: 0.125
+  SmokeTime: 0.5
+  TracerLengthScale: 100
+  TracerProgressiveWidth: 17.5
+  TracerProgressiveDistance: 50
+  NumPellets: 1
+  MuzzleVelocity: 400
+  BulletMass: 0.3
+  RateOfFire: 1.25
+  MaxAmmo: 16
+  AmmoClip: 8
+  SpreadAngleRunning: 6
+  SpreadAngleStanding: 4
+  SpreadAngleAiming: 0.22
+  Damage: 150
+  StunProbability: 100
+  DistanceWhenDamagePercent100: 74
+  DistanceWhenDamagePercent75: 85
+  DistanceWhenDamagePercent50: 90
+  DistanceWhenDamagePercent25: 95
+  DistanceWhenDamagePercent0: 101
+  BurstNumShots: 0
+  BurstRateOfFire: 0

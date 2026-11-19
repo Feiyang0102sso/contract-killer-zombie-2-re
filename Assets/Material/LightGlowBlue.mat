@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: LightGlowBlue
+  m_Shader: {fileID: 4800000, guid: 2d9b0e4438f33d64e90e2f5298e06238, type: 3}
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+    - first:
+        name: _MainTex
+      second:
+        m_Texture: {fileID: 2800000, guid: 48683988b46ee364291305824d510dde, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - first:
+        name: _Shininess
+      second: 0.078125
+    - first:
+        name: _FadeOutDistanceNear
+      second: 5
+    - first:
+        name: _FadeOutDistanceFar
+      second: 15
+    - first:
+        name: _GrowSize
+      second: 0.1
+    - first:
+        name: _BlinkFreq1
+      second: 0
+    - first:
+        name: _BlinkFreq2
+      second: 0
+    - first:
+        name: _BlinkTreshold
+      second: 0
+    - first:
+        name: _Treshold
+      second: 0.2
+    m_Colors:
+    - first:
+        name: _Color
+      second: {r: 0.5882353, g: 0.5882353, b: 0.5882353, a: 1}
+    - first:
+        name: _SpecColor
+      second: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - first:
+        name: _EmissiveColor
+      second: {r: 0.6431373, g: 0.84313726, b: 0.85490197, a: 1}

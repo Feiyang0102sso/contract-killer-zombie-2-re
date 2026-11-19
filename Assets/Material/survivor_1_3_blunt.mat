@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: survivor_1_3_blunt
+  m_Shader: {fileID: 4800000, guid: ce0ccb7bbea7aa646afec641676657bb, type: 3}
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+    - first:
+        name: _MainTex
+      second:
+        m_Texture: {fileID: 2800000, guid: a3b12d80f1a367648aa62d526f75826a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _BumpMap
+      second:
+        m_Texture: {fileID: 2800000, guid: 32a13c98b7b3073438aa6c0f9ad7a570, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - first:
+        name: _Shininess
+      second: 0.078125
+    - first:
+        name: _ProbeStrength
+      second: 1
+    - first:
+        name: _ProbeIntensity
+      second: 1.5179105
+    - first:
+        name: _ProbeShininess
+      second: 16.328358
+    - first:
+        name: _RimIntensity
+      second: 1
+    - first:
+        name: _RimPower
+      second: 3
+    - first:
+        name: _Parallax
+      second: 0.02
+    m_Colors:
+    - first:
+        name: _Color
+      second: {r: 0.588, g: 0.588, b: 0.588, a: 1}
+    - first:
+        name: _SpecColor
+      second: {r: 0.5, g: 0.5, b: 0.5, a: 1}

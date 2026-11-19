@@ -1,0 +1,130 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  serializedVersion: 2
+  m_ObjectHideFlags: 1
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1551862618772568}
+  m_IsPrefabParent: 1
+  m_IsExploded: 0
+--- !u!1 &1551862618772568
+GameObject:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_Component:
+  - 4: {fileID: 4787511374903306}
+  - 33: {fileID: 33962480563453462}
+  - 23: {fileID: 23490105411836965}
+  - 54: {fileID: 54614995011309378}
+  - 114: {fileID: 114387040268245140}
+  - 135: {fileID: 135842386659626137}
+  m_Layer: 17
+  m_Name: GrenadeExplosive
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4787511374903306
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1551862618772568}
+  m_LocalRotation: {x: 1, y: 4.371139E-08, z: 4.371139E-08, w: 1.9106855E-15}
+  m_LocalPosition: {x: -31.864042, y: 0.22071767, z: 20.745373}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_Children: []
+  m_Father: {fileID: 0}
+--- !u!33 &33962480563453462
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1551862618772568}
+  m_Mesh: {fileID: 4300000, guid: 842688017f04d24458c76075d6dc2565, type: 2}
+--- !u!23 &23490105411836965
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1551862618772568}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 2100000, guid: 8f6ab825042e4f54186068e95188191d, type: 2}
+  m_SubsetIndices: []
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 1
+  m_LightProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+--- !u!54 &54614995011309378
+Rigidbody:
+  serializedVersion: 2
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1551862618772568}
+  m_Mass: 0.33
+  m_Drag: 0.05
+  m_AngularDrag: 0.125
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 2
+--- !u!114 &114387040268245140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1551862618772568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5ff9fb3811fd0f02aea405ded4d553a, type: 3}
+  m_Name:
+  CustomGravity: 0
+  MaxLifeTime: 30
+  GuidanceEnabled: 0
+  GuidanceTimeout: 0
+  GuidanceBearing: 0.707
+  GuidanceAngularVel: 90
+  GuidanceToHeadChance: 50
+  GuidancePrecisionOverRealism: 0
+  GuidanceUseDynamicAngularVel: 0
+  EffectPrefab: {fileID: 1402343856255062, guid: 955f4bff409b1174f81525d3cdddfb3c, type: 2}
+  Smoke: {fileID: 0}
+  SmokeLifetime: 0
+  ActionDelay: 1
+  ActionRadius: 4
+  ActionSound: grenade_explosion
+  AutoAiming: 1
+  MinDamage: 100
+  MaxDamage: 200
+  DamageRandomness: 0.2
+  MaxImpulse: 50
+--- !u!135 &135842386659626137
+SphereCollider:
+  serializedVersion: 2
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1551862618772568}
+  m_Material: {fileID: 13400000, guid: 559d6964ca20695458799cb9df302a7c, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.035
+  m_Center: {x: 0, y: 0, z: 0}

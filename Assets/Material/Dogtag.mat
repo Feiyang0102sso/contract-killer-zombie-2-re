@@ -1,0 +1,228 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Dogtag
+  m_Shader: {fileID: 4800000, guid: 4e3aad4bd6f88cc4593eea16036b4134, type: 3}
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+    - first:
+        name: _MainTex
+      second:
+        m_Texture: {fileID: 2800000, guid: e71f40857cd9c2640a85e13f57761b79, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - first:
+        name: _SpecRange
+      second: 20
+    - first:
+        name: _Shininess
+      second: 0.078125
+    - first:
+        name: _ReflectionCoeff
+      second: 0.5
+    - first:
+        name: _ReflectionMagicShift
+      second: 0
+    - first:
+        name: _Time0
+      second: 0
+    - first:
+        name: _Time1
+      second: 0
+    - first:
+        name: _ColorFalloff
+      second: 1
+    - first:
+        name: _ScrollX
+      second: 1
+    - first:
+        name: _ScrollY
+      second: 0
+    - first:
+        name: _Scroll2X
+      second: 1
+    - first:
+        name: _Scroll2Y
+      second: 0
+    - first:
+        name: _SineAmplX
+      second: 0.5
+    - first:
+        name: _SineAmplY
+      second: 0.5
+    - first:
+        name: _SineFreqX
+      second: 10
+    - first:
+        name: _SineFreqY
+      second: 10
+    - first:
+        name: _SineAmplX2
+      second: 0.5
+    - first:
+        name: _SineAmplY2
+      second: 0.5
+    - first:
+        name: _SineFreqX2
+      second: 10
+    - first:
+        name: _SineFreqY2
+      second: 10
+    - first:
+        name: _MMultiplier
+      second: 2
+    - first:
+        name: _GlassThickness
+      second: 0.125
+    - first:
+        name: _FadeOutDistanceNear
+      second: 1
+    - first:
+        name: _FadeOutDistanceFar
+      second: 10
+    - first:
+        name: _GrowSize
+      second: 1
+    - first:
+        name: _BlinkFreq1
+      second: 0
+    - first:
+        name: _BlinkFreq2
+      second: 0
+    - first:
+        name: _BlinkTreshold
+      second: 0
+    - first:
+        name: _ProbeStrength
+      second: 1
+    - first:
+        name: _Multiplier
+      second: 1
+    - first:
+        name: _TimeDelayX
+      second: 1
+    - first:
+        name: _TimeDelayY
+      second: 1
+    - first:
+        name: _TimeShift
+      second: 5
+    - first:
+        name: _Duration
+      second: 3
+    - first:
+        name: _BlinkDuration
+      second: 0.27
+    - first:
+        name: _Treshold
+      second: 0.2
+    - first:
+        name: _ProbeIntensity
+      second: 0.1
+    - first:
+        name: _ProbeShininess
+      second: 2
+    - first:
+        name: _RimIntensity
+      second: 1
+    - first:
+        name: _RimPower
+      second: 3
+    - first:
+        name: _FadeOutDistNear
+      second: 10
+    - first:
+        name: _FadeOutDistFar
+      second: 10000
+    - first:
+        name: _Bias
+      second: 0
+    - first:
+        name: _TimeOnDuration
+      second: 0.5
+    - first:
+        name: _TimeOffDuration
+      second: 0.5
+    - first:
+        name: _BlinkingTimeOffsScale
+      second: 5
+    - first:
+        name: _SizeGrowStartDist
+      second: 5
+    - first:
+        name: _SizeGrowEndDist
+      second: 50
+    - first:
+        name: _MaxGrowSize
+      second: 2.5
+    - first:
+        name: _NoiseAmount
+      second: 0
+    - first:
+        name: _VerticalBillboarding
+      second: 1
+    - first:
+        name: _ViewerOffset
+      second: 0
+    - first:
+        name: _Parallax
+      second: 0.02
+    - first:
+        name: _EmissionLM
+      second: 0
+    m_Colors:
+    - first:
+        name: _Color
+      second: {r: 0.5882353, g: 0.5882353, b: 0.5882353, a: 1}
+    - first:
+        name: _SpecOffset
+      second: {r: 1, g: 10, b: 2, a: 0}
+    - first:
+        name: _SpecColor
+      second: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - first:
+        name: _GlassColor
+      second: {r: 0.99, g: 0.7, b: 0.99, a: 1}
+    - first:
+        name: _EmissiveColor
+      second: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - first:
+        name: _Emission
+      second: {r: 0, g: 0, b: 0, a: 0}
+    - first:
+        name: _TimeDelay
+      second: {r: 0.05, g: 0.05, b: -0.05, a: 0}
+    - first:
+        name: _UV1
+      second: {r: 1, g: 1, b: 0, a: 0}
+    - first:
+        name: _UV2
+      second: {r: 1, g: 1, b: 0, a: 0}
+    - first:
+        name: _UV3
+      second: {r: 1, g: 1, b: 0, a: 0}
+    - first:
+        name: _UV4
+      second: {r: 1, g: 1, b: 0, a: 0}
+    - first:
+        name: _SelfLumColor
+      second: {r: 1, g: 0, b: 0, a: 1}
+    - first:
+        name: _Ambient
+      second: {r: 0, g: 0, b: 0, a: 1}
+    - first:
+        name: _Occluder1
+      second: {r: 0, g: 0, b: 0, a: 1}
+    - first:
+        name: _Occluder2
+      second: {r: 0, g: 0, b: 0, a: 1}
+    - first:
+        name: _Occluder3
+      second: {r: 0, g: 0, b: 0, a: 1}

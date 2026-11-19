@@ -17,6 +17,27 @@ toolchain/downloads/*
 # Windows Mono extracted for the quick dev build (recovery/tools/setup_windows.py)
 toolchain/unity357_win/
 
+# Unity (PC port): caches, per-user settings, IDE projects
+/Library/
+/Temp/
+/Obj/
+/Logs/
+/UserSettings/
+/MemoryCaptures/
+*.csproj
+*.sln
+*.slnx
+.vs/
+.vsconfig
+
+# PC port build output, run logs and reports
+/Builds/
+/RunLogs/
+/PcPilotAudit.txt
+# Rebuilt by PcPilotBuild.Build before every build (PcAssetBundleRebuild)
+/Assets/StreamingAssets/
+/Assets/StreamingAssets.meta
+
 # Misc
 __pycache__/
 *.pyc

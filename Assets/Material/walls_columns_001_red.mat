@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: walls_columns_001_red
+  m_Shader: {fileID: 4800000, guid: 700a1503fe0452745a9887be3997a47c, type: 3}
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+    - first:
+        name: _MainTex
+      second:
+        m_Texture: {fileID: 2800000, guid: b42ed974511547248ac65ba080dc8566, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - first:
+        name: _SpecRange
+      second: 300
+    - first:
+        name: _Shininess
+      second: 0.020819226
+    m_Colors:
+    - first:
+        name: _Color
+      second: {r: 0.5882353, g: 0.5882353, b: 0.5882353, a: 1}
+    - first:
+        name: _SpecOffset
+      second: {r: 2, g: 1, b: 2, a: 0}
+    - first:
+        name: _SpecColor
+      second: {r: 0.67910445, g: 0.62240016, b: 0.5169303, a: 1}

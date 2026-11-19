@@ -1,0 +1,108 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!43 &4300000
+Mesh:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Gate_Rollup_Brown
+  m_SubMeshes:
+  - firstByte: 0
+    indexCount: 10
+    isTriStrip: 2
+    triangleCount: 4
+    firstVertex: 0
+    vertexCount: 8
+    localAABB:
+      m_Center: {x: -0.00047826767, y: 0.095911786, z: 1.3437291}
+      m_Extent: {x: 2.0675309, y: 0.09591198, z: 1.3437284}
+  m_MeshCompression: 0
+  m_IndexBuffer: 0200030000000100010005000500060004000700
+  m_Skin: []
+  m_BindPose: []
+  m_VertexData:
+    m_CurrentChannels: 27
+    m_VertexCount: 8
+    m_Streams[0]:
+      channelMask: 27
+      offset: 0
+      stride: 40
+      align: 16
+    m_Streams[1]:
+      channelMask: 0
+      offset: 0
+      stride: 0
+      align: 16
+    m_Streams[2]:
+      channelMask: 0
+      offset: 0
+      stride: 0
+      align: 16
+    m_Streams[3]:
+      channelMask: 0
+      offset: 0
+      stride: 0
+      align: 16
+    m_DataSize: 320
+    _typelessdata: 90450440703d0a364eff2b40a04afb34000080bf9d07fc33f327e63e840f453ee1717e3f20bb253f154804406666e6350ad7233521a8f734000080bfeb320934f127e63ebded833b4b747e3f0000803b435a04c00ad7a3334bff2b4011c80035000080bf0000000043b7473f7f0f453e0000803b1dbb253fbf5704c0cccc4cb48fc27535a3edfd34000080bfaccdeb3342b7473fe7ec833b6a34813b9e00803b3c5504c01c6d443ecccccc350000000008995136000080bff427e63e00ed833be1717e3f2c7d323f974a0440736d443eae476135315032b48e2aa035000080bf43b7473f80ed833b0000803b317d323f154804406666e6350ad7233518642fb42c0aa835000080bf42b7473fc07a5c3c6c33813b27bb263fbf5704c0cccc4cb48fc2753500000000d6885536000080bff227e63e807a5c3c49747e3f20bb263f
+  m_CompressedMesh:
+    m_Vertices:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data:
+      m_BitSize: 0
+    m_UV:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data:
+      m_BitSize: 0
+    m_BindPoses:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data:
+      m_BitSize: 0
+    m_Normals:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data:
+      m_BitSize: 0
+    m_Tangents:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data:
+      m_BitSize: 0
+    m_Weights:
+      m_NumItems: 0
+      m_Data:
+      m_BitSize: 0
+    m_NormalSigns:
+      m_NumItems: 0
+      m_Data:
+      m_BitSize: 0
+    m_TangentSigns:
+      m_NumItems: 0
+      m_Data:
+      m_BitSize: 0
+    m_BoneIndices:
+      m_NumItems: 0
+      m_Data:
+      m_BitSize: 0
+    m_Triangles:
+      m_NumItems: 0
+      m_Data:
+      m_BitSize: 0
+    m_Colors:
+      m_NumItems: 0
+      m_Data:
+      m_BitSize: 0
+  m_LocalAABB:
+    m_Center: {x: -0.00047826767, y: 0.095911786, z: 1.3437291}
+    m_Extent: {x: 2.0675309, y: 0.09591198, z: 1.3437284}
+  m_MeshUsageFlags: 12
+  m_MeshOptimized: 1

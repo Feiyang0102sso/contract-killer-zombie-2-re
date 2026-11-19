@@ -1,0 +1,81 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Bleedout
+  m_Shader: {fileID: 4800000, guid: f35f5a0146c965c4bbb401ebfb92e08a, type: 3}
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+    - first:
+        name: _MainTex
+      second:
+        m_Texture: {fileID: 2800000, guid: bcde8eee3729f854e9bc05fdef56e733, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - first:
+        name: _Cutoff
+      second: 0.5
+    - first:
+        name: _SpecRange
+      second: 20
+    - first:
+        name: _Shininess
+      second: 0.1
+    - first:
+        name: _Time0
+      second: 0
+    - first:
+        name: _Time1
+      second: 0
+    - first:
+        name: _ColorFalloff
+      second: 1
+    - first:
+        name: _ProbeIntensity
+      second: 1.1
+    - first:
+        name: _ProbeShininess
+      second: 20
+    - first:
+        name: _RimIntensity
+      second: 1
+    - first:
+        name: _RimPower
+      second: 3
+    - first:
+        name: _ProbeSpecStr
+      second: 1.2164179
+    - first:
+        name: _ProbeSpecSub
+      second: 0.29850745
+    - first:
+        name: _Intensity
+      second: 1
+    m_Colors:
+    - first:
+        name: _Color
+      second: {r: 1, g: 1, b: 1, a: 1}
+    - first:
+        name: _SpecOffset
+      second: {r: 3, g: 5, b: 3, a: 0}
+    - first:
+        name: _SpecColor
+      second: {r: 1, g: 1, b: 1, a: 0}
+    - first:
+        name: _EmissiveColor
+      second: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - first:
+        name: _ReflectColor
+      second: {r: 1, g: 1, b: 1, a: 0.5}
+    - first:
+        name: _SpecDir
+      second: {r: 0, g: -1, b: 0, a: 0}
+    - first:
+        name: _LightColor0
+      second: {r: 1, g: 1, b: 1, a: 1}

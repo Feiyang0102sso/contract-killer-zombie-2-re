@@ -1,0 +1,129 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!74 &7400000
+AnimationClip:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: open
+  m_Compressed: 0
+  m_RotationCurves:
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
+        inSlope: {x: 0, y: 0, z: 0, w: 0}
+        outSlope: {x: 0, y: 0, z: 0, w: 0}
+        tangentMode: 0
+      - time: 2
+        value: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
+        inSlope: {x: 0, y: 0, z: 0, w: 0}
+        outSlope: {x: 0, y: 0, z: 0, w: 0}
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+    path: vagon_door_l
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
+        inSlope: {x: 0, y: 0, z: 0, w: 0}
+        outSlope: {x: 0, y: 0, z: 0, w: 0}
+        tangentMode: 0
+      - time: 2
+        value: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
+        inSlope: {x: 0, y: 0, z: 0, w: 0}
+        outSlope: {x: 0, y: 0, z: 0, w: 0}
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+    path: vagon_door_r
+  m_CompressedRotationCurves: []
+  m_PositionCurves:
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: {x: 0.0062039183, y: 0.75217575, z: 0.08436745}
+        inSlope: {x: -0, y: -0, z: 0.17131805}
+        outSlope: {x: -0, y: -0, z: 0.17131805}
+        tangentMode: 0
+      - time: 0.6666667
+        value: {x: 0.0062039183, y: 0.75217575, z: 0.19857948}
+        inSlope: {x: -0, y: -0, z: 0.17131822}
+        outSlope: {x: 0.9882317, y: -0, z: -0}
+        tangentMode: 0
+      - time: 2
+        value: {x: 1.3238455, y: 0.75217575, z: 0.19857948}
+        inSlope: {x: 0.9882293, y: -0, z: -0}
+        outSlope: {x: 0.9882293, y: -0, z: -0}
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+    path: vagon_door_l
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: {x: 0.010950012, y: 0.75217575, z: 0.08436745}
+        inSlope: {x: -0, y: -0, z: 0.16965723}
+        outSlope: {x: -0, y: -0, z: 0.16965723}
+        tangentMode: 0
+      - time: 0.6666667
+        value: {x: 0.010950012, y: 0.75217575, z: 0.1974723}
+        inSlope: {x: -0, y: -0, z: 0.1696571}
+        outSlope: {x: -1.0065094, y: -0, z: -0}
+        tangentMode: 0
+      - time: 2
+        value: {x: -1.3310617, y: 0.75217575, z: 0.1974723}
+        inSlope: {x: -1.0065079, y: -0, z: -0}
+        outSlope: {x: -1.0065079, y: -0, z: -0}
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+    path: vagon_door_r
+  m_ScaleCurves:
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: {x: 1, y: 1, z: 1}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+      - time: 2
+        value: {x: 1, y: 1, z: 1}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+    path: vagon_door_l
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: {x: 1, y: 1, z: 1}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+      - time: 2
+        value: {x: 1, y: 1, z: 1}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+    path: vagon_door_r
+  m_FloatCurves: []
+  m_SampleRate: 30
+  m_WrapMode: 0
+  m_Bounds:
+    m_Center: {x: -0.0036084652, y: 1.0643935, z: 1.4567373}
+    m_Extent: {x: 2.8853462, y: 1.0619717, z: 0.13424516}
+  m_EditorCurves: []
+  m_EulerEditorCurves: []
+  m_Events: []

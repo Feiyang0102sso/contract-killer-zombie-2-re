@@ -1,0 +1,108 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!43 &4300000
+Mesh:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: SHS_Signboard_Shop
+  m_SubMeshes:
+  - firstByte: 0
+    indexCount: 28
+    isTriStrip: 2
+    triangleCount: 10
+    firstVertex: 0
+    vertexCount: 20
+    localAABB:
+      m_Center: {x: 0, y: -0.09111129, z: 0}
+      m_Extent: {x: 1.4493437, y: 0.091111645, z: 0.51234525}
+  m_MeshCompression: 0
+  m_IndexBuffer: 01000000030002000200050005000400080009000900060006000a000b000c000c00070007000d000e000f000f0012001200100011001300
+  m_Skin: []
+  m_BindPose: []
+  m_VertexData:
+    m_CurrentChannels: 31
+    m_VertexCount: 20
+    m_Streams[0]:
+      channelMask: 31
+      offset: 0
+      stride: 44
+      align: 16
+    m_Streams[1]:
+      channelMask: 0
+      offset: 0
+      stride: 0
+      align: 16
+    m_Streams[2]:
+      channelMask: 0
+      offset: 0
+      stride: 0
+      align: 16
+    m_Streams[3]:
+      channelMask: 0
+      offset: 0
+      stride: 0
+      align: 16
+    m_DataSize: 880
+    _typelessdata: 1884b93fa6983abe0f2903bf00000000000080bf00000000ffffffffbf3f653fb2ff833e93e77e3f0000803b1884b9bfa1983abe0f2903bf00000000000080bf00000000ffffffffbf3f653f787be53e0000803b0000803b1884b93fa6983abe0f29033f00000000000080bf00000000ffffffff1b00533fb4ff833e93e77e3fe782b53e1884b9bfa1983abe0a29033f00000000000080bf00000000ffffffff1b00533f7a7be53e0000803be482b53e1884b93f446488340f2903bf0000000000000000000080bfffffffff1b82653fa9fd7e3e0000803b735bf93e1884b9bfd249bf340f2903bf0000000000000000000080bfffffffff0044523fe1fd7e3e93e77e3f755bf93e1884b9bfd249bf340a29033f000080bf0000000000000000ffffffffbb81653fe1047f3ee482b53e009a1e3f1884b93f446488340f29033f00000000000000000000803fffffffff1b82653fa9fd7e3e93e77e3f2d6fd73e1884b9bfa1983abe0f2903bf0000000000000000000080bfffffffff0244523fe8ff833e93e77e3f2f6fd93e1884b93fa6983abe0f2903bf0000000000000000000080bfffffffff1d82653fccff833e0000803b2e6fd93e1884b9bfd249bf340f2903bf000080bf0000000000000000ffffffffd97d653fc9047f3e0000803b009a1e3f1884b9bfa1983abe0a29033f000080bf0000000000000000ffffffffbf81653f50fc833ee482b53edda30e3f1884b9bfa1983abe0f2903bf000080bf0000000000000000ffffffffdd7d653f44fc833e0000803bdda30e3f1884b9bfd249bf340a29033f00000000000000000000803fffffffff0044523fe1fd7e3e0000803b2e6fd73e1884b93fa6983abe0f29033f00000000000000000000803fffffffff1d82653fccff833e93e77e3fe782b73e1884b9bfa1983abe0a29033f00000000000000000000803fffffffff0244523fe8ff833e0000803be882b73e1884b93f446488340f29033f0000803f0000000000000000ffffffffb981653fe1047f3e0000803bdda30d3f1884b93fa6983abe0f2903bf0000803f0000000000000000ffffffffdd7d653f44fc833ee782b53e755bfb3e1884b93f446488340f2903bf0000803f0000000000000000ffffffffd97d653fc9047f3ee782b53edda30d3f1884b93fa6983abe0f29033f0000803f0000000000000000ffffffffbf81653f50fc833e0000803b755bfb3e
+  m_CompressedMesh:
+    m_Vertices:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data:
+      m_BitSize: 0
+    m_UV:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data:
+      m_BitSize: 0
+    m_BindPoses:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data:
+      m_BitSize: 0
+    m_Normals:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data:
+      m_BitSize: 0
+    m_Tangents:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data:
+      m_BitSize: 0
+    m_Weights:
+      m_NumItems: 0
+      m_Data:
+      m_BitSize: 0
+    m_NormalSigns:
+      m_NumItems: 0
+      m_Data:
+      m_BitSize: 0
+    m_TangentSigns:
+      m_NumItems: 0
+      m_Data:
+      m_BitSize: 0
+    m_BoneIndices:
+      m_NumItems: 0
+      m_Data:
+      m_BitSize: 0
+    m_Triangles:
+      m_NumItems: 0
+      m_Data:
+      m_BitSize: 0
+    m_Colors:
+      m_NumItems: 0
+      m_Data:
+      m_BitSize: 0
+  m_LocalAABB:
+    m_Center: {x: 0, y: -0.09111129, z: 0}
+    m_Extent: {x: 1.4493437, y: 0.091111645, z: 0.51234525}
+  m_MeshUsageFlags: 4
+  m_MeshOptimized: 1

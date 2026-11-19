@@ -1,0 +1,94 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  serializedVersion: 2
+  m_ObjectHideFlags: 1
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1447495587523804}
+  m_IsPrefabParent: 1
+  m_IsExploded: 0
+--- !u!1 &1447495587523804
+GameObject:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_Component:
+  - 4: {fileID: 4238281055241839}
+  - 114: {fileID: 114527744804858705}
+  m_Layer: 0
+  m_Name: Pistols2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4238281055241839
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1447495587523804}
+  m_LocalRotation: {x: -0.05266106, y: 0.67341346, z: 0.048195336, w: 0.73581135}
+  m_LocalPosition: {x: -43.094486, y: 0.051194668, z: -41.455265}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+--- !u!114 &114527744804858705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1447495587523804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a8f58131ca59d2d351e9985264cb909, type: 3}
+  m_Name:
+  HudIconTexturePath: WeaponIcons/Pistol1
+  ScopeModelPath:
+  ZoomModeFov: 35
+  Operation: 2
+  Ammunition: 0
+  ModelPath: Weapons/eagle
+  ModelTexturePath:
+  ModelTextureNormalMapPath:
+  IsAutomatic: 0
+  MaxAutofireDistance: 25.1
+  ReloadingTime: 2.33
+  ShotSound: pistol_shots
+  ReloadingSound: desert_eagle_reload
+  AnimationPrefix: pistols
+  CriticalMultiplier: 4
+  DefragProbability: 100
+  MutilationProbability: 0
+  TracerMaterial: {fileID: 2100000, guid: a8d726564aaf2e54f9d81c4952c57e48, type: 2}
+  TracerMesh: {fileID: 4300000, guid: 4042ed7e580854b4c9496959160e47ab, type: 2}
+  TracerWidth: 7
+  SmokeWidth: 0.125
+  SmokeTime: 0.5
+  TracerLengthScale: 100
+  TracerProgressiveWidth: 14
+  TracerProgressiveDistance: 50
+  NumPellets: 1
+  MuzzleVelocity: 250
+  BulletMass: 0.09
+  RateOfFire: 1.5
+  MaxAmmo: 24
+  AmmoClip: 12
+  SpreadAngleRunning: 3
+  SpreadAngleStanding: 2
+  SpreadAngleAiming: 1
+  Damage: 35
+  StunProbability: 10
+  DistanceWhenDamagePercent100: 11
+  DistanceWhenDamagePercent75: 18
+  DistanceWhenDamagePercent50: 21
+  DistanceWhenDamagePercent25: 23
+  DistanceWhenDamagePercent0: 25
+  BurstNumShots: 0
+  BurstRateOfFire: 0

@@ -1,0 +1,108 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!43 &4300000
+Mesh:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Gas_Station_Door_Back
+  m_SubMeshes:
+  - firstByte: 0
+    indexCount: 28
+    isTriStrip: 2
+    triangleCount: 10
+    firstVertex: 0
+    vertexCount: 20
+    localAABB:
+      m_Center: {x: -0.5207895, y: 0.004066727, z: 1.0298345}
+      m_Extent: {x: 0.5207895, y: 0.02395935, z: 1.0298345}
+  m_MeshCompression: 0
+  m_IndexBuffer: 000001000300020002000d000d000c000600070007000f000f000e000500100010001200120011000400130013000a000a00080009000b00
+  m_Skin: []
+  m_BindPose: []
+  m_VertexData:
+    m_CurrentChannels: 31
+    m_VertexCount: 20
+    m_Streams[0]:
+      channelMask: 31
+      offset: 0
+      stride: 44
+      align: 16
+    m_Streams[1]:
+      channelMask: 0
+      offset: 0
+      stride: 0
+      align: 16
+    m_Streams[2]:
+      channelMask: 0
+      offset: 0
+      stride: 0
+      align: 16
+    m_Streams[3]:
+      channelMask: 0
+      offset: 0
+      stride: 0
+      align: 16
+    m_DataSize: 880
+    _typelessdata: 765285bff296e53c00000000000000000000803f00000000ffffffff10762d3c06459a3e0000803b0000803b765285bff296e53cef990340000000000000803f00000000ffffffff10762d3c2557fd3eda53673f0000803b00000000f296e53c9ed10340000000000000803f00000000ffffffff26efde3d2557fd3e4fb5673fdc56eb3e00000000f296e53c00000000000000000000803f00000000ffffffff26efde3d06459a3e0000803bdc56eb3e00000000dbf5a2bc000000000000803f0000000000000000ffffffff508acb3d06459a3e4fb5673fdc566c3f00000000dbf5a2bc9ed1034071d655bb00000000a7ff7f3fffffffff508acb3d2557fd3e2d57eb3e0313793f765285bfdbf5a2bcef990340000080bf0000000000000000ffffffff5a4ea43c2557fd3eda53673fefb4723f765285bfdbf5a2bc00000000000080bf0000000000000000ffffffff5a4ea43c06459a3e0000803befb4723f765285bfdbf5a2bcef99034000000000000080bf00000000ffffffff10762d3c2557fd3eb1bab03bdc56ed3e00000000dbf5a2bc0000000000000000000080bf00000000ffffffff26efde3d06459a3e4fb5673fdc566b3f00000000dbf5a2bc9ed1034000000000000080bf00000000ffffffff26efde3d2557fd3e0000803bdc566b3f765285bfdbf5a2bc0000000000000000000080bf00000000ffffffff10762d3c06459a3e4fb5673fdc56ed3e765285bff296e53c00000000000080bf0000000000000000ffffffff10762d3c06459a3e0000803b0313783f765285bff296e53cef990340000080bf0000000000000000ffffffff10762d3c2557fd3eda53673f0313783f765285bff296e53cef99034070d655bb00000000a7ff7f3fffffffff10762d3c2557fd3e0000803b16717e3f00000000f296e53c9ed1034071d655bb00000000a7ff7f3fffffffff26efde3d2557fd3e2d57eb3e16717e3f765285bfdbf5a2bcef99034071d655bb00000000a7ff7f3fffffffff5a4ea43c2557fd3e0000803b0313793f00000000f296e53c9ed103400000803f0000000000000000ffffffff26efde3d2557fd3e0000803befb4713f00000000f296e53c000000000000803f0000000000000000ffffffff26efde3d06459a3e4fb5673fefb4713f00000000dbf5a2bc9ed103400000803f0000000000000000ffffffff508acb3d2557fd3e0000803bdc566c3f
+  m_CompressedMesh:
+    m_Vertices:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data:
+      m_BitSize: 0
+    m_UV:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data:
+      m_BitSize: 0
+    m_BindPoses:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data:
+      m_BitSize: 0
+    m_Normals:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data:
+      m_BitSize: 0
+    m_Tangents:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data:
+      m_BitSize: 0
+    m_Weights:
+      m_NumItems: 0
+      m_Data:
+      m_BitSize: 0
+    m_NormalSigns:
+      m_NumItems: 0
+      m_Data:
+      m_BitSize: 0
+    m_TangentSigns:
+      m_NumItems: 0
+      m_Data:
+      m_BitSize: 0
+    m_BoneIndices:
+      m_NumItems: 0
+      m_Data:
+      m_BitSize: 0
+    m_Triangles:
+      m_NumItems: 0
+      m_Data:
+      m_BitSize: 0
+    m_Colors:
+      m_NumItems: 0
+      m_Data:
+      m_BitSize: 0
+  m_LocalAABB:
+    m_Center: {x: -0.5207895, y: 0.004066727, z: 1.0298345}
+    m_Extent: {x: 0.5207895, y: 0.02395935, z: 1.0298345}
+  m_MeshUsageFlags: 4
+  m_MeshOptimized: 1
