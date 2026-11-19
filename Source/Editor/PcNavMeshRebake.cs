@@ -3,7 +3,7 @@
 // 放在工程根目录的 pc_data/navmesh/<旧 NavMesh 资源 GUID>.json。这里逐个打开场景：
 //   1. 按 pc_data/navmesh/scene_map.tsv（场景 -> 旧 NavMesh 资源 GUID）找到对应 JSON；
 //   2. 用射线把顶点贴到场景的真实地面（原版顶点高度是量化过的），再用这些多边形作为唯一输入构建 NavMeshData（代理半径取很小，因为原版多边形已经按半径收缩过）；
-//   3. 存成 Assets/PcNavMesh/<场景名>.asset，挂到场景的 NavMeshSettings.m_NavMeshData 上，保存场景。
+//   3. 存成 Assets/NewNavMesh/<场景名>.asset，挂到场景的 NavMeshSettings.m_NavMeshData 上，保存场景。
 // 批处理调用：Unity.exe -batchmode -quit -projectPath <工程> -executeMethod PcNavMeshRebake.RebakeAll -logFile <日志>
 using System.Collections.Generic;
 using System.IO;
@@ -17,7 +17,7 @@ public static class PcNavMeshRebake
 {
 	private const string JsonDir = "pc_data/navmesh";
 
-	private const string OutputDir = "Assets/PcNavMesh";
+	private const string OutputDir = "Assets/NewNavMesh";
 
 	private const string HolderName = "PcNavMesh";
 
