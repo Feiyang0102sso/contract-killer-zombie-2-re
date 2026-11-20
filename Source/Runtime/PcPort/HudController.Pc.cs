@@ -20,29 +20,23 @@ public partial class HudController
 	private const float PcPickUpRadius = 20f;
 
 	// ---- Key hint layout (HUD units, relative to the parent). Estimated; tune in game ----
-	// z: parent at 0, red banner at -0.5 (in front of parent), text at -1 (in front of banner).
+	// z: parent at 0, text at -1 (in front of parent).
 	/// <summary>HUD hint font size (ammo count is 9, RELOAD is 8).</summary>
 	private const float PcHintCharacterSize = 7f;
 	/// <summary>ESC: below the pause button, text only (as on Mac). Button is 10x10, anchored top-left.</summary>
 	private static readonly Vector3 PcHintPauseOffset = new Vector3(5f, -14f, -1f);
 	/// <summary>
-	/// Moves the ammo row (AmmoBack and the RELOAD blinker) down to make room for the SPACE banner, as on Mac.
-	/// Original: ammo panel center (-28.8, -31.2), height 13.
+	/// SPACE: between the weapon icon and the ammo row, relative to Weapon.
+	/// The ammo row (AmmoBack, ReloadLabel) was moved down by 6 in Hud.prefab to make room, as on Mac
+	/// (original ammo panel center (-28.8, -31.2), now (-28.8, -37.2); height 13).
 	/// </summary>
-	private static readonly Vector3 PcAmmoRowShift = new Vector3(0f, -6f, 0f);
-	/// <summary>SPACE: between the weapon icon and the (shifted) ammo row, relative to Weapon.</summary>
-	private static readonly Vector3 PcHintWeaponSelectOffset = new Vector3(-28.8f, -22f, -1f);
+	private static readonly Vector3 PcHintWeaponSelectOffset = new Vector3(-28.8f, -25.1f, -1f);
 	/// <summary>R: right below the ammo panel, relative to its center.</summary>
-	private static readonly Vector3 PcHintReloadOffset = new Vector3(0f, -12f, -1f);
-	/// <summary>SPACE / R banner size (ammo panel is 46 wide).</summary>
-	private const float PcBannerWidth = 40f;
-	private const float PcBannerHeight = 9f;
-	/// <summary>How far the banner sits behind its text (larger z = further back).</summary>
-	private const float PcBannerBehindText = 0.5f;
+	private static readonly Vector3 PcHintReloadOffset = new Vector3(0f, -10.2f, -1f);
 	/// <summary>Q / E: below the item list arrows (arrows are 11 tall).</summary>
 	private static readonly Vector3 PcHintItemArrowOffset = new Vector3(0f, -10f, -1f);
 	/// <summary>U: below the item icon.</summary>
-	private static readonly Vector3 PcHintUseItemOffset = new Vector3(0f, -16f, -1f);
+	private static readonly Vector3 PcHintUseItemOffset = new Vector3(0f, -19f, -1f);
 	/// <summary>Weapon wheel slot number: hex slot is 47x43; top-left corner, clear of BUY (top) and the name (bottom).</summary>
 	private static readonly Vector3 PcHintWeaponSlotOffset = new Vector3(-16f, 13f, -2f);
 	private const float PcHintWeaponSlotCharacterSize = 9f;
@@ -69,17 +63,9 @@ public partial class HudController
 	/// </summary>
 	private void CreatePcKeyHints()
 	{
-		// Banner template: an existing HUD UISingleSprite (bonus popup icon); only its components/material are reused
-		UISingleSprite bannerTemplate = _bonus.GetComponentInChildren<UISingleSprite>(true);
-		AmmoBack.transform.localPosition += PcAmmoRowShift;
-		ReloadLabel.transform.localPosition += PcAmmoRowShift;
-
 		PcKeyHints.Attach(AmmoLabel, _settingsButton.transform, KeyCode.Escape, PcHintPauseOffset, PcHintCharacterSize);
 
-		Vector3 bannerShift = new Vector3(0f, 0f, PcBannerBehindText);
-		PcKeyHints.AttachBanner(bannerTemplate, _hudWeapon.transform, PcHintWeaponSelectOffset + bannerShift, PcBannerWidth, PcBannerHeight);
 		PcKeyHints.Attach(AmmoLabel, _hudWeapon.transform, PcKeyBindings.WeaponSelect, PcHintWeaponSelectOffset, PcHintCharacterSize);
-		PcKeyHints.AttachBanner(bannerTemplate, AmmoBack.transform, PcHintReloadOffset + bannerShift, PcBannerWidth, PcBannerHeight);
 		PcKeyHints.Attach(AmmoLabel, AmmoBack.transform, PcKeyBindings.WeaponReload, PcHintReloadOffset, PcHintCharacterSize);
 
 		PcKeyHints.Attach(AmmoLabel, ConsumablesPrevButton.transform, PcKeyBindings.PreviousItem, PcHintItemArrowOffset, PcHintCharacterSize);
