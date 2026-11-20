@@ -537,6 +537,8 @@ public class RagdollManager : MonoBehaviourAndLog
 		if (_preinstanced.TryGetValue(prefab, out value))
 		{
 			ActivatePreinstancedObject(value, true);
+			// PC port: keep ragdoll joints from stretching under PhysX 4 (see PcRagdollJoints)
+			PcRagdollJoints.EnableProjection(value);
 			int num = _requested.FindIndex((GameObject x) => x == prefab);
 			if (num != -1)
 			{
@@ -546,11 +548,16 @@ public class RagdollManager : MonoBehaviourAndLog
 			_preinstanced.Remove(prefab);
 			return value;
 		}
-		return UnityEngine.Object.Instantiate(prefab) as GameObject;
+		GameObject created = UnityEngine.Object.Instantiate(prefab) as GameObject;
+		// PC port: keep ragdoll joints from stretching under PhysX 4 (see PcRagdollJoints)
+		PcRagdollJoints.EnableProjection(created);
+		return created;
 	}
 
 	public void Manage(GameObject gameObject)
 	{
+		// PC port: dismembered limb pieces come through here; keep their joints from stretching too
+		PcRagdollJoints.EnableProjection(gameObject);
 		if (IsRagdoll(gameObject))
 		{
 			_numRagdollsSpawnedThisFrame++;

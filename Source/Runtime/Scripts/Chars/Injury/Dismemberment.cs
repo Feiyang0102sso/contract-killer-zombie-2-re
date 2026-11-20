@@ -170,6 +170,10 @@ public class Dismemberment : MonoBehaviour
 				}
 			}
 			_hidingBones.Add(HeadBone.transform);
+			// PC port: the hidden head keeps its rigidbody and collider, scaled to 0.005 by LateUpdate. PhysX 4 recomputes
+			// the inertia from the shrunken collider, the near-zero inertia blows up the joint chain and flings or
+			// stretches the corpse. Drop its physics like the hidden hands and legs (it is invisible anyway).
+			DisableLimb(HeadBone);
 			HeadBone = null;
 		}
 		else if (bone == SpineBone)
@@ -192,8 +196,10 @@ public class Dismemberment : MonoBehaviour
 			}
 			RagdollManager.instance.ShowDismemberedJoint(SpineBone.transform, Vector3.forward, RagdollManager.LimbType.Spine);
 			_hidingBones.Add(SpineBone.transform);
-			SpineBone = null;
+			// PC port: the original nulls SpineBone before DisableLimb, so the hidden chest/head keep their physics at
+			// scale 0.005 (and 0.000025) and PhysX 4's near-zero inertia flings the hips and legs. Disable first.
 			DisableLimb(SpineBone);
+			SpineBone = null;
 			Rigidbody rootRigidBody = RagdollManager.GetRootRigidBody(base.gameObject);
 			if ((bool)rootRigidBody)
 			{
