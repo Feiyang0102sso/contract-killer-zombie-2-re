@@ -436,9 +436,11 @@ public partial class HudController : MonoBehaviourAndLog
 	public Vector2 GetCharacterMovementInput()
 	{
 		var result = _leftStick.GetVector();
-		// PC port: WASD overrides the stick while held
+		// PC port: WASD overrides the stick while held, but only while the stick itself is usable: the original hides it
+		// when zoomed in (and at survival gates), so the player cannot move there. Moving while zoomed would also widen
+		// the sniper spread from ~0.2 to 6 degrees (Firearm.Update).
 		Vector2 pcMovement = GetPcMovementInput();
-		if (pcMovement != Vector2.zero)
+		if (pcMovement != Vector2.zero && _leftStick.Visible)
 		{
 			result = pcMovement;
 		}
