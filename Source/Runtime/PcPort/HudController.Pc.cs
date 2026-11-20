@@ -20,7 +20,9 @@ public partial class HudController
 	private const float PcPickUpRadius = 20f;
 
 	// ---- Key hint layout (HUD units, relative to the parent). Estimated; tune in game ----
-	// z: parent at 0, text at -1 (in front of parent).
+	// z: parent at 0, text at -1 (in front of parent), red banner 0.5 behind its text (child of the text).
+	/// <summary>How far the banner sits behind its text (larger z = further back).</summary>
+	private const float PcBannerBehindText = 0.5f;
 	/// <summary>HUD hint font size (ammo count is 9, RELOAD is 8).</summary>
 	private const float PcHintCharacterSize = 7f;
 	/// <summary>ESC: below the pause button, text only (as on Mac). Button is 10x10, anchored top-left.</summary>
@@ -34,7 +36,7 @@ public partial class HudController
 	/// <summary>R: right below the ammo panel, relative to its center.</summary>
 	private static readonly Vector3 PcHintReloadOffset = new Vector3(0f, -10.2f, -1f);
 	/// <summary>Q / E: below the item list arrows (arrows are 11 tall).</summary>
-	private static readonly Vector3 PcHintItemArrowOffset = new Vector3(0f, -10f, -1f);
+	private static readonly Vector3 PcHintItemArrowOffset = new Vector3(1.2f, 0.2f, -1f);
 	/// <summary>U: below the item icon.</summary>
 	private static readonly Vector3 PcHintUseItemOffset = new Vector3(0f, -19f, -1f);
 	/// <summary>Weapon wheel slot number: hex slot is 47x43; top-left corner, clear of BUY (top) and the name (bottom).</summary>
@@ -60,17 +62,18 @@ public partial class HudController
 	/// Creates the key hints next to HUD buttons (called once at the end of Start).
 	/// Text template is AmmoLabel: a plain SpriteText with no localization or blinker to overwrite it.
 	/// Hints are children of the buttons, so they hide whenever the original code hides the button.
+	/// Red banners on SPACE / R / U only; ESC, Q / E and the weapon wheel numbers are text only.
 	/// </summary>
 	private void CreatePcKeyHints()
 	{
 		PcKeyHints.Attach(AmmoLabel, _settingsButton.transform, KeyCode.Escape, PcHintPauseOffset, PcHintCharacterSize);
 
-		PcKeyHints.Attach(AmmoLabel, _hudWeapon.transform, PcKeyBindings.WeaponSelect, PcHintWeaponSelectOffset, PcHintCharacterSize);
-		PcKeyHints.Attach(AmmoLabel, AmmoBack.transform, PcKeyBindings.WeaponReload, PcHintReloadOffset, PcHintCharacterSize);
+		AttachPcHintWithBanner(_hudWeapon.transform, PcKeyBindings.WeaponSelect, PcHintWeaponSelectOffset);
+		AttachPcHintWithBanner(AmmoBack.transform, PcKeyBindings.WeaponReload, PcHintReloadOffset);
 
-		PcKeyHints.Attach(AmmoLabel, ConsumablesPrevButton.transform, PcKeyBindings.PreviousItem, PcHintItemArrowOffset, PcHintCharacterSize);
-		PcKeyHints.Attach(AmmoLabel, ConsumablesNextButton.transform, PcKeyBindings.NextItem, PcHintItemArrowOffset, PcHintCharacterSize);
-		PcKeyHints.Attach(AmmoLabel, _consumablesScrollList.transform, PcKeyBindings.UseItem, PcHintUseItemOffset, PcHintCharacterSize);
+		AttachPcItemArrowHint(ConsumablesPrevButton.transform, PcKeyBindings.PreviousItem);
+		AttachPcItemArrowHint(ConsumablesNextButton.transform, PcKeyBindings.NextItem);
+		AttachPcHintWithBanner(_consumablesScrollList.transform, PcKeyBindings.UseItem, PcHintUseItemOffset);
 
 		AttachPcWeaponSlotHint("Melee", PcKeyBindings.Melee);
 		AttachPcWeaponSlotHint("Assault", PcKeyBindings.Assault);
@@ -78,6 +81,30 @@ public partial class HudController
 		AttachPcWeaponSlotHint("Handgun", PcKeyBindings.Handgun);
 		AttachPcWeaponSlotHint("Sniper", PcKeyBindings.Sniper);
 		AttachPcWeaponSlotHint("Shotgun", PcKeyBindings.Shotgun);
+	}
+
+	/// <summary>
+	/// Key hint plus red banner (child of the hint text, so they move together).
+	/// Banner template: an existing HUD UISingleSprite (bonus popup icon); only its components/material are reused.
+	/// </summary>
+	private void AttachPcHintWithBanner(Transform parent, KeyCode key, Vector3 offset)
+	{
+		SpriteText hint = PcKeyHints.Attach(AmmoLabel, parent, key, offset, PcHintCharacterSize);
+		UISingleSprite bannerTemplate = _bonus.GetComponentInChildren<UISingleSprite>(true);
+		PcKeyHints.AttachBanner(bannerTemplate, hint, PcBannerBehindText);
+	}
+
+	/// <summary>
+	/// Q / E under the item list arrows. LeftArrow in Hud.prefab is the right arrow rotated 180 degrees around z,
+	/// so the hint cancels its arrow's rotation: the text stays upright, and PcHintItemArrowOffset is in the
+	/// arrow's unrotated frame (same direction on both sides). PcHudLayoutTool converts back when saving.
+	/// </summary>
+	private void AttachPcItemArrowHint(Transform arrow, KeyCode key)
+	{
+		SpriteText hint = PcKeyHints.Attach(AmmoLabel, arrow, key, PcHintItemArrowOffset, PcHintCharacterSize);
+		Quaternion undoArrowRotation = Quaternion.Inverse(arrow.localRotation);
+		hint.transform.localRotation = undoArrowRotation;
+		hint.transform.localPosition = undoArrowRotation * PcHintItemArrowOffset;
 	}
 
 	/// <summary>Shows the number key in the top-left of wheel slot Hud/WeaponSelector/Slots/&lt;slotName&gt;.</summary>

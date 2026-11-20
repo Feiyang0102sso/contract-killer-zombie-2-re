@@ -352,7 +352,14 @@ public class PcHudLayoutTool : EditorWindow
 						continue;
 					}
 					// Shared constants (Q/E, weapon slots): the last moved one wins
-					hintValues[constant] = node.localPosition;
+					Vector3 offset = node.localPosition;
+					if (constant.Name == "PcHintItemArrowOffset")
+					{
+						// Q / E cancel their arrow's rotation (LeftArrow is turned 180 degrees), and the constant is in the
+						// arrow's unrotated frame: rotate the local position back (see HudController.AttachPcItemArrowHint)
+						offset = node.parent.localRotation * node.localPosition;
+					}
+					hintValues[constant] = offset;
 					continue;
 				}
 				List<string> namePath = GetNamePath(node);
@@ -437,6 +444,13 @@ public class PcHudLayoutTool : EditorWindow
 			foreach (KeyValuePair<string, string> pair in sources)
 			{
 				File.WriteAllText(pair.Key, pair.Value);
+			}
+			if (sources.Count > 0)
+			{
+				// File.WriteAllText bypasses the AssetDatabase: without a refresh, pressing Play right after saving
+				// runs the old code. In Play mode Unity recompiles once Play mode ends.
+				AssetDatabase.Refresh();
+				AddReport(report, "Source changed: scripts recompile now (or after Play mode ends)");
 			}
 		}
 
