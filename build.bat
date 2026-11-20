@@ -4,6 +4,7 @@ rem Unity is looked up in this order: the UNITY_EXE environment variable,
 rem D:\Unity\Unity <version>\Editor\Unity.exe, then the default Unity Hub location.
 rem The version comes from ProjectSettings\ProjectVersion.txt. Log: RunLogs\build.log.
 rem Comments are in English on purpose: cmd reads .bat files in the OEM code page.
+rem The window waits for a key at the end so the result stays readable.
 setlocal
 cd /d "%~dp0"
 
@@ -18,7 +19,8 @@ set "UNITY_EXE=%ProgramFiles%\Unity\Hub\Editor\%UNITY_VERSION%\Editor\Unity.exe"
 if not exist "%UNITY_EXE%" (
     echo [build] Unity %UNITY_VERSION% not found: %UNITY_EXE%
     echo [build] Set UNITY_EXE to the full path of Unity.exe and run again.
-    exit /b 1
+    set "EXIT_CODE=1"
+    goto :finish
 )
 
 rem Batch mode cannot open a project that the editor already has open.
@@ -27,7 +29,8 @@ if exist "Temp\UnityLockfile" (
 )
 if exist "Temp\UnityLockfile" (
     echo [build] Unity has this project open. Close the editor first.
-    exit /b 1
+    set "EXIT_CODE=1"
+    goto :finish
 )
 
 if not exist "RunLogs" mkdir "RunLogs"
@@ -42,7 +45,11 @@ set "EXIT_CODE=%ERRORLEVEL%"
 findstr /l /c:"[PcAssetBundleRebuild] done" /c:"[PcPilotBuild] result" "%LOG%"
 if not "%EXIT_CODE%"=="0" (
     echo [build] FAILED, exit code %EXIT_CODE%. See the log above.
-    exit /b %EXIT_CODE%
+    goto :finish
 )
 echo [build] done: %CD%\Builds\ckz2.exe
-exit /b 0
+
+:finish
+echo.
+pause
+exit /b %EXIT_CODE%
