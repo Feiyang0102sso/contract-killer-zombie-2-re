@@ -1,7 +1,9 @@
-// 把原版的光照贴图分配和光照探针写回场景：每个场景加一个 PcSceneLighting 物体（运行时组件见 PcPort/PcSceneLighting.cs）。
-// 数据由 tools/scene_lighting_extract.py 从未改动的导出提取，放在 pc_data/lighting/<场景名>.json。
-// 渲染器按组件的 fileID 对应（GlobalObjectId.targetObjectId；场景被 Unity 6 重存过 fileID 也不变）。可以重复运行。
-// 批处理调用：Unity.exe -batchmode -quit -projectPath <工程> -executeMethod PcSceneLightingRestore.RestoreAll -logFile <日志>
+// Writes the original lightmap assignment and light probes back into the scenes: each scene gets a PcSceneLighting
+// object (runtime component: PcPort/PcSceneLighting.cs).
+// Data comes from the untouched export via tools/scene_lighting_extract.py, in pc_data/lighting/<scene name>.json.
+// Renderers are matched by component fileID (GlobalObjectId.targetObjectId; it survives Unity 6 re-saving the scene).
+// Safe to run again: an existing PcSceneLighting object is reused, so a rerun only changes the fields.
+// Batch mode: Unity.exe -batchmode -quit -projectPath <project> -executeMethod PcSceneLightingRestore.RestoreAll -logFile <log>
 using System.Collections.Generic;
 using System.IO;
 
@@ -15,7 +17,7 @@ public static class PcSceneLightingRestore
 
 	private const string HolderName = "PcSceneLighting";
 
-	/// <summary>JSON 结构（与 scene_lighting_extract.py 的输出对应）。</summary>
+	/// <summary>JSON layout (matches the output of scene_lighting_extract.py).</summary>
 	[System.Serializable]
 	private class ProbeJson
 	{
@@ -23,6 +25,7 @@ public static class PcSceneLightingRestore
 		public float[] coefficients;
 		public int[] tetraIndices;
 		public int[] tetraNeighbors;
+		public float[] hullRays;
 	}
 
 	[System.Serializable]
@@ -55,6 +58,37 @@ public static class PcSceneLightingRestore
 		Debug.Log("[PcLightingRestore] done: " + scenes + " scenes");
 	}
 
+	/// <summary>The scene's PcSceneLighting component: the existing one if there is one, otherwise a new holder object.</summary>
+	private static PcSceneLighting GetOrCreateHolder(UnityEngine.SceneManagement.Scene scene)
+	{
+		foreach (GameObject root in scene.GetRootGameObjects())
+		{
+			if (root.name != HolderName)
+			{
+				continue;
+			}
+			PcSceneLighting existing = root.GetComponent<PcSceneLighting>();
+			if (existing != null)
+			{
+				return existing;
+			}
+		}
+		GameObject holder = new GameObject(HolderName);
+		return holder.AddComponent<PcSceneLighting>();
+	}
+
+	/// <summary>Flat xyz array -> Vector3 array.</summary>
+	private static Vector3[] ToVectors(float[] flat)
+	{
+		int count = flat.Length / 3;
+		Vector3[] vectors = new Vector3[count];
+		for (int i = 0; i < count; i++)
+		{
+			vectors[i] = new Vector3(flat[i * 3], flat[i * 3 + 1], flat[i * 3 + 2]);
+		}
+		return vectors;
+	}
+
 	private static void RestoreScene(SceneJson data)
 	{
 		UnityEngine.SceneManagement.Scene scene = EditorSceneManager.OpenScene(data.scenePath, OpenSceneMode.Single);
@@ -68,16 +102,7 @@ public static class PcSceneLightingRestore
 			}
 		}
 
-		// 旧的同名物体先删掉，保证可以重复运行
-		foreach (GameObject root in scene.GetRootGameObjects())
-		{
-			if (root.name == HolderName)
-			{
-				Object.DestroyImmediate(root);
-			}
-		}
-		GameObject holder = new GameObject(HolderName);
-		PcSceneLighting lighting = holder.AddComponent<PcSceneLighting>();
+		PcSceneLighting lighting = GetOrCreateHolder(scene);
 
 		List<Texture2D> lightmaps = new List<Texture2D>();
 		foreach (string guid in data.lightmapGuids)
@@ -113,20 +138,16 @@ public static class PcSceneLightingRestore
 		lighting.lightmapIndices = indices.ToArray();
 		lighting.lightmapScaleOffsets = scaleOffsets.ToArray();
 
-		int probeCount = data.probes.positions.Length / 3;
-		Vector3[] positions = new Vector3[probeCount];
-		for (int p = 0; p < probeCount; p++)
-		{
-			positions[p] = new Vector3(data.probes.positions[p * 3], data.probes.positions[p * 3 + 1], data.probes.positions[p * 3 + 2]);
-		}
-		lighting.probePositions = positions;
+		lighting.probePositions = ToVectors(data.probes.positions);
 		lighting.probeCoefficients = data.probes.coefficients;
 		lighting.tetraIndices = data.probes.tetraIndices;
 		lighting.tetraNeighbors = data.probes.tetraNeighbors;
+		lighting.hullRays = ToVectors(data.probes.hullRays);
 
+		EditorUtility.SetDirty(lighting);
 		EditorSceneManager.MarkSceneDirty(scene);
 		EditorSceneManager.SaveScene(scene);
 		Debug.Log("[PcLightingRestore] " + data.scenePath + ": lightmaps=" + lightmaps.Count + " renderers=" + renderers.Count
-			+ " missing=" + missing + " probes=" + probeCount);
+			+ " missing=" + missing + " probes=" + lighting.probePositions.Length + " hullRays=" + lighting.hullRays.Length);
 	}
 }

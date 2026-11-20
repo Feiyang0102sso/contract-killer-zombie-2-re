@@ -1,18 +1,20 @@
-"""从未改动的 ULegacy 导出里提取每个场景的光照贴图分配和光照探针，输出 JSON 供编辑器写回场景。
+"""Extract each scene's lightmap assignment and light probes from the untouched ULegacy export, as JSON for the editor to write back.
 
-Unity 6 打开 3.5 的场景时把这些数据丢了：
-    - LightmapSettings.m_Lightmaps（光照贴图列表）和 m_LightProbes（LightProbes 资源引用）；
-    - 每个渲染器的 m_LightmapIndex / m_LightmapTilingOffset（Unity 5 起改由 LightingDataAsset 保存）；
-    - 3.5 格式的 LightProbes 资源本身也读不了。
-所以场景里的物体全部没有光照贴图，用探针的角色拿到的 SH 是 0（全黑）。
+Unity 6 drops this data when it opens a 3.5 scene:
+    - LightmapSettings.m_Lightmaps (lightmap list) and m_LightProbes (LightProbes asset reference);
+    - every renderer's m_LightmapIndex / m_LightmapTilingOffset (Unity 5+ keeps them in the LightingDataAsset);
+    - the 3.5-format LightProbes asset itself cannot be read either.
+So nothing in the scenes has a lightmap, and probe-lit characters get SH = 0 (black).
 
-输出：<工程根目录>/pc_data/lighting/<场景名>.json，每个场景一个，字段见 build_scene_entry()。
-LightProbes 资源（3.5 格式 YAML）：
-    bakedPositions: 探针位置
-    bakedCoefficients: 每个探针 27 个浮点，sh[i*3+c] 是第 i 个系数的第 c 个颜色通道
-    tetrahedra: indices[0..3]（探针下标，外壳四面体的 indices[3] 为 -1）、neighbors[0..3]（与第 i 个顶点相对的面的邻居）
+Output: <project root>/pc_data/lighting/<scene name>.json, one per scene, fields in build_scene_entry().
+LightProbes asset (3.5-format YAML):
+    bakedPositions: probe positions
+    bakedCoefficients: 27 floats per probe, sh[i*3+c] is coefficient i of color channel c
+    tetrahedra: indices[0..3] (probe indices; outer cells have indices[3] = -1),
+                neighbors[0..3] (neighbor across the face opposite vertex i; for outer cells neighbors[3] is the inner tetrahedron)
+    hullRays: one per probe, the direction outer cells extrude along (zero for interior probes)
 
-用法：python scene_lighting_extract.py <导出根目录> <工程根目录>
+Usage: python scene_lighting_extract.py <export root> <project root>
 """
 
 import json
@@ -20,17 +22,18 @@ import re
 import sys
 from pathlib import Path
 
-RENDERER_CLASSES = {"23", "137"}   # MeshRenderer、SkinnedMeshRenderer
+RENDERER_CLASSES = {"23", "137"}   # MeshRenderer, SkinnedMeshRenderer
 NO_LIGHTMAP = 255
-LIGHTMAP_LIMIT = 254               # 0～253 是有效的光照贴图下标
+LIGHTMAP_LIMIT = 254               # 0..253 are valid lightmap indices
 DOCUMENT_HEADER = re.compile(r"^--- !u!(\d+) &(-?\d+)")
 GUID = re.compile(r"guid: ([0-9a-f]{32})")
 VECTOR4 = re.compile(r"\{x: ([-0-9.eE+]+), y: ([-0-9.eE+]+), z: ([-0-9.eE+]+), w: ([-0-9.eE+]+)\}")
 VECTOR3 = re.compile(r"\{x: ([-0-9.eE+]+), y: ([-0-9.eE+]+), z: ([-0-9.eE+]+)\}")
+PROBE_SECTIONS = ("bakedPositions:", "bakedCoefficients:", "tetrahedra:", "hullRays:")
 
 
 def build_guid_map(export_root):
-    """GUID → 资源路径（从 .meta 文件读）。"""
+    """GUID -> asset path (read from the .meta files)."""
     guid_map = {}
     for meta in export_root.joinpath("Assets").rglob("*.meta"):
         text = meta.read_text(encoding="utf-8", errors="ignore")
@@ -41,7 +44,7 @@ def build_guid_map(export_root):
 
 
 def split_documents(text):
-    """拆成 (classID, fileID, 正文行列表)。"""
+    """Split a YAML scene into (classID, fileID, body lines)."""
     documents = []
     current = None
     for line in text.splitlines():
@@ -55,7 +58,7 @@ def split_documents(text):
 
 
 def parse_lightmap_settings(lines):
-    """取 LightmapSettings 里的光照贴图 GUID 列表和 LightProbes 资源 GUID。"""
+    """Lightmap GUID list and LightProbes asset GUID from LightmapSettings."""
     lightmap_guids = []
     probes_guid = ""
     for line in lines:
@@ -74,7 +77,7 @@ def parse_lightmap_settings(lines):
 
 
 def parse_renderer(lines):
-    """取渲染器的光照贴图下标、缩放偏移和是否用探针。"""
+    """A renderer's lightmap index, scale/offset and whether it uses light probes."""
     index = NO_LIGHTMAP
     scale_offset = [1.0, 1.0, 0.0, 0.0]
     use_probes = False
@@ -93,22 +96,26 @@ def parse_renderer(lines):
 
 
 def parse_light_probes(path):
-    """解析 3.5 格式的 LightProbes 资源。返回扁平数组组成的字典。"""
+    """Parse a 3.5-format LightProbes asset into a dict of flat arrays."""
     positions = []
     coefficients = []
     tetra_indices = []
     tetra_neighbors = []
+    hull_rays = []
     section = ""
     for line in path.read_text(encoding="utf-8").splitlines():
         stripped = line.strip()
-        if stripped in ("bakedPositions:", "bakedCoefficients:", "tetrahedra:", "hullRays:"):
+        if stripped in PROBE_SECTIONS:
             section = stripped[:-1]
             continue
-        if section == "bakedPositions":
+        if section == "bakedPositions" or section == "hullRays":
             match = VECTOR3.search(stripped)
             if match:
                 for group in match.groups():
-                    positions.append(float(group))
+                    if section == "bakedPositions":
+                        positions.append(float(group))
+                    else:
+                        hull_rays.append(float(group))
         elif section == "bakedCoefficients":
             match = re.match(r"-?\s*sh\[(\d+)\]: ([-0-9.eE+]+)", stripped)
             if match:
@@ -125,16 +132,19 @@ def parse_light_probes(path):
         raise ValueError(f"{path}: {probe_count} probes but {len(coefficients)} coefficients")
     if len(tetra_indices) != len(tetra_neighbors):
         raise ValueError(f"{path}: tetrahedra indices/neighbors mismatch")
+    if len(hull_rays) != len(positions):
+        raise ValueError(f"{path}: {probe_count} probes but {len(hull_rays) // 3} hull rays")
     return {
         "positions": positions,
         "coefficients": coefficients,
         "tetraIndices": tetra_indices,
         "tetraNeighbors": tetra_neighbors,
+        "hullRays": hull_rays,
     }
 
 
 def build_scene_entry(scene_path, relative_path, guid_map):
-    """一个场景的 JSON 内容；没有任何光照数据时返回 None。"""
+    """JSON content of one scene; None when the scene has no lighting data at all."""
     lightmap_guids = []
     probes_guid = ""
     renderer_ids = []
@@ -142,7 +152,7 @@ def build_scene_entry(scene_path, relative_path, guid_map):
     renderer_scale_offsets = []
     probe_renderer_ids = []
     for class_id, file_id, lines in split_documents(scene_path.read_text(encoding="utf-8")):
-        if class_id == "157":   # LightmapSettings（3.5 的 classID）
+        if class_id == "157":   # LightmapSettings (3.5 classID)
             lightmap_guids, probes_guid = parse_lightmap_settings(lines)
         elif class_id in RENDERER_CLASSES:
             index, scale_offset, use_probes = parse_renderer(lines)
@@ -169,9 +179,10 @@ def build_scene_entry(scene_path, relative_path, guid_map):
 
 
 def main():
+    """Entry point."""
     export_root = Path(sys.argv[1])
-    pilot_root = Path(sys.argv[2])
-    output_dir = pilot_root / "pc_data" / "lighting"
+    project_root = Path(sys.argv[2])
+    output_dir = project_root / "pc_data" / "lighting"
     output_dir.mkdir(parents=True, exist_ok=True)
     guid_map = build_guid_map(export_root)
     count = 0
@@ -185,9 +196,9 @@ def main():
         if entry["probes"] is not None:
             probe_count = len(entry["probes"]["positions"]) // 3
             tetra_count = len(entry["probes"]["tetraIndices"]) // 4
-        # JsonUtility 不接受 null 的嵌套对象，没有探针时给空数组
+        # JsonUtility does not accept a null nested object: use empty arrays when there are no probes
         if entry["probes"] is None:
-            entry["probes"] = {"positions": [], "coefficients": [], "tetraIndices": [], "tetraNeighbors": []}
+            entry["probes"] = {"positions": [], "coefficients": [], "tetraIndices": [], "tetraNeighbors": [], "hullRays": []}
         output = output_dir / (scene_path.stem + ".json")
         output.write_text(json.dumps(entry), encoding="utf-8")
         print(f"{relative_path}: lightmaps={len(entry['lightmapGuids'])} lightmapped={len(entry['rendererFileIds'])} "
