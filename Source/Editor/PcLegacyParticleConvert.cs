@@ -1,9 +1,9 @@
-// 把旧版粒子（Unity 3.5 的 EllipsoidParticleEmitter / ParticleAnimator / ParticleRenderer / WorldParticleCollider）
-// 转成 ParticleSystem + ParticleSystemRenderer + PcPort/LegacyParticleEmitter。
-// 旧参数由 tools/legacy_particles_extract.py 从未改动的导出里提取，放在 pc_data/particles/legacy_particles.json，
-// 以 GameObject 的 fileID 为键（工程素材是导出的副本，场景被 Unity 6 重存过 fileID 也不变）。
-// 可以重复运行：已经有 ParticleSystem / LegacyParticleEmitter 的物体会被重新设置，不会重复添加。
-// 批处理调用：Unity.exe -batchmode -quit -projectPath <工程> -executeMethod PcLegacyParticleConvert.ConvertAll -logFile <日志>
+// Converts legacy particles (Unity 3.5 EllipsoidParticleEmitter / ParticleAnimator / ParticleRenderer / WorldParticleCollider)
+// into ParticleSystem + ParticleSystemRenderer + PcPort/LegacyParticleEmitter.
+// Legacy parameters are extracted from the untouched export by tools/legacy_particles_extract.py into
+// pc_data/particles/legacy_particles.json, keyed by GameObject fileID (stable even after Unity 6 re-saves the scene).
+// Safe to re-run: objects that already have ParticleSystem / LegacyParticleEmitter are reconfigured, not duplicated.
+// Batch mode: Unity.exe -batchmode -quit -projectPath <project> -executeMethod PcLegacyParticleConvert.ConvertAll -logFile <log>
 using System.Collections.Generic;
 using System.IO;
 
@@ -15,26 +15,29 @@ public static class PcLegacyParticleConvert
 {
 	private const string JsonPath = "pc_data/particles/legacy_particles.json";
 
-	/// <summary>粒子上限：旧版没有上限，这里给一个足够大的值。</summary>
+	/// <summary>Particle cap: legacy particles had none, so use a large enough value.</summary>
 	private const int MaxParticles = 1000;
 
-	/// <summary>限速模块只用来做阻尼，速度上限给一个不会触发的值。</summary>
+	/// <summary>The limit-velocity module is only used for damping; the speed limit itself never triggers.</summary>
 	private const float NoSpeedLimit = 100000f;
 
-	/// <summary>旧版阻尼按每秒乘 damping 理解，换成线性阻力 drag = -ln(damping)；damping 过小时截断。</summary>
+	/// <summary>Legacy damping multiplies velocity by damping per second, i.e. drag = -ln(damping); clamp tiny values.</summary>
 	private const float MinDamping = 0.0001f;
 
-	/// <summary>尺寸增长曲线的采样点数。</summary>
+	/// <summary>Number of samples on the size growth curve.</summary>
 	private const int SizeCurveKeys = 5;
 
-	// 旧版 ParticleRenderMode 的序列化值
+	/// <summary>Smallest growth base (1 + sizeGrow) passed to pow.</summary>
+	private const float MinGrowthBase = 0.0001f;
+
+	// Serialized values of the legacy ParticleRenderMode
 	private const int LegacyBillboard = 0;
 	private const int LegacySortedBillboard = 2;
 	private const int LegacyStretch = 3;
 	private const int LegacyHorizontalBillboard = 4;
 	private const int LegacyVerticalBillboard = 5;
 
-	/// <summary>一个物体上的旧版粒子参数（与 legacy_particles_extract.py 的输出对应）。</summary>
+	/// <summary>Legacy particle parameters of one object (matches the output of legacy_particles_extract.py).</summary>
 	[System.Serializable]
 	private class LegacyEntry
 	{
@@ -95,7 +98,7 @@ public static class PcLegacyParticleConvert
 	public static void ConvertAll()
 	{
 		LegacyFile file = JsonUtility.FromJson<LegacyFile>(File.ReadAllText(JsonPath));
-		// 按资源分组，保持 JSON 里的顺序
+		// Group by asset, keeping the JSON order
 		Dictionary<string, List<LegacyEntry>> byAsset = new Dictionary<string, List<LegacyEntry>>();
 		List<string> assetOrder = new List<string>();
 		foreach (LegacyEntry entry in file.entries)
@@ -135,7 +138,7 @@ public static class PcLegacyParticleConvert
 		Debug.Log("[PcLegacyParticle] done: converted " + converted + ", missing " + missing);
 	}
 
-	/// <summary>转换一个场景，返回 [转换数, 找不到的物体数]。</summary>
+	/// <summary>Converts one scene; returns [converted, missing].</summary>
 	private static int[] ConvertScene(string scenePath, List<LegacyEntry> entries)
 	{
 		UnityEngine.SceneManagement.Scene scene = EditorSceneManager.OpenScene(scenePath, OpenSceneMode.Single);
@@ -168,8 +171,9 @@ public static class PcLegacyParticleConvert
 	}
 
 	/// <summary>
-	/// 转换一个预制体，返回 [转换数, 找不到的物体数]。
-	/// 预制体资源里的物体能查到 fileID，但改动要在 LoadPrefabContents 的副本上做，所以用“从根开始的子物体序号路径”对应过去。
+	/// Converts one prefab; returns [converted, missing].
+	/// fileIDs are only known on the prefab asset, but edits must go to the LoadPrefabContents copy,
+	/// so objects are matched by their sibling-index path from the root.
 	/// </summary>
 	private static int[] ConvertPrefab(string prefabPath, List<LegacyEntry> entries)
 	{
@@ -215,7 +219,7 @@ public static class PcLegacyParticleConvert
 		return new int[] { converted, missing };
 	}
 
-	/// <summary>从根到该物体的子物体序号列表。</summary>
+	/// <summary>Sibling indices from the root down to this object.</summary>
 	private static List<int> SiblingPath(Transform transform)
 	{
 		List<int> path = new List<int>();
@@ -243,7 +247,7 @@ public static class PcLegacyParticleConvert
 		return new Vector3(values[0], values[1], values[2]);
 	}
 
-	/// <summary>给物体加上（或重新设置）ParticleSystem、渲染器和 LegacyParticleEmitter。</summary>
+	/// <summary>Adds (or reconfigures) ParticleSystem, its renderer and LegacyParticleEmitter on the object.</summary>
 	private static void Apply(GameObject target, LegacyEntry entry)
 	{
 		ParticleSystem system = target.GetComponent<ParticleSystem>();
@@ -272,7 +276,7 @@ public static class PcLegacyParticleConvert
 			main.scalingMode = ParticleSystemScalingMode.Hierarchy;
 		}
 
-		// 发射交给 LegacyParticleEmitter
+		// Emission is driven by LegacyParticleEmitter
 		ParticleSystem.EmissionModule emission = system.emission;
 		emission.enabled = false;
 		ParticleSystem.ShapeModule shape = system.shape;
@@ -315,7 +319,7 @@ public static class PcLegacyParticleConvert
 		EditorUtility.SetDirty(target);
 	}
 
-	/// <summary>旧版颜色动画：5 个颜色在寿命里均匀分布。</summary>
+	/// <summary>Legacy color animation: 5 colors spread evenly over the lifetime.</summary>
 	private static void ApplyColorAnimation(ParticleSystem system, LegacyEntry entry)
 	{
 		ParticleSystem.ColorOverLifetimeModule colorModule = system.colorOverLifetime;
@@ -340,8 +344,9 @@ public static class PcLegacyParticleConvert
 	}
 
 	/// <summary>
-	/// 旧版 sizeGrow 按每秒指数增长理解：size(t) = size0 * exp(sizeGrow * t)。
-	/// ParticleSystem 的尺寸曲线按归一化寿命取值，这里用平均寿命换算，寿命不同的粒子会有少许偏差。
+	/// Legacy sizeGrow: ParticleAnimator::UpdateParticles multiplies size by powf(1 + sizeGrow, deltaTime) every frame
+	/// (verified in the original binary), so size(t) = size0 * (1 + sizeGrow)^t.
+	/// The size curve uses normalized lifetime, so convert with the mean energy; particles with other lifetimes drift slightly.
 	/// </summary>
 	private static void ApplySizeGrow(ParticleSystem system, LegacyEntry entry)
 	{
@@ -352,16 +357,18 @@ public static class PcLegacyParticleConvert
 			return;
 		}
 		float meanEnergy = (entry.minEnergy + entry.maxEnergy) * 0.5f;
+		// Keep the pow base positive (sizeGrow <= -1)
+		float growthBase = Mathf.Max(1f + entry.sizeGrow, MinGrowthBase);
 		Keyframe[] keys = new Keyframe[SizeCurveKeys];
 		float maxValue = 0f;
 		for (int i = 0; i < SizeCurveKeys; i++)
 		{
 			float time = i / (float)(SizeCurveKeys - 1);
-			float value = Mathf.Exp(entry.sizeGrow * time * meanEnergy);
+			float value = Mathf.Pow(growthBase, time * meanEnergy);
 			keys[i] = new Keyframe(time, value);
 			maxValue = Mathf.Max(maxValue, value);
 		}
-		// 曲线值归一化到 0～1，倍数放进 multiplier
+		// Normalize the curve to 0-1 and move the scale into the multiplier
 		for (int i = 0; i < SizeCurveKeys; i++)
 		{
 			keys[i].value = keys[i].value / maxValue;
@@ -374,7 +381,7 @@ public static class PcLegacyParticleConvert
 		sizeModule.size = new ParticleSystem.MinMaxCurve(maxValue, curve);
 	}
 
-	/// <summary>旧版 force（恒定）和 rndForce（每帧随机，取 -rnd 到 +rnd）。</summary>
+	/// <summary>Legacy force (constant) and rndForce (random per frame, -rnd to +rnd).</summary>
 	private static void ApplyForce(ParticleSystem system, LegacyEntry entry)
 	{
 		Vector3 force = ToVector(entry.force);
@@ -403,7 +410,7 @@ public static class PcLegacyParticleConvert
 		}
 	}
 
-	/// <summary>旧版 damping（1 = 不减速）换成限速模块的线性阻力。</summary>
+	/// <summary>Legacy damping (1 = no slowdown) mapped to linear drag of the limit-velocity module.</summary>
 	private static void ApplyDamping(ParticleSystem system, LegacyEntry entry)
 	{
 		ParticleSystem.LimitVelocityOverLifetimeModule limit = system.limitVelocityOverLifetime;
@@ -421,7 +428,7 @@ public static class PcLegacyParticleConvert
 		limit.multiplyDragByParticleVelocity = false;
 	}
 
-	/// <summary>旧版 UV 动画：x/y 方向的格数和寿命内的循环次数；循环 0 次表示停在第一帧。</summary>
+	/// <summary>Legacy UV animation: x/y tile counts and cycles per lifetime; 0 cycles keeps the first frame.</summary>
 	private static void ApplyUvAnimation(ParticleSystem system, LegacyEntry entry)
 	{
 		ParticleSystem.TextureSheetAnimationModule sheet = system.textureSheetAnimation;
@@ -447,7 +454,7 @@ public static class PcLegacyParticleConvert
 		}
 	}
 
-	/// <summary>旧版 WorldParticleCollider：与场景碰撞体碰撞、反弹。能量损失（按秒扣寿命）没有对应项，忽略。</summary>
+	/// <summary>Legacy WorldParticleCollider: collide and bounce off scene colliders. Energy loss has no equivalent and is ignored.</summary>
 	private static void ApplyCollision(ParticleSystem system, LegacyEntry entry)
 	{
 		ParticleSystem.CollisionModule collision = system.collision;
