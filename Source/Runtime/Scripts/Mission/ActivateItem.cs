@@ -106,6 +106,8 @@ public class ActivateItem : MonoBehaviourAndLog
 			node.active = false;
 			return true;
 		});
+		// PC port: 3.5 keeps the Item_* model visible under the now inactive item (see PcLegacyActive)
+		PcLegacyActive.RescueAfterDisappear(gameObject);
 	}
 
 	private void OnEnterArea(AreaVisitInfo info)

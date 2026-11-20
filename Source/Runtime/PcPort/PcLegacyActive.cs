@@ -1,22 +1,27 @@
-// PC 移植：补上 Unity 3.5 的“非层级 active”语义在任务系统里的效果。
+// PC port: restores the effect of Unity 3.5's non-hierarchical "active" where the game relies on it.
 //
-// 3.5 的 GameObject.active 只管物体自己：父物体失活，子物体只要自己的 active 是 true，照样运行、渲染、收消息。
-// Unity 4 起改成层级失活：父物体一失活，整棵子树都停。
-// Mission.DeactivateNode 是照 3.5 语义写的：
-//   - [Action] 节点执行完只把节点本身 active = false，子物体（Effect、Fade、刷出来的僵尸等）在 3.5 里继续运行，
-//     例如教程关 “3.1) [Action] remove copter & fade-in” 的 Effect 要延时 Invoke 后广播 OnEffect，让白屏淡出；
-//   - [Task] 节点结束时逐个关掉子物体，但特意跳过 Character 和 ActivateItem（以及不随使用消失的 Item_*），它们在 3.5 里留在场上。
-// 在 Unity 6 里这些子物体都随父节点一起失活：教程爆炸后一直白屏、任务下面的幸存者和僵尸凭空消失。
-// 做法：DeactivateNode 结束后，把节点子树里“自己 active 为 true、但祖先被关掉”的物体移到节点的父物体下（保持世界位置），
-// 让它们像 3.5 那样继续运行。见 tools/README.md 白天修复第 2 节。
+// In 3.5, GameObject.active only affects the object itself: children whose own flag is true keep running,
+// rendering and receiving messages under an inactive parent. From Unity 4 on, deactivating a parent stops the whole subtree.
+// Code written against the 3.5 semantics:
+//   - Mission.DeactivateNode: an [Action] node only sets itself inactive when done; its children (Effect, Fade,
+//     spawned zombies, ...) keep running in 3.5. E.g. the Effect of the tutorial's "3.1) [Action] remove copter & fade-in"
+//     must Invoke OnEffect later to fade the white screen out.
+//     A [Task] node switches its children off one by one but skips Character and ActivateItem (and Item_* that stay after use).
+//   - ActivateItem.Disappear: switches the item off but keeps its Item_* model (when !disappearsAfterUse),
+//     so a used one-shot ammo crate leaves its empty crate in place in 3.5.
+// In Unity 6 those children go inactive with their parent: white screen after the tutorial explosion, survivors and
+// zombies under a task vanish, used ammo crates vanish.
+// Fix: after the original code runs, move objects that are active themselves but have a deactivated ancestor
+// out of the deactivated subtree (keeping world position), so they keep running as in 3.5.
+// See tools/README.md, daytime fixes section 2.
 using System.Collections.Generic;
 using UnityEngine;
 
 public static class PcLegacyActive
 {
 	/// <summary>
-	/// 在 Mission.DeactivateNode 末尾调用：节点已失活时，把子树里按 3.5 语义仍应运行的物体移出来。
-	/// 只移最上层的那个（它的子物体跟着走）；不深入自己 active 为 true 的物体内部。
+	/// Called at the end of Mission.DeactivateNode: if the node is inactive, moves out the objects that should keep
+	/// running under 3.5 semantics. Only the topmost one is moved (its children go with it).
 	/// </summary>
 	public static void RescueLegacyActiveChildren(GameObject node)
 	{
@@ -34,7 +39,30 @@ public static class PcLegacyActive
 		}
 	}
 
-	/// <summary>parent 已失活：它的子物体里自己 active 的收进 rescued，失活的继续往下找。</summary>
+	/// <summary>
+	/// Called at the end of ActivateItem.Disappear: keeps the Item_* model of a used item visible (e.g. the empty ammo crate).
+	/// Moved to the scene root, not the item's parent: in 3.5 nothing switches it off later (DeactivateNode stops at the
+	/// ActivateItem), but under the parent a later DeactivateNode of an enclosing [Task] would reach it. The root also keeps
+	/// it out of the child list DeactivateNode may be iterating when it calls Disappear.
+	/// </summary>
+	public static void RescueAfterDisappear(GameObject item)
+	{
+		if (item.activeSelf)
+		{
+			return;
+		}
+		List<Transform> rescued = new List<Transform>();
+		CollectActiveUnderInactive(item.transform, rescued);
+		foreach (Transform child in rescued)
+		{
+			child.SetParent(null, true);
+			// still goes away when the item is destroyed, as it did as a child in 3.5
+			child.gameObject.AddComponent<PcLegacyShell>().Init(item);
+			Debug.Log("[PcLegacyActive] keep '" + child.name + "' after '" + item.name + "' disappeared");
+		}
+	}
+
+	/// <summary>parent is inactive: collects its children that are active themselves, searches deeper under inactive ones.</summary>
 	private static void CollectActiveUnderInactive(Transform parent, List<Transform> rescued)
 	{
 		for (int i = 0; i < parent.childCount; i++)
