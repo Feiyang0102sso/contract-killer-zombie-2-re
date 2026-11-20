@@ -41,6 +41,11 @@ public class PcHudLayoutTool : EditorWindow
 	/// <summary>Default step of the nudge buttons, in UI units.</summary>
 	private const float DefaultNudgeStep = 1f;
 
+	/// <summary>Parent of crate P hints (ActivateItem's ButtonCenter/Button).</summary>
+	private const string PickUpHintParentName = "Button";
+	/// <summary>Scene view size (m) when focusing a crate P hint: icon and crate lid both in view.</summary>
+	private const float PickUpHintViewSize = 1.5f;
+
 	private const string HudHintSource = "Source/Runtime/PcPort/HudController.Pc.cs";
 	private const string PickUpHintSource = "Source/Runtime/PcPort/PcKeyHints.cs";
 
@@ -142,6 +147,13 @@ public class PcHudLayoutTool : EditorWindow
 		}
 		GUI.enabled = true;
 		EditorGUILayout.EndHorizontal();
+
+		GUI.enabled = Application.isPlaying;
+		if (GUILayout.Button("Focus nearest crate P hint"))
+		{
+			FocusNearestPickUpHint();
+		}
+		GUI.enabled = true;
 
 		// Fallback when a move was not picked up automatically
 		GUI.enabled = Application.isPlaying && Selection.transforms.Length > 0;
@@ -510,6 +522,58 @@ public class PcHudLayoutTool : EditorWindow
 		sceneView.Repaint();
 		_status = string.Empty;
 		Debug.Log("[PcHudLayoutTool] scene view focused on the Gui layer");
+	}
+
+	/// <summary>
+	/// 3D view on the crate P hint (ammo crate / bonus box) nearest to the game camera: leaves 2D mode, shows all
+	/// layers (crates are on Gui3d, hidden by "Focus Scene view on HUD"), selects the hint and looks at it the way the
+	/// game camera does. The hint is only drawn while the crate's text is shown, so stand next to the crate first.
+	/// </summary>
+	private void FocusNearestPickUpHint()
+	{
+		SceneView sceneView = SceneView.lastActiveSceneView;
+		if (sceneView == null)
+		{
+			_status = "Open a Scene view first.";
+			return;
+		}
+		Camera gameCamera = Camera.main;
+		if (gameCamera == null)
+		{
+			_status = "No game camera.";
+			return;
+		}
+		Transform nearestHint = null;
+		float nearestDistance = float.PositiveInfinity;
+		foreach (PcKeyHintRoot hint in FindObjectsByType<PcKeyHintRoot>(FindObjectsSortMode.None))
+		{
+			// Crate hints sit under ActivateItem's ButtonCenter/Button
+			if (hint.transform.parent == null || hint.transform.parent.name != PickUpHintParentName)
+			{
+				continue;
+			}
+			float distance = Vector3.Distance(hint.transform.position, gameCamera.transform.position);
+			if (distance < nearestDistance)
+			{
+				nearestDistance = distance;
+				nearestHint = hint.transform;
+			}
+		}
+		if (nearestHint == null)
+		{
+			_status = "No crate P hint in the scene.";
+			return;
+		}
+
+		RestoreSceneLayers();
+		sceneView.in2DMode = false;
+		sceneView.orthographic = false;
+		Selection.activeGameObject = nearestHint.gameObject;
+		EditorGUIUtility.PingObject(nearestHint.gameObject);
+		sceneView.LookAt(nearestHint.position, gameCamera.transform.rotation, PickUpHintViewSize);
+		sceneView.Repaint();
+		_status = string.Empty;
+		Debug.Log("[PcHudLayoutTool] scene view on " + string.Join("/", GetNamePath(nearestHint)));
 	}
 
 	private void RestoreSceneLayers()

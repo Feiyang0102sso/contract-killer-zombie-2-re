@@ -19,8 +19,13 @@ public static class PcKeyHints
 	// ---- Pick-up hint under 3D icons (Button local space: height 1, centered, scale 0.7) ----
 	/// <summary>Font size: 0.2 x 0.7 ~= the 0.14 text above the icon.</summary>
 	private const float PickUpHintCharacterSize = 0.2f;
-	/// <summary>Right below the icon.</summary>
-	private static readonly Vector3 PickUpHintLocalPosition = new Vector3(0f, -0.65f, 0f);
+	/// <summary>
+	/// Right below the blue icon ring (the ring is smaller than the 1 x 1 quad; -0.65 sat on the crate lid and
+	/// inside the taller ammo crate). Shared by ammo crates and bonus boxes; tune with CKZ2/HUD Layout Tool.
+	/// z: pulled toward the camera (Button -z faces the camera; z scale 0.05, so -8 ~= 0.4 m) so the crate model
+	/// right under the icon doesn't cover the hint. The Button faces the camera, so this barely moves it on screen.
+	/// </summary>
+	private static readonly Vector3 PickUpHintLocalPosition = new Vector3(0f, -0.45f, -0.73f);
 	/// <summary>Pick-up banner behind the text (Button +z faces away from the camera; z scale 0.05, so 0.2 ~= 1 cm).</summary>
 	private const float PickUpBannerBehindZ = 0.2f;
 
@@ -39,6 +44,11 @@ public static class PcKeyHints
 	private const float BannerExtraWidth = 2.2f;
 	private const float BannerMinWidth = 3.2f;
 	private const float BannerHeight = 2.2f;
+	/// <summary>
+	/// Alpha-blended sprite shader of the HUD. Banners always use it: the 3D icon Button (pick-up banner template)
+	/// is additive, which tints the red banner by whatever is behind it (orange over the green ammo crate).
+	/// </summary>
+	private const string BannerShaderName = "Sprite/Vertex Colored, Fast";
 
 	/// <summary>
 	/// Clones template into a key hint under parent at localPosition.
@@ -111,6 +121,16 @@ public static class PcKeyHints
 		banner.pixelPerfect = false;
 		banner.autoResize = false;
 		banner.SetTexture(sheet);
+		// SetTexture already gave the banner its own material instance, so changing the shader affects only it
+		Shader bannerShader = Shader.Find(BannerShaderName);
+		if (bannerShader != null)
+		{
+			bannerObject.GetComponent<Renderer>().material.shader = bannerShader;
+		}
+		else
+		{
+			Debug.LogWarning("[PcKeyHints] banner shader not found: " + BannerShaderName);
+		}
 		banner.SetAnchor(SpriteRoot.ANCHOR_METHOD.MIDDLE_CENTER);
 		banner.SetUVs(GetBannerUv(BannerIndex));
 		banner.SetSize(width, height);
@@ -145,10 +165,14 @@ public static class PcKeyHints
 	/// Text template is the ActivateItem's own Text (world-space SpriteText on Gui3d).
 	/// Parented to the Button, which faces the camera every frame and deactivates when far away.
 	/// Banner template is the Button itself.
+	/// Shown only together with itemText ("Collect bonus" etc.), not whenever the icon is visible.
 	/// </summary>
 	public static void AttachPickUpHint(SpriteText itemText, UISingleSprite button)
 	{
 		SpriteText hint = Attach(itemText, button.transform, PcKeyBindings.PickUpItem, PickUpHintLocalPosition, PickUpHintCharacterSize);
 		AttachBanner(button, hint, PickUpBannerBehindZ);
+		// After the banner exists, so its renderer is included
+		PcPickUpHintVisibility visibility = hint.gameObject.AddComponent<PcPickUpHintVisibility>();
+		visibility.Init(itemText.GetComponent<Renderer>());
 	}
 }
