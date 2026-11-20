@@ -43,11 +43,12 @@ public class StorageManager
 		}
 	}
 
+	/// <summary>PC port: a Cache folder next to the exe instead of Application.temporaryCachePath (see PcPaths).</summary>
 	public static string TemporaryCachePath
 	{
 		get
 		{
-			return Application.temporaryCachePath;
+			return PcPaths.CacheDir;
 		}
 	}
 

@@ -148,7 +148,8 @@ namespace Glu.ABTesting
 				}
 				if (!flag)
 				{
-					string pathName = Path.Combine(Application.temporaryCachePath, Path.GetFileName(m_filename));
+					// PC port: cache folder next to the exe (PcPaths), not in AppData
+					string pathName = Path.Combine(StorageManager.TemporaryCachePath, Path.GetFileName(m_filename));
 					try
 					{
 						m_data = StorageManager.ReadXmlFromLocation(pathName, m_data.GetType()) as List<KeyValuePair<string, object>>;

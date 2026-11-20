@@ -362,7 +362,8 @@ namespace Glu.ABTesting
 		{
 			get
 			{
-				return !(!string.IsNullOrEmpty(BuildInfo.buildTag)) ? Application.temporaryCachePath : Path.Combine(Application.temporaryCachePath, BuildInfo.buildTag);
+				// PC port: cache folder next to the exe (PcPaths), not in AppData
+				return !(!string.IsNullOrEmpty(BuildInfo.buildTag)) ? StorageManager.TemporaryCachePath : Path.Combine(StorageManager.TemporaryCachePath, BuildInfo.buildTag);
 			}
 		}
 

@@ -10,7 +10,8 @@ public class MemoryInfoLogger : LoggerSingleton<MemoryInfoLogger>
 		{
 			LoggerSingleton<MemoryInfoLogger>.RemoveHandler(LoggerSingleton<MemoryInfoLogger>.GetHandler(i));
 		}
-		string temporaryCachePath = Application.temporaryCachePath;
+		// PC port: cache folder next to the exe (PcPaths), not in AppData
+		string temporaryCachePath = StorageManager.TemporaryCachePath;
 		string path = Path.Combine(temporaryCachePath, "memory_log.txt");
 		Logging.IHandler handler = new Logging.FileHandler(path, FileMode.Create);
 		Logging.SimpleFormatter formatter = new Logging.SimpleFormatter();

@@ -383,7 +383,8 @@ namespace Glu.AssetBundles
 
 		private static string GetPathToCache()
 		{
-			string text = Application.temporaryCachePath;
+			// PC port: cache folder next to the exe (PcPaths), not in AppData
+			string text = StorageManager.TemporaryCachePath;
 			if (string.IsNullOrEmpty(text))
 			{
 				text = ".";

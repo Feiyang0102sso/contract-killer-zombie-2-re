@@ -1,59 +1,125 @@
-// PC port: when the game quits, copy this run's player log next to the exe as "<exe name>.log" (Builds\ckz2.log).
-// Unity itself writes the log to %USERPROFILE%\AppData\LocalLow\<company>\<product>\Player.log; the copy is just
-// easier to find. Lines Unity writes after Application.quitting (engine shutdown) are not in the copy.
-// A crash skips Application.quitting, so after a crash read Player.log instead.
+// PC port: the Unity log is written live next to the exe as "<exe name>.log" (Builds\ckz2.log); the previous run's log
+// is kept as "<exe name>-prev.log". Unity's own Player.log (AppData\LocalLow) is turned off in the player settings
+// (usePlayerLog: 0), so nothing is written to C:\Users\...\AppData.
+// Everything that reaches Application.logMessageReceivedThreaded is recorded: script logs, exceptions, and the engine
+// errors/warnings Unity reports through the log callback. Pure engine startup output (GPU, driver...) is not, so a short
+// system header is written instead. Written as it happens, so the file survives a crash or a killed process.
+using System;
 using System.IO;
+using System.Text;
 using UnityEngine;
 
 public static class PcPlayerLog
 {
-	/// <summary>Suffix of the "<exe name>_Data" folder that Application.dataPath points at.</summary>
-	private const string DataFolderSuffix = "_Data";
+	/// <summary>Suffix of the previous run's log ("ckz2-prev.log").</summary>
+	private const string PreviousSuffix = "-prev";
 
-	/// <summary>Extension of the copied log.</summary>
-	private const string LogExtension = ".log";
+	private static readonly object WriterLock = new object();
 
-	[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+	private static StreamWriter _writer;
+
+	[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
 	private static void Install()
 	{
-		// The editor has its own Editor.log and no exe next to the data folder
+		// The editor has its own Editor.log
 		if (Application.isEditor)
 		{
 			return;
 		}
-		Application.quitting += CopyLogNextToExe;
-		Debug.Log("[PcPlayerLog] will copy " + Application.consoleLogPath + " to " + GetTargetPath() + " on quit");
-	}
-
-	/// <summary>Builds\ckz2_Data -> Builds\ckz2.log</summary>
-	private static string GetTargetPath()
-	{
-		string dataDir = Application.dataPath;
-		string rootDir = Path.GetDirectoryName(dataDir);
-		string exeName = Path.GetFileName(dataDir);
-		if (exeName.EndsWith(DataFolderSuffix))
+		string logPath = PcPaths.UnityLogPath;
+		if (!Open(logPath))
 		{
-			exeName = exeName.Substring(0, exeName.Length - DataFolderSuffix.Length);
-		}
-		return Path.Combine(rootDir, exeName + LogExtension);
-	}
-
-	private static void CopyLogNextToExe()
-	{
-		string sourcePath = Application.consoleLogPath;
-		if (string.IsNullOrEmpty(sourcePath) || !File.Exists(sourcePath))
-		{
-			Debug.LogWarning("[PcPlayerLog] no player log to copy (started with -nolog?)");
 			return;
 		}
-		string targetPath = GetTargetPath();
-		Debug.Log("[PcPlayerLog] copying log to " + targetPath);
-		// Unity keeps Player.log open for writing, so share ReadWrite instead of File.Copy
-		using (FileStream input = new FileStream(sourcePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+		WriteHeader();
+		Application.logMessageReceivedThreaded += OnLogMessage;
+		Application.quitting += Close;
+		Debug.Log("[PcPlayerLog] logging to " + logPath);
+	}
+
+	/// <summary>The window only has its real size once the first scene is loaded (at startup it reports a placeholder).</summary>
+	[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
+	private static void LogDisplay()
+	{
+		if (Application.isEditor)
 		{
-			using (FileStream output = new FileStream(targetPath, FileMode.Create, FileAccess.Write))
+			return;
+		}
+		Debug.Log("[PcPlayerLog] screen " + Screen.width + "x" + Screen.height + " " + Screen.fullScreenMode);
+	}
+
+	/// <summary>Keeps the previous log as -prev and opens a fresh one. False if the file is in use (another instance).</summary>
+	private static bool Open(string logPath)
+	{
+		string previousPath = Path.Combine(Path.GetDirectoryName(logPath),
+			Path.GetFileNameWithoutExtension(logPath) + PreviousSuffix + Path.GetExtension(logPath));
+		try
+		{
+			if (File.Exists(logPath))
 			{
-				input.CopyTo(output);
+				File.Copy(logPath, previousPath, true);
+			}
+			FileStream stream = new FileStream(logPath, FileMode.Create, FileAccess.Write, FileShare.Read);
+			_writer = new StreamWriter(stream, new UTF8Encoding(false));
+			_writer.AutoFlush = true;
+			return true;
+		}
+		catch (IOException exception)
+		{
+			// Another running instance holds the log: carry on without a file log rather than fail the start
+			Debug.LogWarning("[PcPlayerLog] cannot open " + logPath + ": " + exception.Message);
+			return false;
+		}
+	}
+
+	private static void WriteHeader()
+	{
+		StringBuilder header = new StringBuilder();
+		header.AppendLine("CK Zombies 2 PC log, started " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
+		header.AppendLine("Unity " + Application.unityVersion + ", " + SystemInfo.operatingSystem);
+		header.AppendLine("CPU " + SystemInfo.processorType + " x" + SystemInfo.processorCount + ", RAM " + SystemInfo.systemMemorySize + " MB");
+		header.AppendLine("GPU " + SystemInfo.graphicsDeviceName + " (" + SystemInfo.graphicsDeviceVersion + "), VRAM " + SystemInfo.graphicsMemorySize + " MB");
+		header.AppendLine("Command line: " + Environment.CommandLine);
+		header.AppendLine();
+		Write(header.ToString());
+	}
+
+	private static void OnLogMessage(string message, string stackTrace, LogType type)
+	{
+		StringBuilder entry = new StringBuilder();
+		entry.Append(DateTime.Now.ToString("HH:mm:ss.fff"));
+		entry.Append(" [");
+		entry.Append(type);
+		entry.Append("] ");
+		entry.AppendLine(message);
+		// Plain logs without their stack keep the file readable; warnings and errors keep it
+		if (type != LogType.Log && !string.IsNullOrEmpty(stackTrace))
+		{
+			entry.AppendLine(stackTrace.TrimEnd());
+		}
+		Write(entry.ToString());
+	}
+
+	private static void Write(string text)
+	{
+		lock (WriterLock)
+		{
+			if (_writer != null)
+			{
+				_writer.Write(text);
+			}
+		}
+	}
+
+	private static void Close()
+	{
+		Write(DateTime.Now.ToString("HH:mm:ss.fff") + " [Log] quit" + Environment.NewLine);
+		lock (WriterLock)
+		{
+			if (_writer != null)
+			{
+				_writer.Dispose();
+				_writer = null;
 			}
 		}
 	}

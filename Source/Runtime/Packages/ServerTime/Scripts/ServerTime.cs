@@ -53,7 +53,8 @@ public class ServerTime : MonoBehaviour
 
 	private bool _repeatRequest;
 
-	private static string _localSaveFilePath = Path.Combine(Application.temporaryCachePath, "servertimedata.dat");
+	// PC port: cache folder next to the exe (PcPaths), not in AppData
+	private static string _localSaveFilePath = Path.Combine(StorageManager.TemporaryCachePath, "servertimedata.dat");
 
 	private ServerTimeData _data;
 

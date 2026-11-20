@@ -41,7 +41,8 @@ public class ForcedUpdate : MonoBehaviour
 			_instance = gameObject.AddComponent<ForcedUpdate>();
 			_instance._checkStatusURL = url;
 			_instance._currentVersion = currentVersion;
-			_instance._lockFileName = Application.temporaryCachePath + "/fucache" + currentVersion + ".dat";
+			// PC port: cache folder next to the exe (PcPaths), not in AppData
+			_instance._lockFileName = StorageManager.TemporaryCachePath + "/fucache" + currentVersion + ".dat";
 			UnityEngine.Object.DontDestroyOnLoad(gameObject);
 		}
 	}

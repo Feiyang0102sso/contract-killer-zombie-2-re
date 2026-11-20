@@ -1299,9 +1299,9 @@ public static class Logging
 			}
 			if (flag && runtimeConfig.FileHandlerEnabled)
 			{
-				string temporaryCachePath = Application.temporaryCachePath;
-				string text = Path.Combine(temporaryCachePath, "log.txt");
-				string destFileName = Path.Combine(temporaryCachePath, "log.bak");
+				// PC port: <exe name>.game.log next to the exe instead of log.txt / log.bak in the AppData temp folder
+				string text = PcPaths.GameLogPath;
+				string destFileName = text + ".bak";
 				if (File.Exists(text))
 				{
 					File.Copy(text, destFileName, true);
