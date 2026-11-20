@@ -355,9 +355,9 @@ public class PcHudLayoutTool : EditorWindow
 					Vector3 offset = node.localPosition;
 					if (constant.Name == "PcHintItemArrowOffset")
 					{
-						// Q / E cancel their arrow's rotation (LeftArrow is turned 180 degrees), and the constant is in the
-						// arrow's unrotated frame: rotate the local position back (see HudController.AttachPcItemArrowHint)
-						offset = node.parent.localRotation * node.localPosition;
+						// Q / E cancel their arrow's rotation (LeftArrow is turned 180 degrees) and mirror x:
+						// convert back to the shared constant (see HudController.AttachPcItemArrowHint)
+						offset = HudController.PcItemArrowLocalToOffset(node.parent, node.localPosition);
 					}
 					hintValues[constant] = offset;
 					continue;

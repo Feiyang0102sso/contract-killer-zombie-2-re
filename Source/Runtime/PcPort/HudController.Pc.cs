@@ -35,8 +35,11 @@ public partial class HudController
 	private static readonly Vector3 PcHintWeaponSelectOffset = new Vector3(-28.8f, -25.1f, -1f);
 	/// <summary>R: right below the ammo panel, relative to its center.</summary>
 	private static readonly Vector3 PcHintReloadOffset = new Vector3(0f, -10.2f, -1f);
-	/// <summary>Q / E: below the item list arrows (arrows are 11 tall).</summary>
-	private static readonly Vector3 PcHintItemArrowOffset = new Vector3(1.2f, 0.2f, -1f);
+	/// <summary>
+	/// Q / E: below the item list arrows (arrows are 11 tall). Given for E (right arrow); Q mirrors it left/right,
+	/// so x = toward the arrow's tip, y = screen up (see PcItemArrowOffsetToLocal).
+	/// </summary>
+	private static readonly Vector3 PcHintItemArrowOffset = new Vector3(-0.8f, 0.2f, -1f);
 	/// <summary>U: below the item icon.</summary>
 	private static readonly Vector3 PcHintUseItemOffset = new Vector3(0f, -19f, -1f);
 	/// <summary>Weapon wheel slot number: hex slot is 47x43; top-left corner, clear of BUY (top) and the name (bottom).</summary>
@@ -96,15 +99,34 @@ public partial class HudController
 
 	/// <summary>
 	/// Q / E under the item list arrows. LeftArrow in Hud.prefab is the right arrow rotated 180 degrees around z,
-	/// so the hint cancels its arrow's rotation: the text stays upright, and PcHintItemArrowOffset is in the
-	/// arrow's unrotated frame (same direction on both sides). PcHudLayoutTool converts back when saving.
+	/// so the hint cancels its arrow's rotation (text stays upright) and its offset is mirrored left/right,
+	/// so Q and E sit symmetrically on their triangles.
 	/// </summary>
 	private void AttachPcItemArrowHint(Transform arrow, KeyCode key)
 	{
 		SpriteText hint = PcKeyHints.Attach(AmmoLabel, arrow, key, PcHintItemArrowOffset, PcHintCharacterSize);
-		Quaternion undoArrowRotation = Quaternion.Inverse(arrow.localRotation);
-		hint.transform.localRotation = undoArrowRotation;
-		hint.transform.localPosition = undoArrowRotation * PcHintItemArrowOffset;
+		hint.transform.localRotation = Quaternion.Inverse(arrow.localRotation);
+		hint.transform.localPosition = PcItemArrowOffsetToLocal(arrow, PcHintItemArrowOffset);
+	}
+
+	/// <summary>
+	/// PcHintItemArrowOffset -> hint local position under arrow.
+	/// The offset is screen-aligned with x flipped for an arrow that points left: x = toward the tip, y = up.
+	/// </summary>
+	public static Vector3 PcItemArrowOffsetToLocal(Transform arrow, Vector3 offset)
+	{
+		// +1 for the right arrow, -1 for the left one (rotated 180 degrees)
+		float tipDirection = Mathf.Sign((arrow.localRotation * Vector3.right).x);
+		Vector3 screenOffset = new Vector3(offset.x * tipDirection, offset.y, offset.z);
+		return Quaternion.Inverse(arrow.localRotation) * screenOffset;
+	}
+
+	/// <summary>Inverse of PcItemArrowOffsetToLocal; used by PcHudLayoutTool when saving a dragged Q / E.</summary>
+	public static Vector3 PcItemArrowLocalToOffset(Transform arrow, Vector3 localPosition)
+	{
+		float tipDirection = Mathf.Sign((arrow.localRotation * Vector3.right).x);
+		Vector3 screenOffset = arrow.localRotation * localPosition;
+		return new Vector3(screenOffset.x * tipDirection, screenOffset.y, screenOffset.z);
 	}
 
 	/// <summary>Shows the number key in the top-left of wheel slot Hud/WeaponSelector/Slots/&lt;slotName&gt;.</summary>
