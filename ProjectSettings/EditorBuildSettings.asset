@@ -2,86 +2,131 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!1045 &1
 EditorBuildSettings:
-  serializedVersion: 2
   m_ObjectHideFlags: 0
+  serializedVersion: 2
   m_Scenes:
   - enabled: 1
     path: Assets/Scenes/_Basic/_Intro.unity
+    guid: 3d90e36265b007b40b940e535fc49507
   - enabled: 1
     path: Assets/Scenes/_Basic/_Start.unity
+    guid: 8e2f67cba8b91b34585efd1dda878142
   - enabled: 1
     path: Assets/Scenes/_Basic/CityMap.unity
+    guid: 87b3f8a5ac1e102428c6c7c8b109ec6a
   - enabled: 1
     path: Assets/Scenes/_Basic/Loading.unity
+    guid: 76fc125e079c96142b65e1d80829e19c
   - enabled: 1
     path: Assets/Scenes/Lab_Blue_DaVinci.unity
+    guid: 3bd9c9af6b9cfb94b9613c1a211077b9
   - enabled: 1
     path: Assets/Scenes/Lab_Green_Cloning1.1.unity
+    guid: b16e0fb3ec6ba3f488ed34468bf075ff
   - enabled: 1
     path: Assets/Scenes/Lab_Green_Cloning2.unity
+    guid: 98bd6f4f01479ca4aa3935c7da941b75
   - enabled: 1
     path: Assets/Scenes/Lab_Red_ParticleAccelerator.unity
+    guid: 689a2fed5ba25f149ab5d308ea467b62
   - enabled: 1
     path: Assets/Scenes/Lab_Red_DataAnalysis.unity
+    guid: 7d27f648e6eea034c9d99e5f30c202a7
   - enabled: 1
     path: Assets/Scenes/Lab_Blue_MeetingRoom.unity
+    guid: 4939c3bc432c8e846a393ca52fb4c063
   - enabled: 1
     path: Assets/Scenes/Outdoor_GasStation_DAY.unity
+    guid: a9285bb87e930404ba51db02ff38cc3f
   - enabled: 1
     path: Assets/Scenes/Outdoor_Survival_Mode.unity
+    guid: 346c318715b1bfb4b9018de8e625ef11
   - enabled: 1
     path: Assets/Scenes/Outdoor_Store.unity
+    guid: 8c9ea8f4c0ce0f84ab8f1f1a5557f410
   - enabled: 1
     path: Assets/Scenes/Outdoor_GasStation_NIGHT.unity
+    guid: 747c33e32a0fe9c468f2e87e965ca895
   - enabled: 1
     path: Assets/Scenes/FPS_Base_test.unity
+    guid: 91d03d2fa940df644adf7603820808af
   - enabled: 1
     path: Assets/Scenes/Outdoor_Store_Tutorial.unity
+    guid: 4212e9e8fb3899843be822208b0ff127
   - enabled: 1
     path: Assets/Scenes/Outdoor_Square.unity
+    guid: f50cdb3e435f2bf48b9a484f53cf1c73
   - enabled: 1
     path: Assets/Scenes/Outdoor_Square_Night.unity
+    guid: adf9c52e99ac95f48923006f37c50091
   - enabled: 1
     path: Assets/Scenes/Outdoor_GasStation_DAY_Story2.unity
+    guid: 70d8c5b4e553e3e41a64de1b815f0d6d
   - enabled: 1
     path: Assets/Scenes/Outdoor_Store_Night.unity
+    guid: 449e499f4dd8aaf4ebb34bd8acc827df
   - enabled: 1
     path: Assets/Scenes/_Trimmed/Lab_Blue_DaVinci_trimmed.unity
+    guid: 72190388cfa6d794384712c596fc1501
   - enabled: 1
     path: Assets/Scenes/_Trimmed/Lab_Green_Cloning1.1_trimmed.unity
+    guid: c3982860573e22944bb74b65222bd678
   - enabled: 1
     path: Assets/Scenes/_Trimmed/Lab_Green_Cloning2_trimmed.unity
+    guid: d4ffe57c1ee0b054ebc3f58f94ed7ca8
   - enabled: 1
     path: Assets/Scenes/_Trimmed/Lab_Red_ParticleAccelerator_trimmed.unity
+    guid: b3b948fc096b52449a92766cff2bfb55
   - enabled: 1
     path: Assets/Scenes/_Trimmed/Outdoor_GasStation_DAY_Story2_trimmed.unity
+    guid: cc27455f719f9a24ca5bb5bebda2445f
   - enabled: 1
     path: Assets/Scenes/_Trimmed/Lab_Red_DataAnalysis_trimmed.unity
+    guid: 1af95f16b4d69cb4abb08383c23584df
   - enabled: 1
     path: Assets/Scenes/_Trimmed/Lab_Blue_MeetingRoom_trimmed.unity
+    guid: 2298d721048929842aec350c92608ddc
   - enabled: 1
     path: Assets/Scenes/_Trimmed/Outdoor_GasStation_DAY_trimmed.unity
+    guid: 1ae9f5f111d0d854a828ccae98f4fae7
   - enabled: 1
     path: Assets/Scenes/_Trimmed/Outdoor_Survival_Mode_trimmed.unity
+    guid: 4849fe89340fcf84f89996565def8675
   - enabled: 1
     path: Assets/Scenes/_Trimmed/Outdoor_Store_trimmed.unity
+    guid: 706f266df6612b649ac240d4e1bcfb2f
   - enabled: 1
     path: Assets/Scenes/_Trimmed/Outdoor_GasStation_NIGHT_trimmed.unity
+    guid: 449c33d38797e624684b8b0eb2fcfa1e
   - enabled: 1
     path: Assets/Scenes/_Trimmed/Outdoor_Store_Tutorial_trimmed.unity
+    guid: c65cf021b4160654d960d89cdd228e05
   - enabled: 1
     path: Assets/Scenes/_Trimmed/Outdoor_Square_trimmed.unity
+    guid: 750e5073303370f478d43f9d5efe116a
   - enabled: 1
     path: Assets/Scenes/Indoor_Survival_grey.unity
+    guid: 83dd78b751ff4d6458941427652e1d89
   - enabled: 1
     path: Assets/Scenes/_Trimmed/Indoor_Survival_grey_trimmed.unity
+    guid: 4c3d791c228bd7647a6265031bef44ac
   - enabled: 1
     path: Assets/Scenes/_Trimmed/Outdoor_Square_Night_trimmed.unity
+    guid: 235e00115d069914689238a09a50eeef
   - enabled: 1
     path: Assets/Scenes/_Trimmed/Outdoor_Store_Night_trimmed.unity
+    guid: f84bd2871c6ba644cadf6ba54129a2f9
   - enabled: 1
     path: Assets/Scenes/_Trimmed/FPS_Base_test_trimmed.unity
+    guid: b3b094adeb0726e42a0fb12d541f6578
   - enabled: 1
     path: Assets/Scenes/_Trimmed/Outdoor_GasStation_DAY_Story2_trimmed.unity
+    guid: cc27455f719f9a24ca5bb5bebda2445f
   - enabled: 1
     path: Assets/Scenes/_Trimmed/ThePit_trimmed.unity
+    guid: 8434ca786171fd644bc09277db20e5f0
+  - enabled: 1
+    path: Assets/Scenes/_TestMaps/TestMap_Crates.unity
+    guid: 46b1a36d4fe719d4bbacef5543237ae6
+  m_configObjects: {}
+  m_UseUCBPForAssetBundles: 0

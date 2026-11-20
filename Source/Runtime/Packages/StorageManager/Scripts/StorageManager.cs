@@ -36,6 +36,8 @@ public class StorageManager
 		{
 			string rootDir = Path.GetDirectoryName(Application.dataPath);
 			string saveDir = Path.Combine(rootDir, SaveDirName);
+			// PC port: editor test maps use their own temporary save (Save/TestMap)
+			saveDir = PcTestMap.GetSaveDir(saveDir);
 			Directory.CreateDirectory(saveDir);
 			return saveDir;
 		}
