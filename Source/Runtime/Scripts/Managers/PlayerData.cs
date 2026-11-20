@@ -1623,8 +1623,14 @@ public class PlayerData : MonoBehaviourAndLog
 
 	private void FirstStart()
 	{
-		HardCurrency = 3;
-		SoftCurrency = Singleton.GameData.GetPlayerLevelData(1).LevelUpSC;
+		// PC port: start with 999,999 of both currencies (original: HardCurrency = 3, SoftCurrency = GetPlayerLevelData(1).LevelUpSC, which is 0).
+		// Write the save fields directly: FirstStart runs inside PlayerData.Awake, before Singleton._playerData is assigned,
+		// and the SoftCurrency setter logs any increase through GameAnalytics.GetPlayerLevel() -> Singleton.PlayerData.Level,
+		// which throws a NullReferenceException there and aborts the rest of FirstStart (no XP, weapons or consumables).
+		// The setters' other side effects are not needed here: nothing is subscribed to the change events yet,
+		// and _flush is set at the end of this method.
+		_data.HardCurrency = 999999;
+		_data.SoftCurrency = 999999;
 		XP = 1;
 		AddConsumable(Singleton.GameData.StartConsumable, Singleton.GameData.StartConsumableCount);
 		AddWeapon(Singleton.GameData.StartHandgunWeapon);
