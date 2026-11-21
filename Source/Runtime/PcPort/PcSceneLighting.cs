@@ -15,7 +15,8 @@
 //      barycentric weights inside that triangle. (Clamping an inner tetrahedron instead lit one side only, e.g. the
 //      level-up screen Evelyn, who stands 140 m outside the CityMap probe hull.)
 //      Renderers spawned at runtime (BlendProbes) are picked up by a scan every frame, before they are first drawn
-//      (a slower scan left new corpses black for up to 0.5 s).
+//      (a slower scan left new corpses black for up to 0.5 s). Clones of tracked renderers arrive as CustomProvided without
+//      the property block (Instantiate does not copy it) and are picked up the same way.
 // GetInterpolatedLightProbe replaces 3.5's LightProbes.GetInterpolatedLightProbe (used by the game's LightProbeSampler).
 using System.Collections.Generic;
 using UnityEngine;
@@ -276,14 +277,20 @@ public class PcSceneLighting : MonoBehaviour
 		return 1f;
 	}
 
-	/// <summary>Finds renderers still on Unity's own probes (BlendProbes) and switches them to SH provided here.</summary>
+	/// <summary>
+	/// Finds renderers still on Unity's own probes (BlendProbes) and switches them to SH provided here.
+	/// Also takes over untracked CustomProvided renderers: Instantiate of a live tracked renderer (Dismemberment clones the
+	/// zombie's head bone) copies lightProbeUsage but not the MaterialPropertyBlock, so the clone would render with SH = 0 (black).
+	/// </summary>
 	private void ScanProbeRenderers()
 	{
 		Renderer[] renderers = FindObjectsByType<Renderer>(FindObjectsSortMode.None);
 		int added = 0;
 		foreach (Renderer target in renderers)
 		{
-			if (target.lightProbeUsage != LightProbeUsage.BlendProbes)
+			bool isBlendProbes = target.lightProbeUsage == LightProbeUsage.BlendProbes;
+			bool isUntrackedCustom = target.lightProbeUsage == LightProbeUsage.CustomProvided && !_shScales.ContainsKey(target);
+			if (!isBlendProbes && !isUntrackedCustom)
 			{
 				continue;
 			}
