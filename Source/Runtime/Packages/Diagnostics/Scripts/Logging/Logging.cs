@@ -1299,7 +1299,7 @@ public static class Logging
 			}
 			if (flag && runtimeConfig.FileHandlerEnabled)
 			{
-				// PC port: <exe name>.game.log next to the exe instead of log.txt / log.bak in the AppData temp folder
+				// PC port: Logs\<exe name>.game.log next to the exe instead of log.txt / log.bak in the AppData temp folder
 				string text = PcPaths.GameLogPath;
 				string destFileName = text + ".bak";
 				if (File.Exists(text))

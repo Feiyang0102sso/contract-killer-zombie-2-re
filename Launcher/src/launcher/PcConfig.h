@@ -6,6 +6,10 @@
 
 #include <windows.h>
 
+// ---- Files ----
+// Log folder next to the exe; must match PcPaths.LogDirName in the game.
+const wchar_t* const kLogDirectoryName = L"Logs";
+
 // ---- Registry ----
 // Unity stores screen settings and PlayerPrefs under HKCU\Software\<companyName>\<productName> (Player Settings).
 // The launcher deletes the game key before and after every run, so nothing stays in the registry.

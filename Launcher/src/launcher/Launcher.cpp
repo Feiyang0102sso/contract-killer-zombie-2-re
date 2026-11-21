@@ -6,7 +6,7 @@
 //      Unity's registry key.
 // Game process (-ckz2-game): runs the engine (UnityMain2 in UnityPlayer.dll). UnityMain2 never returns, the engine
 // ends the process itself, which is why the cleanup lives in the launcher process.
-// Log: <exe name>.launcher.log next to the exe, rewritten every run (launcher process only).
+// Log: Logs\<exe name>.launcher.log next to the exe (with the game's logs), rewritten every run (launcher process only).
 #define NOMINMAX
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
@@ -610,7 +610,11 @@ static int RunLauncher(LPWSTR commandLine)
     std::wstring basePath = GetExeBasePath();
     std::wstring exePath = basePath + L".exe";
     std::wstring configPath = basePath + L".cfg";
-    std::wstring logPath = basePath + L".launcher.log";
+    // Logs\ next to the exe, shared with the game's logs (PcPaths.LogDir)
+    std::wstring exeDirectory = GetDirectory(basePath);
+    std::wstring logDirectory = exeDirectory + L"\\" + kLogDirectoryName;
+    CreateDirectoryW(logDirectory.c_str(), nullptr);
+    std::wstring logPath = logDirectory + basePath.substr(exeDirectory.size()) + L".launcher.log";
     g_logFile = _wfopen(logPath.c_str(), L"w, ccs=UTF-8");
     Log(L"[launcher] start, command line: %ls", commandLine);
 

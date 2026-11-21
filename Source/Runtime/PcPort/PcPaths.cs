@@ -1,7 +1,8 @@
 // PC port: every file the game writes stays next to the exe instead of C:\Users\...\AppData.
-//   build:  <exe dir>\Cache\              (replaces Application.temporaryCachePath)
-//           <exe dir>\<exe name>.game.log  (the game's own Glu log, was log.txt in the temp folder)
-//           <exe dir>\<exe name>.log       (Unity log, written by PcPlayerLog; Unity's Player.log is turned off)
+//   build:  <exe dir>\Cache\                   (replaces Application.temporaryCachePath)
+//           <exe dir>\Logs\<exe name>.game.log  (the game's own Glu log, was log.txt in the temp folder)
+//           <exe dir>\Logs\<exe name>.log       (Unity log, written by PcPlayerLog; Unity's Player.log is turned off)
+//           (the launcher writes Logs\<exe name>.launcher.log next to these)
 //   editor: <project>\Temp\PcCache\ and <project>\Logs\ckz2.game.log (both git-ignored)
 // Saves are handled by StorageManager.PersistentDataPath (<exe dir>\Save\).
 // The paths are captured before the first scene loads: Unity refuses Application.dataPath / temporaryCachePath
@@ -17,8 +18,8 @@ public static class PcPaths
 	/// <summary>Cache folder inside the editor project's Temp folder.</summary>
 	private const string EditorCacheDirName = "Temp/PcCache";
 
-	/// <summary>Folder of the game log in the editor (Unity's own Logs folder).</summary>
-	private const string EditorLogDirName = "Logs";
+	/// <summary>Log folder: next to the exe in a build, Unity's own Logs folder in the editor.</summary>
+	private const string LogDirName = "Logs";
 
 	/// <summary>Base name of the log files in the editor.</summary>
 	private const string EditorLogBaseName = "ckz2";
@@ -59,19 +60,24 @@ public static class PcPaths
 		}
 	}
 
+	/// <summary>Folder of all log files (exe dir or project root + Logs). Created if missing.</summary>
+	public static string LogDir
+	{
+		get
+		{
+			EnsureCaptured();
+			string logDir = Path.Combine(_rootDir, LogDirName);
+			Directory.CreateDirectory(logDir);
+			return logDir;
+		}
+	}
+
 	/// <summary>The game's own (Glu Logging) log file.</summary>
 	public static string GameLogPath
 	{
 		get
 		{
-			EnsureCaptured();
-			string logDir = _rootDir;
-			if (_isEditor)
-			{
-				logDir = Path.Combine(_rootDir, EditorLogDirName);
-			}
-			Directory.CreateDirectory(logDir);
-			return Path.Combine(logDir, _logBaseName + ".game.log");
+			return Path.Combine(LogDir, _logBaseName + ".game.log");
 		}
 	}
 
@@ -80,8 +86,7 @@ public static class PcPaths
 	{
 		get
 		{
-			EnsureCaptured();
-			return Path.Combine(_rootDir, _logBaseName + ".log");
+			return Path.Combine(LogDir, _logBaseName + ".log");
 		}
 	}
 

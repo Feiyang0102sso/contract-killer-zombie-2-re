@@ -1,5 +1,5 @@
-// PC port: the Unity log is written live next to the exe as "<exe name>.log" (Builds\ckz2.log); the previous run's log
-// is kept as "<exe name>-prev.log". Unity's own Player.log (AppData\LocalLow) is turned off in the player settings
+// PC port: the Unity log is written live to the Logs folder next to the exe as "<exe name>.log" (Builds\Logs\ckz2.log);
+// the previous run's log is kept as "<exe name>-prev.log". Unity's own Player.log (AppData\LocalLow) is turned off in the player settings
 // (usePlayerLog: 0), so nothing is written to C:\Users\...\AppData.
 // Everything that reaches Application.logMessageReceivedThreaded is recorded: script logs, exceptions, and the engine
 // errors/warnings Unity reports through the log callback. Pure engine startup output (GPU, driver...) is not, so a short
