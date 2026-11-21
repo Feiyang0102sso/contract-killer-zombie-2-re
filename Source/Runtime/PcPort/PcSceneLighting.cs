@@ -7,7 +7,8 @@
 //      batched also get their lightmapScaleOffset back (for batched ones the original build baked it into the combined UV2);
 //   2. Light probes: interpolate the original probes (positions, 27 SH coefficients) over the original tetrahedralization
 //      like 3.5 does, convert to unity_SHAr..unity_SHC with the 3.5 formula (same as the game's LightProbeSampler) and hand
-//      them to the renderer through LightProbeUsage.CustomProvided + MaterialPropertyBlock.
+//      them to the renderer through LightProbeUsage.CustomProvided + MaterialPropertyBlock. Like 3.5 forward rendering,
+//      the scene ambient (RenderSettings.ambientLight) is added to the L0 term on top of the probes.
 //      Inside the probe hull: barycentric weights of the enclosing tetrahedron.
 //      Outside the hull: 3.5's outer cells. An outer cell is a hull triangle whose corners extrude along their hull rays;
 //      solve for the extrusion t that puts the point in the plane of the extruded triangle (a cubic in t), then use the
@@ -41,11 +42,19 @@ public class PcSceneLighting : MonoBehaviour
 	private const int MaxWalkFailLogs = 5;
 
 	/// <summary>
-	/// Extra SH multiplier for renderers using EmissiveCharacterShader (the Thrower). With the plain 3.5 conversion it
-	/// came out about 3x darker than the original (almost black, no face visible) while the probe data and shader match;
-	/// x2 was picked by eye against an original screenshot (2026-11-20). Tune here; 1 = no boost.
+	/// Multiplier for the scene ambient (RenderSettings.ambientLight) added to every probe-lit renderer's SH.
+	/// 3.5 forward rendering folds the ambient into the SH constants on top of the light probes; without it characters
+	/// were about 3x too dark and pure black where the probes are ~0 (doorways, next to walls; Lab_Green_Cloning2
+	/// ambient is 0.216 grey). Tune here; 0 = probes only (the old behavior).
 	/// </summary>
-	private const float EmissiveCharacterShScale = 2f;
+	private const float SceneAmbientScale = 1f;
+
+	/// <summary>
+	/// Extra multiplier of the probe SH (not the ambient) for renderers using EmissiveCharacterShader (the Thrower).
+	/// x2 was a stopgap picked by eye before the missing ambient was found (2026-11-20); with the ambient added it is 1
+	/// again. Tune here; 1 = no boost.
+	/// </summary>
+	private const float EmissiveCharacterShScale = 1f;
 
 	/// <summary>Shader whose renderers get EmissiveCharacterShScale.</summary>
 	private const string EmissiveCharacterShader = "CKZ2/Character - Bumped Emissive";
@@ -211,6 +220,8 @@ public class PcSceneLighting : MonoBehaviour
 			_nextScan = Time.realtimeSinceStartup + ScanInterval;
 			ScanProbeRenderers();
 		}
+		// 3.5 adds the scene ambient to the L0 term of the SH constants (SHAr/g/b.w), so it lights every normal equally
+		Color ambient = RenderSettings.ambientLight * SceneAmbientScale;
 		for (int i = _probeRenderers.Count - 1; i >= 0; i--)
 		{
 			Renderer target = _probeRenderers[i];
@@ -242,6 +253,11 @@ public class PcSceneLighting : MonoBehaviour
 			{
 				// SHC.w is unused by the shaders, scaling it is harmless
 				_single[0] = _constants[k] * shScale;
+				if (k < 3)
+				{
+					// k = 0, 1, 2: unity_SHAr, SHAg, SHAb (red, green, blue)
+					_single[0].w += ambient[k];
+				}
 				_block.SetVectorArray(ShaderNames[k], _single);
 			}
 			target.SetPropertyBlock(_block);
