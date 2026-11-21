@@ -11,14 +11,64 @@
 //     so a used one-shot ammo crate leaves its empty crate in place in 3.5.
 // In Unity 6 those children go inactive with their parent: white screen after the tutorial explosion, survivors and
 // zombies under a task vanish, used ammo crates vanish.
-// Fix: after the original code runs, move objects that are active themselves but have a deactivated ancestor
-// out of the deactivated subtree (keeping world position), so they keep running as in 3.5.
+// Fix: move objects that are active themselves but have a deactivated ancestor out of the deactivated subtree
+// (keeping world position), so they keep running as in 3.5.
+// For Mission.DeactivateNode this is done before the node goes inactive: a deactivation, even a brief one, stops the
+// object's legacy animations and coroutines. E.g. a Thrower (no ragdoll) whose death completes a kill-all task froze in
+// the first frame of its death animation.
 // See tools/README.md, daytime fixes section 2.
 using System.Collections.Generic;
 using UnityEngine;
 
 public static class PcLegacyActive
 {
+	/// <summary>
+	/// Called in Mission.DeactivateNode right before the node is set inactive: moves out what the original code leaves
+	/// running under 3.5 semantics, so it never goes inactive.
+	///   - [Action]: only the node is switched off, so all of its own-active children keep running.
+	///   - [Task]: children are switched off except Character (kept) and ActivateItem (Disappear keeps its Item_* model,
+	///     see RescueAfterDisappear), so the own-active Characters are moved out.
+	/// RescueLegacyActiveChildren at the end of DeactivateNode stays as the fallback.
+	/// </summary>
+	public static void RescueBeforeDeactivate(GameObject node)
+	{
+		List<Transform> rescued = new List<Transform>();
+		if (Mission.IsTask(node))
+		{
+			CollectTaskSurvivors(node.transform, rescued);
+		}
+		else if (Mission.IsAction(node))
+		{
+			CollectActiveUnderInactive(node.transform, rescued);
+		}
+		Transform newParent = node.transform.parent;
+		foreach (Transform child in rescued)
+		{
+			child.SetParent(newParent, true);
+			Debug.Log("[PcLegacyActive] keep '" + child.name + "' running, moved out before '" + node.name + "' is deactivated");
+		}
+	}
+
+	/// <summary>Same walk as DeactivateNode's [Task] loop: collects own-active Characters, skips ActivateItems, goes into the rest.</summary>
+	private static void CollectTaskSurvivors(Transform parent, List<Transform> rescued)
+	{
+		for (int i = 0; i < parent.childCount; i++)
+		{
+			Transform child = parent.GetChild(i);
+			if (child.GetComponent<Character>() != null)
+			{
+				if (child.gameObject.activeSelf)
+				{
+					rescued.Add(child);
+				}
+			}
+			else if (child.GetComponent<ActivateItem>() == null)
+			{
+				CollectTaskSurvivors(child, rescued);
+			}
+		}
+	}
+
 	/// <summary>
 	/// Called at the end of Mission.DeactivateNode: if the node is inactive, moves out the objects that should keep
 	/// running under 3.5 semantics. Only the topmost one is moved (its children go with it).

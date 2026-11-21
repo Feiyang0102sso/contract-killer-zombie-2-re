@@ -40,6 +40,16 @@ public class PcSceneLighting : MonoBehaviour
 	/// <summary>Failed walks logged per scene (the fallback runs every frame for such a renderer).</summary>
 	private const int MaxWalkFailLogs = 5;
 
+	/// <summary>
+	/// Extra SH multiplier for renderers using EmissiveCharacterShader (the Thrower). With the plain 3.5 conversion it
+	/// came out about 3x darker than the original (almost black, no face visible) while the probe data and shader match;
+	/// x2 was picked by eye against an original screenshot (2026-11-20). Tune here; 1 = no boost.
+	/// </summary>
+	private const float EmissiveCharacterShScale = 2f;
+
+	/// <summary>Shader whose renderers get EmissiveCharacterShScale.</summary>
+	private const string EmissiveCharacterShader = "CKZ2/Character - Bumped Emissive";
+
 	// 3.5 SH -> shader constant factors (same as LightProbeSampler in Visual.cs)
 	private static readonly float SqrtPI = Mathf.Sqrt(Mathf.PI);
 	private static readonly float C0 = 1f / (2f * SqrtPI);
@@ -86,6 +96,9 @@ public class PcSceneLighting : MonoBehaviour
 	private readonly List<Renderer> _probeRenderers = new List<Renderer>();
 
 	private readonly Dictionary<Renderer, int> _lastCell = new Dictionary<Renderer, int>();
+
+	/// <summary>SH multiplier per tracked renderer (decided once, when the renderer is picked up).</summary>
+	private readonly Dictionary<Renderer, float> _shScales = new Dictionary<Renderer, float>();
 
 	private MaterialPropertyBlock _block;
 
@@ -205,6 +218,7 @@ public class PcSceneLighting : MonoBehaviour
 			{
 				_probeRenderers.RemoveAt(i);
 				_lastCell.Remove(target);
+				_shScales.Remove(target);
 				continue;
 			}
 			// No isVisible check: a renderer coming into view must not be drawn once with stale SH
@@ -218,14 +232,32 @@ public class PcSceneLighting : MonoBehaviour
 			int cell = Interpolate(position, startCell, _probe);
 			_lastCell[target] = cell;
 			ComputeShaderConstants(_probe, _constants);
+			float shScale;
+			if (!_shScales.TryGetValue(target, out shScale))
+			{
+				shScale = 1f;
+			}
 			target.GetPropertyBlock(_block);
 			for (int k = 0; k < ShaderNames.Length; k++)
 			{
-				_single[0] = _constants[k];
+				// SHC.w is unused by the shaders, scaling it is harmless
+				_single[0] = _constants[k] * shScale;
 				_block.SetVectorArray(ShaderNames[k], _single);
 			}
 			target.SetPropertyBlock(_block);
 		}
+	}
+
+	/// <summary>EmissiveCharacterShScale for renderers whose material uses EmissiveCharacterShader, otherwise 1.</summary>
+	private static float GetShScale(Renderer target)
+	{
+		Material material = target.sharedMaterial;
+		if (material != null && material.shader != null && material.shader.name == EmissiveCharacterShader)
+		{
+			Debug.Log("[PcSceneLighting] SH x" + EmissiveCharacterShScale + " for '" + target.name + "' (" + material.name + ")");
+			return EmissiveCharacterShScale;
+		}
+		return 1f;
 	}
 
 	/// <summary>Finds renderers still on Unity's own probes (BlendProbes) and switches them to SH provided here.</summary>
@@ -241,6 +273,7 @@ public class PcSceneLighting : MonoBehaviour
 			}
 			target.lightProbeUsage = LightProbeUsage.CustomProvided;
 			_probeRenderers.Add(target);
+			_shScales[target] = GetShScale(target);
 			added++;
 		}
 		if (added > 0)

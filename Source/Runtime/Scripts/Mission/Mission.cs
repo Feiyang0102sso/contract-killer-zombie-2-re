@@ -837,6 +837,8 @@ public class Mission : MonoBehaviourAndLog
 		{
 			node.SendMessage("OnFinished");
 		}
+		// PC port: move out what keeps running under 3.5 before the node goes inactive (see PcLegacyActive)
+		PcLegacyActive.RescueBeforeDeactivate(node);
 		if (IsTask(node) || IsAction(node))
 		{
 			node.active = false;
