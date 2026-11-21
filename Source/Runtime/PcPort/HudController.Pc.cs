@@ -8,7 +8,7 @@
 // Hooks in the original code (marked "PC port"):
 //   - HudController.Update: calls UpdatePcControls() after _aimMode is computed;
 //   - HudController.GetCharacterMovementInput / GetCameraRotationDeltaAndReset: add WASD and mouse look;
-//   - HudController.Start: calls CreatePcKeyHints() at the end;
+//   - HudController.Start: calls CreatePcKeyHints() and HidePcTouchControls() at the end;
 //   - HudController.OnDestroy: releases the cursor;
 //   - Player.Aim: fires when IsPcManualFiring(), like the MiniZombieControls setting.
 using System.Collections.Generic;
@@ -54,7 +54,6 @@ public partial class HudController
 
 	/// <summary>Keyboard/mouse active (cursor locked).</summary>
 	private bool _pcCursorLocked;
-
 	/// <summary>For Player.Aim: while manual fire is held, shoot without waiting for a target lock.</summary>
 	public bool IsPcManualFiring()
 	{
@@ -84,6 +83,38 @@ public partial class HudController
 		AttachPcWeaponSlotHint("Handgun", PcKeyBindings.Handgun);
 		AttachPcWeaponSlotHint("Sniper", PcKeyBindings.Sniper);
 		AttachPcWeaponSlotHint("Shotgun", PcKeyBindings.Shotgun);
+	}
+
+	/// <summary>
+	/// Hides the touch-only controls of the lower half (see PcTouchControlsHider): left stick, fire stick (Mini Zombie
+	/// controls), weapon switch, zoom, zoom fire and melee buttons, plus the tutorial tips' backs, fingers and splashes.
+	/// The tip labels stay; their text names the keys (PcTutorialTexts).
+	/// The right stick needs nothing: the original already keeps it invisible.
+	/// </summary>
+	private void HidePcTouchControls()
+	{
+		if (!PcKeyBindings.KeyboardUi)
+		{
+			return;
+		}
+		GameObject[] roots = new GameObject[]
+		{
+			_leftStick.gameObject,
+			_fireStick.gameObject,
+			_switchButton,
+			_zoomModeButton,
+			_fireButton,
+			_meleeButton,
+			TipLeft,
+			TipRight,
+		};
+		GameObject[] keep = new GameObject[]
+		{
+			TipTextLabelLeft.gameObject,
+			TipTextLabelRight.gameObject,
+		};
+		PcTouchControlsHider hider = gameObject.AddComponent<PcTouchControlsHider>();
+		hider.Init(roots, keep);
 	}
 
 	/// <summary>
@@ -162,6 +193,16 @@ public partial class HudController
 			ShowPcWeaponSlotHints();
 		}
 		_pcManualFire = false;
+		if (IsPcBeaconTutorialPause())
+		{
+			// The beacon tutorial pauses the game until the item is used; on touch the icon is tapped (works while paused)
+			if (Input.GetKeyDown(PcKeyBindings.UseItem) && _consumablesScrollList.gameObject.activeSelf)
+			{
+				UnityEngine.Debug.Log("[PcControls] use item during beacon tutorial pause");
+				OnConsumableScrollTap();
+			}
+			return;
+		}
 		if (!inGameplay)
 		{
 			return;
@@ -179,6 +220,30 @@ public partial class HudController
 		}
 		UpdatePcFire();
 		UpdatePcItemKeys();
+	}
+
+	/// <summary>
+	/// Paused by BeaconTutorial (it waits for the beacon grenade to be used), with the HUD shown and no pause menu open.
+	/// Other pauses (menus, cutscenes) keep ignoring PC keys.
+	/// </summary>
+	private bool IsPcBeaconTutorialPause()
+	{
+		if (!TimeControl.IsPaused() || !IsPcHudShown())
+		{
+			return false;
+		}
+		if (!(bool)Singleton.Tutorial || Singleton.Tutorial.GetComponent<BeaconTutorial>() == null)
+		{
+			return false;
+		}
+		foreach (UIWindow window in Singleton.UI.OpenedWindows)
+		{
+			if (window is PauseWindow)
+			{
+				return false;
+			}
+		}
+		return true;
 	}
 
 	/// <summary>Whether the HUD is shown: cutscenes call Show(false), which moves the HUD to z = -1000.</summary>

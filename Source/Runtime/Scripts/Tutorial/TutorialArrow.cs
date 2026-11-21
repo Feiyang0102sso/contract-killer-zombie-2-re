@@ -24,6 +24,12 @@ public class TutorialArrow : MonoBehaviour
 
 	public void SetTarget(UIButton button, float angle, float distance)
 	{
+		// PC port: no arrow at a hidden touch control (switch / zoom / fire / melee button); the task text names the key
+		if (PcTouchControlsHider.IsHidden(button.gameObject))
+		{
+			Hide();
+			return;
+		}
 		SetTarget(button.transform.position + button.GetCenterPoint(), angle, distance);
 	}
 

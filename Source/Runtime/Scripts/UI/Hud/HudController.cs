@@ -320,6 +320,8 @@ public partial class HudController : MonoBehaviourAndLog
 		_hudWeaponSelector.OnWeaponSelected += new Action<PlayerData.Slots>(SelectWeapon);
 		// PC port: key hint labels
 		CreatePcKeyHints();
+		// PC port: hide touch-only controls
+		HidePcTouchControls();
 	}
 
 	private void NextConsumable(int shift)

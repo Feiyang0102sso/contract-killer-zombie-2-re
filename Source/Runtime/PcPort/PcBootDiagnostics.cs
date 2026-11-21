@@ -43,6 +43,18 @@ public class PcBootDiagnostics : MonoBehaviour
 		diagnostics.StartCoroutine(TapActivateItems());
 		diagnostics.StartCoroutine(WatchSurvivalTutorialStart());
 		CheckSaveFile();
+		MuteForTests();
+	}
+
+	/// <summary>Test: -pcMute 1 silences the game (listener volume 0) so automatic runs don't disturb anyone. The game never sets the listener volume itself.</summary>
+	private static void MuteForTests()
+	{
+		if (GetArgument("-pcMute") != "1")
+		{
+			return;
+		}
+		AudioListener.volume = 0f;
+		Debug.Log("[PcDiag] muted (-pcMute)");
 	}
 
 	/// <summary>

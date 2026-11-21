@@ -55,10 +55,16 @@ namespace Glu.Localization
 
 		public string GetString(string id)
 		{
-			string text = stringManager.GetString(id);
+			// PC port: tutorial texts that name keys have their own msgids (PcTutorialTexts)
+			string pcId = PcTutorialTexts.MapId(id);
+			string text = stringManager.GetString(pcId);
 			if (text == null)
 			{
-				text = UntranslatedStringHandler(null, id);
+				text = UntranslatedStringHandler(null, pcId);
+			}
+			else if (pcId != id)
+			{
+				text = PcTutorialTexts.FillKeys(pcId, text);
 			}
 			return StringDecorator(null, id, text);
 		}

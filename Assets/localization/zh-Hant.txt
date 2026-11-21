@@ -6249,3 +6249,58 @@ msgstr "登入Facebook 帳號可免費獲得"
 msgid "DAILY"
 msgstr "每日獎勵！"
 
+
+# ---- PC port: keyboard/mouse tutorial texts ----
+
+# PC only. {0}, {1}... are key names (W, LEFT MOUSE, SPACE); keep them.
+#: Source/Runtime/PcPort/PcTutorialTexts.cs
+msgid ""
+"{0}{1}{2}{3}\n"
+"TO MOVE"
+msgstr ""
+"{0}{1}{2}{3}\n"
+"TO MOVE"
+
+# PC only. {0}, {1}... are key names (W, LEFT MOUSE, SPACE); keep them.
+#: Source/Runtime/PcPort/PcTutorialTexts.cs
+msgid ""
+"MOUSE TO AIM\n"
+"{0} TO FIRE"
+msgstr ""
+"MOUSE TO AIM\n"
+"{0} TO FIRE"
+
+# PC only. {0}, {1}... are key names (W, LEFT MOUSE, SPACE); keep them.
+#: Source/Runtime/PcPort/PcTutorialTexts.cs
+msgid "Hold {0} to shoot"
+msgstr "Hold {0} to shoot"
+
+# PC only. {0}, {1}... are key names (W, LEFT MOUSE, SPACE); keep them.
+#: Source/Runtime/PcPort/PcTutorialTexts.cs
+msgid "Press {0} to use medkit"
+msgstr "Press {0} to use medkit"
+
+# PC only. {0}, {1}... are key names (W, LEFT MOUSE, SPACE); keep them.
+#: Source/Runtime/PcPort/PcTutorialTexts.cs
+msgid "Press {0} or {1} to switch to bat"
+msgstr "Press {0} or {1} to switch to bat"
+
+# PC only. {0}, {1}... are key names (W, LEFT MOUSE, SPACE); keep them.
+#: Source/Runtime/PcPort/PcTutorialTexts.cs
+msgid "Press {0} to resupply ammo"
+msgstr "Press {0} to resupply ammo"
+
+# PC only. {0}, {1}... are key names (W, LEFT MOUSE, SPACE); keep them.
+#: Source/Runtime/PcPort/PcTutorialTexts.cs
+msgid "Press {0} to collect bonus"
+msgstr "Press {0} to collect bonus"
+
+# PC only. {0}, {1}... are key names (W, LEFT MOUSE, SPACE); keep them.
+#: Source/Runtime/PcPort/PcTutorialTexts.cs
+msgid "Press {0} to throw beacon grenade"
+msgstr "Press {0} to throw beacon grenade"
+
+# PC only. {0}, {1}... are key names (W, LEFT MOUSE, SPACE); keep them.
+#: Source/Runtime/PcPort/PcTutorialTexts.cs
+msgid "Press {0} for sniper, {1} to zoom"
+msgstr "Press {0} for sniper, {1} to zoom"

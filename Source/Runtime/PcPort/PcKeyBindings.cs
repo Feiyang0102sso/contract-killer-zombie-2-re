@@ -5,6 +5,16 @@ using UnityEngine;
 
 public static class PcKeyBindings
 {
+	/// <summary>
+	/// Keyboard/mouse UI: tutorial texts name keys (PcTutorialTexts) and the touch-only HUD controls are hidden
+	/// (PcTouchControlsHider). Off on touch platforms, so a mobile port keeps the original buttons, arrows and texts.
+	/// </summary>
+#if UNITY_IOS || UNITY_ANDROID
+	public static readonly bool KeyboardUi = false;
+#else
+	public static readonly bool KeyboardUi = true;
+#endif
+
 	// ---- Movement ----
 	public static KeyCode MoveForward = KeyCode.W;
 	public static KeyCode MoveBackward = KeyCode.S;
