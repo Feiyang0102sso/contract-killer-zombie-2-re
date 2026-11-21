@@ -1,6 +1,6 @@
 // PC port: settings chosen in the launcher (Launcher/ckz2.exe, table in Launcher/PcConfig.h).
 // The launcher reads ckz2.cfg and passes the values on the command line; the game never reads the cfg itself.
-// Resolution and window mode go through Unity's own -screen-* arguments; this class reads the three -ckz2-* ones.
+// Resolution and window mode go through Unity's own -screen-* arguments; this class reads the four -ckz2-* ones.
 // Without the arguments (editor Play) the defaults below apply.
 using System;
 using System.Globalization;
@@ -12,6 +12,10 @@ public static class PcLaunchArgs
 	private const string GraphDetailArgument = "-ckz2-graph-detail";
 	private const string VSyncArgument = "-ckz2-vsync";
 	private const string DrawFpsArgument = "-ckz2-draw-fps";
+	private const string LanguageArgument = "-ckz2-language";
+
+	/// <summary>Locales the launcher can pass (localization file names); the first one is the default.</summary>
+	private static readonly string[] SupportedLanguages = new string[] { "en", "zh-Hans" };
 
 	// ---- Defaults when an argument is missing (same as the cfg defaults in PcConfig.h) ----
 	private const int DefaultGraphDetail = 4;
@@ -31,6 +35,9 @@ public static class PcLaunchArgs
 
 	public static bool DrawFps { get; private set; }
 
+	/// <summary>Game locale chosen in the launcher ("en" or "zh-Hans"); handed to the game as the system locale (PcNative).</summary>
+	public static string Language { get; private set; }
+
 	static PcLaunchArgs()
 	{
 		string[] arguments = Environment.GetCommandLineArgs();
@@ -38,7 +45,29 @@ public static class PcLaunchArgs
 		QualityPresetName = GraphDetailPresets[graphDetail];
 		VSync = ReadBool(arguments, VSyncArgument, DefaultVSync);
 		DrawFps = ReadBool(arguments, DrawFpsArgument, DefaultDrawFps);
-		Debug.Log("[PcLaunchArgs] graph detail " + graphDetail + " (" + QualityPresetName + "), vsync " + VSync + ", draw fps " + DrawFps);
+		Language = ReadLanguage(arguments);
+		Debug.Log("[PcLaunchArgs] graph detail " + graphDetail + " (" + QualityPresetName + "), vsync " + VSync + ", draw fps " + DrawFps + ", language " + Language);
+	}
+
+	/// <summary>Locale after -ckz2-language when it is supported, otherwise the default (English).</summary>
+	private static string ReadLanguage(string[] arguments)
+	{
+		string defaultLanguage = SupportedLanguages[0];
+		for (int i = 0; i + 1 < arguments.Length; i++)
+		{
+			if (arguments[i] != LanguageArgument)
+			{
+				continue;
+			}
+			string value = arguments[i + 1];
+			if (Array.IndexOf(SupportedLanguages, value) >= 0)
+			{
+				return value;
+			}
+			Debug.LogWarning("[PcLaunchArgs] unsupported " + LanguageArgument + " " + value + ", using " + defaultLanguage);
+			return defaultLanguage;
+		}
+		return defaultLanguage;
 	}
 
 	/// <summary>

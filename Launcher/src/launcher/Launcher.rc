@@ -5,6 +5,7 @@
 // Lowest icon ID first: it becomes the exe icon. Path is relative to this file.
 IDI_APP ICON "../../assets/ckz2.ico"
 
+// Check boxes in two columns (x 12 and 120). "Don't show again" is undone with StartDialog=1 in the .cfg.
 IDD_LAUNCHER DIALOGEX 0, 0, 230, 136
 STYLE DS_SETFONT | DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX
 CAPTION "CK Zombies 2"
@@ -14,10 +15,13 @@ BEGIN
     COMBOBOX        IDC_RESOLUTION, 90, 12, 128, 160, CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     LTEXT           "Graphics detail:", IDC_STATIC, 12, 32, 70, 10
     COMBOBOX        IDC_GRAPH_DETAIL, 90, 30, 128, 100, CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    AUTOCHECKBOX    "Fullscreen", IDC_FULLSCREEN, 12, 52, 200, 10, WS_TABSTOP
-    AUTOCHECKBOX    "VSync", IDC_VSYNC, 12, 66, 200, 10, WS_TABSTOP
-    AUTOCHECKBOX    "Show FPS", IDC_DRAW_FPS, 12, 80, 200, 10, WS_TABSTOP
-    AUTOCHECKBOX    "Don't show this again (StartDialog=1 in the .cfg brings it back)", IDC_HIDE_DIALOG, 12, 94, 210, 10, WS_TABSTOP
+    // Text set in InitDialog (kLanguageLabel): it has Chinese characters and this file stays ASCII
+    LTEXT           "Language:", IDC_LANGUAGE_LABEL, 12, 50, 76, 10
+    COMBOBOX        IDC_LANGUAGE, 90, 48, 128, 60, CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    AUTOCHECKBOX    "Fullscreen", IDC_FULLSCREEN, 12, 72, 100, 10, WS_TABSTOP
+    AUTOCHECKBOX    "VSync", IDC_VSYNC, 120, 72, 100, 10, WS_TABSTOP
+    AUTOCHECKBOX    "Show FPS", IDC_DRAW_FPS, 12, 88, 100, 10, WS_TABSTOP
+    AUTOCHECKBOX    "Don't show again", IDC_HIDE_DIALOG, 120, 88, 100, 10, WS_TABSTOP
     DEFPUSHBUTTON   "Play", IDOK, 112, 114, 50, 14
     PUSHBUTTON      "Quit", IDCANCEL, 168, 114, 50, 14
 END

@@ -35,6 +35,7 @@ const wchar_t* const kGameProcessArgument = L"-ckz2-game";
 const wchar_t* const kGraphDetailArgument = L"-ckz2-graph-detail";
 const wchar_t* const kVSyncArgument = L"-ckz2-vsync";
 const wchar_t* const kDrawFpsArgument = L"-ckz2-draw-fps";
+const wchar_t* const kLanguageArgument = L"-ckz2-language";
 
 // ---- Config keys ----
 enum ConfigKey
@@ -46,6 +47,7 @@ enum ConfigKey
     GraphDetail,
     StartDialog,
     DrawFPS,
+    Language,
     ConfigKeyCount
 };
 
@@ -70,10 +72,19 @@ const ConfigEntry kConfigEntries[ConfigKeyCount] =
     { L"graph", L"GraphDetail", 4, 0, 4, L"0 Lowest, 1 Low, 2 Medium, 3 High, 4 Ultra" },
     { L"game", L"StartDialog", 1, 0, 1, L"Show the start dialog (0/1)" },
     { L"game", L"DrawFPS", 0, 0, 1, L"FPS counter (0/1)" },
+    { L"game", L"Language", 0, 0, 1, L"0 English, 1 Simplified Chinese" },
 };
 
 // Dialog names for GraphDetail 0..4. The quality preset behind each level is chosen in PcLaunchArgs.cs.
 const wchar_t* const kGraphDetailNames[] = { L"Lowest", L"Low", L"Medium", L"High", L"Ultra" };
+
+// Language 0..1: dialog name and the game locale passed with kLanguageArgument
+// (the game's localization file <locale>.txt; must match PcLaunchArgs.SupportedLanguages).
+// The Chinese name is escaped so the source stays ASCII (escaped name = Simplified Chinese).
+const wchar_t* const kLanguageNames[] = { L"English", L"\u7B80\u4F53\u4E2D\u6587" };
+const wchar_t* const kLanguageLocales[] = { L"en", L"zh-Hans" };
+// Label of the language box: "Language/" plus the Chinese word for language (escaped).
+const wchar_t* const kLanguageLabel = L"Language/\u8BED\u8A00:";
 
 // ---- Resolutions offered by the dialog ----
 // Only presets that fit the desktop are listed; the desktop resolution and the current cfg value are always listed.

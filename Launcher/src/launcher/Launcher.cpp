@@ -411,6 +411,14 @@ static void InitDialog(HWND dialog)
     }
     SendMessageW(detailCombo, CB_SETCURSEL, g_values[GraphDetail], 0);
 
+    SetDlgItemTextW(dialog, IDC_LANGUAGE_LABEL, kLanguageLabel);
+    HWND languageCombo = GetDlgItem(dialog, IDC_LANGUAGE);
+    for (const wchar_t* name : kLanguageNames)
+    {
+        SendMessageW(languageCombo, CB_ADDSTRING, 0, reinterpret_cast<LPARAM>(name));
+    }
+    SendMessageW(languageCombo, CB_SETCURSEL, g_values[Language], 0);
+
     SetCheck(dialog, IDC_FULLSCREEN, g_values[FullScreen] == 1);
     SetCheck(dialog, IDC_VSYNC, g_values[VSync] == 1);
     SetCheck(dialog, IDC_DRAW_FPS, g_values[DrawFPS] == 1);
@@ -431,6 +439,11 @@ static void ReadDialog(HWND dialog)
     if (detailIndex >= 0)
     {
         g_values[GraphDetail] = static_cast<int>(detailIndex);
+    }
+    LRESULT languageIndex = SendDlgItemMessageW(dialog, IDC_LANGUAGE, CB_GETCURSEL, 0, 0);
+    if (languageIndex >= 0)
+    {
+        g_values[Language] = static_cast<int>(languageIndex);
     }
     g_values[FullScreen] = GetCheck(dialog, IDC_FULLSCREEN);
     g_values[VSync] = GetCheck(dialog, IDC_VSYNC);
@@ -560,10 +573,11 @@ static std::wstring BuildGameCommandLine(const std::wstring& exePath, const wcha
     {
         commandLine += L" -window-mode borderless";
     }
-    swprintf(arguments, 512, L" %ls %d %ls %d %ls %d",
+    swprintf(arguments, 512, L" %ls %d %ls %d %ls %d %ls %ls",
         kGraphDetailArgument, g_values[GraphDetail],
         kVSyncArgument, g_values[VSync],
-        kDrawFpsArgument, g_values[DrawFPS]);
+        kDrawFpsArgument, g_values[DrawFPS],
+        kLanguageArgument, kLanguageLocales[g_values[Language]]);
     commandLine += arguments;
     return Trim(commandLine);
 }

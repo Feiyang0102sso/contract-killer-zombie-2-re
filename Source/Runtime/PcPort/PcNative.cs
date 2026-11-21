@@ -10,12 +10,19 @@ public static class PcNative
 	// ---------------- Localization ----------------
 
 	/// <summary>
-	/// The native side returns the system language code; 0 means unavailable and the game falls back to Application.systemLanguage.
-	/// PC simply takes the game's own fallback.
+	/// The native side writes the locale code into buf and returns its length (0 = unavailable, the game then guesses
+	/// from Application.systemLanguage). PC returns the language chosen in the launcher (PcLaunchArgs.Language), so the
+	/// game loads <locale>.txt and the locale's replacement assets (fonts, loading image) exactly as on iOS.
 	/// </summary>
 	public static int Glu_Localization_GetLocale(int size, byte[] buf)
 	{
-		return 0;
+		byte[] locale = Encoding.UTF8.GetBytes(PcLaunchArgs.Language);
+		if (locale.Length > size)
+		{
+			return 0;
+		}
+		Array.Copy(locale, buf, locale.Length);
+		return locale.Length;
 	}
 
 	// ---------------- Integrity ----------------
