@@ -40,6 +40,8 @@ toolchain/unity357_win/
 /Save/
 /RunLogs/
 /PcPilotAudit.txt
+# Previews written by tools/*.py
+/tools/out/
 # Rebuilt by PcPilotBuild.Build before every build (PcAssetBundleRebuild)
 /Assets/StreamingAssets/
 /Assets/StreamingAssets.meta

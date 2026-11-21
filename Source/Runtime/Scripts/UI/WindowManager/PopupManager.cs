@@ -464,6 +464,23 @@ public class PopupManager : MonoBehaviour
 		ShowPopup(popupInfo);
 	}
 
+	/// <summary>PC port: asked by the city map exit button. Same strings as the original ShopOrExit popup.</summary>
+	public void ShowExitGameConfirmationPopup()
+	{
+		PopupInfo popupInfo = new PopupInfo();
+		popupInfo.Title = Strings.GetString("Quit?");
+		popupInfo.Message = Strings.GetString("Wanna quit?");
+		popupInfo.AddButton(Strings.GetString("Quit"), () =>
+		{
+			Debug.Log("Exit button: quitting the game");
+			Application.Quit();
+		});
+		popupInfo.AddButton(Strings.GetString("Continue"), () =>
+		{
+		});
+		ShowPopup(popupInfo);
+	}
+
 	public UIWindow ShowInfoPopup(string message)
 	{
 		return ShowInfoPopup(Strings.GetString("Info"), message);

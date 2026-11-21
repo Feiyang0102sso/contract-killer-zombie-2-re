@@ -155,10 +155,7 @@ public class MapWindow : UIWindow
 			{
 				Singleton.UI.PopupManager.ShowNewItemAvailablePopup(newAvailableItemToNotify);
 			}
-			if (QualitySetter.FacebookEnabled && Singleton.PlayerData.Level == 3 && !FacebookManager.WasLoggedIn())
-			{
-				Singleton.UI.PopupManager.ShowFacebookLoginForRewardPopup();
-			}
+			// PC port: no Facebook, so the level 3 "login for reward" popup is gone
 		}
 		else
 		{

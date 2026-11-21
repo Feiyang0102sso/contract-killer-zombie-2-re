@@ -61,7 +61,7 @@ MonoBehaviour:
   GetFreeGoldButton: {fileID: 114164572510340276}
   GetFreeTutorialIcon: {fileID: 114119736261249140}
   AchievementsButton: {fileID: 114362643333793478}
-  FacebookLoginButton: {fileID: 114183051942464731}
+  ExitButton: {fileID: 114183051942464731}
   SoftCurrencyText: {fileID: 114763258146072739}
   HardCurrencyText: {fileID: 114857073325183756}
   HardCurrencyPanel: {fileID: 1304824002256649}
@@ -747,7 +747,7 @@ GameObject:
   - 33: {fileID: 33232862927441673}
   - 23: {fileID: 23248632589468344}
   m_Layer: 8
-  m_Name: FacebookLoginButton
+  m_Name: ExitButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -841,15 +841,14 @@ MonoBehaviour:
     framerate: 14.999999
     onAnimEnd: 0
     framePaths: []
-    frameGUIDs:
-    - e470a60214657b14db76cfbce37d2cbc
+    frameGUIDs: []
     spriteFrames:
     - uvs:
         serializedVersion: 2
-        x: 0.31445312
-        y: 0.7363281
-        width: 0.19042969
-        height: 0.18847656
+        x: 0
+        y: 0
+        width: 1
+        height: 1
       scaleFactor: {x: 0.5, y: 0.5}
       topLeftOffset: {x: -1, y: 1}
       bottomRightOffset: {x: 1, y: -1}
@@ -958,7 +957,7 @@ MeshRenderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: aba677190e3979f46b262f78dd40b587, type: 2}
+  - {fileID: 2100000, guid: a39f784aa6b54aed90a87fc4c4c18905, type: 2}
   m_SubsetIndices: []
   m_StaticBatchInfo:
     firstSubMesh: 0

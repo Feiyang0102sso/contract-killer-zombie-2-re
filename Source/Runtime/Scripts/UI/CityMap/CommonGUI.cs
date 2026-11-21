@@ -20,7 +20,8 @@ public class CommonGUI : MonoBehaviour
 
 	public UIButton AchievementsButton;
 
-	public UIButton FacebookLoginButton;
+	// PC port: replaces the Facebook login button (same slot in BottomRight)
+	public UIButton ExitButton;
 
 	public SpriteText SoftCurrencyText;
 
@@ -49,8 +50,6 @@ public class CommonGUI : MonoBehaviour
 	private bool _rollupGoals;
 
 	private static bool _showTutorialGetFreeIcon = true;
-
-	private bool _showFacebookButtons = true;
 
 	private bool _uiAlignHackFix;
 
@@ -137,14 +136,7 @@ public class CommonGUI : MonoBehaviour
 		{
 			ShowGetFreeTutorialIcon(false);
 		}
-		GUIUtils.HookButton(FacebookLoginButton, () =>
-		{
-			if (!Util.DoRarelyReal(this, "fb_antispam", 1.5f))
-			{
-				return;
-			}
-			FacebookManager.Login();
-		});
+		GUIUtils.HookButton(ExitButton, Singleton.UI.PopupManager.ShowExitGameConfirmationPopup);
 		StartCoroutine(PreloadGoalUI());
 	}
 
@@ -179,10 +171,6 @@ public class CommonGUI : MonoBehaviour
 		else
 		{
 			ShowGetFreeTutorialIcon(false);
-		}
-		if (Util.DoRarely(this, "facebook_update", 1f))
-		{
-			UpdateFacebookButtons();
 		}
 	}
 
@@ -229,13 +217,6 @@ public class CommonGUI : MonoBehaviour
 	{
 		LevelText.Text = Strings.GetString("Level") + " " + Singleton.PlayerData.Level.ToString();
 		XPBar.Value = (float)(PlayerData.Instance.XP - PlayerData.Instance.CurrLevelXP) / (float)(PlayerData.Instance.NextLevelXP - PlayerData.Instance.CurrLevelXP);
-	}
-
-	private void UpdateFacebookButtons()
-	{
-		bool flag = FacebookManager.WasLoggedIn();
-		bool flag2 = Singleton.PlayerData.Level >= 3;
-		FacebookLoginButton.gameObject.SetActiveRecursively(!flag && flag2 && _showFacebookButtons);
 	}
 
 	public bool AreGoalsScrolled
@@ -596,8 +577,8 @@ public class CommonGUI : MonoBehaviour
 		BottomPanel.SetActiveRecursively(flag);
 		BackButton.gameObject.SetActiveRecursively(flag);
 		AchievementsButton.gameObject.SetActiveRecursively(!flag);
-		_showFacebookButtons = !flag && QualitySetter.FacebookEnabled;
-		UpdateFacebookButtons();
+		// PC port: the exit button shows with the achievements button (city map, not sub screens)
+		ExitButton.gameObject.SetActiveRecursively(!flag);
 	}
 
 	private void ShowAchievements()
