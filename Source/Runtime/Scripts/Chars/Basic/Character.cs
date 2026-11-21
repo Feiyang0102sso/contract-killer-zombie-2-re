@@ -1093,7 +1093,9 @@ public class Character : MonoBehaviourAndLog
 	private void Report(GameObject obj, string text)
 	{
 		float unusedLocal1;
-		if (obj == _charInfo.BasicText && !Util.DoRarely(this, "report_delay", 2f))
+		// PC port: the original compared the GameObject with the SpriteText component (never equal), so the
+		// 2 s limit never applied and two quick reports drew overlapping speech bubbles
+		if (obj == _charInfo.BasicText.gameObject && !Util.DoRarely(this, "report_delay", 2f))
 		{
 			return;
 		}
