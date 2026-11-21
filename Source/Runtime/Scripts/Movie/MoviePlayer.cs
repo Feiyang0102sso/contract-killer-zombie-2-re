@@ -25,7 +25,12 @@ public class MoviePlayer : MonoBehaviour
 
 	private void Awake()
 	{
+#if UNITY_IOS || UNITY_ANDROID
 		_moviePlayer = new MoviePlayerIPhone();
+#else
+		// PC port: Handheld.PlayFullScreenMovie does nothing on Windows, which skipped the intro
+		_moviePlayer = new MoviePlayerPc();
+#endif
 	}
 
 	private void Start()
