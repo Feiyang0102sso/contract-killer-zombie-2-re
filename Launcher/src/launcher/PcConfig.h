@@ -69,14 +69,15 @@ const ConfigEntry kConfigEntries[ConfigKeyCount] =
     { L"graph", L"ScreenY", 0, 480, 16384, L"Window height (windowed mode only)" },
     { L"graph", L"FullScreen", 1, 0, 1, L"0 = windowed, 1 = borderless fullscreen at desktop resolution" },
     { L"graph", L"VSync", 1, 0, 1, L"0/1, no FPS cap when 0" },
-    { L"graph", L"GraphDetail", 4, 0, 4, L"0 Lowest, 1 Low, 2 Medium, 3 High, 4 Ultra" },
+    { L"graph", L"GraphDetail", 4, 0, 5, L"0 Lowest, 1 Low, 2 Medium, 3 High, 4 Ultra, 5 Extreme" },
     { L"game", L"StartDialog", 1, 0, 1, L"Show the start dialog (0/1)" },
     { L"game", L"DrawFPS", 0, 0, 1, L"FPS counter (0/1)" },
     { L"game", L"Language", 0, 0, 1, L"0 English, 1 Simplified Chinese" },
 };
 
-// Dialog names for GraphDetail 0..4. The quality preset behind each level is chosen in PcLaunchArgs.cs.
-const wchar_t* const kGraphDetailNames[] = { L"Lowest", L"Low", L"Medium", L"High", L"Ultra" };
+// Dialog names for GraphDetail 0..5. The quality preset behind each level is chosen in PcLaunchArgs.cs;
+// Extreme is a PC-only level above the original presets (PcExtremeQuality.cs).
+const wchar_t* const kGraphDetailNames[] = { L"Lowest", L"Low", L"Medium", L"High", L"Ultra", L"Extreme" };
 
 // Language 0..1: dialog name and the game locale passed with kLanguageArgument
 // (the game's localization file <locale>.txt; must match PcLaunchArgs.SupportedLanguages).

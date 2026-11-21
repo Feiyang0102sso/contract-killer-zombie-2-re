@@ -174,7 +174,19 @@ public class PostEffectManager : MonoBehaviour
 
 	private void CreateRenderTexture(out RenderTexture renderTexture, int Width, int Height, int DepthBits, FilterMode filterMode)
 	{
+#if UNITY_STANDALONE
+		// PC port: Extreme level keeps 32-bit color and MSAA while a post effect is on
+		if (PcExtremeQuality.Enabled)
+		{
+			renderTexture = PcExtremeQuality.CreatePostEffectTexture(Width, Height);
+		}
+		else
+		{
+			renderTexture = new RenderTexture(Width, Height, DepthBits, RenderTextureFormat.RGB565);
+		}
+#else
 		renderTexture = new RenderTexture(Width, Height, DepthBits, RenderTextureFormat.RGB565);
+#endif
 		renderTexture.Create();
 		renderTexture.name = TEXTURE_NAME;
 		renderTexture.hideFlags = HideFlags.HideAndDontSave;

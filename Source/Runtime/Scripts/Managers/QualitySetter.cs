@@ -114,6 +114,8 @@ public class QualitySetter : MonoBehaviourAndLog
 #if UNITY_STANDALONE
 		// PC port: no frame cap and VSync from the launcher (after SetQualityLevel, which resets vSyncCount)
 		PcLaunchArgs.ApplyFrameSettings();
+		// PC port: Extreme level, also after SetQualityLevel
+		PcExtremeQuality.ApplyTextureFiltering();
 #endif
 		UpdateQualitySetup();
 	}
@@ -176,6 +178,14 @@ public class QualitySetter : MonoBehaviourAndLog
 		TimeControl.PhysicsFixedTimestep = 0.025f;
 		DecalLayerCullDistance = 25f;
 		EyeCandyLayerCullDistance = 25f;
+#if UNITY_STANDALONE
+		// PC port: Extreme level draws decals and eye candy farther
+		if (PcExtremeQuality.Enabled)
+		{
+			DecalLayerCullDistance = PcExtremeQuality.DetailCullDistance;
+			EyeCandyLayerCullDistance = PcExtremeQuality.DetailCullDistance;
+		}
+#endif
 		switch (QualitySettings.names[QualitySettings.GetQualityLevel()])
 		{
 		case "iPod4":

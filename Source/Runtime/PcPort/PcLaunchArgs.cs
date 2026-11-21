@@ -23,13 +23,19 @@ public static class PcLaunchArgs
 	private const bool DefaultDrawFps = false;
 
 	/// <summary>
-	/// Original quality preset (QualitySettings.asset) behind each GraphDetail level 0..4:
-	/// Lowest, Low, Medium, High, Ultra. Lowest (iPod4) also trims level content (QualitySetter.TrimmedLevels).
+	/// Original quality preset (QualitySettings.asset) behind each GraphDetail level 0..5:
+	/// Lowest, Low, Medium, High, Ultra, Extreme. Lowest (iPod4) also trims level content (QualitySetter.TrimmedLevels).
+	/// Extreme is Ultra's preset plus the PC-only upgrades in PcExtremeQuality.
 	/// </summary>
-	private static readonly string[] GraphDetailPresets = new string[] { "iPod4", "iPhone4", "AndroidMedium", "iPhone4S", "iPad3" };
+	private static readonly string[] GraphDetailPresets = new string[] { "iPod4", "iPhone4", "AndroidMedium", "iPhone4S", "iPad3", "iPad3" };
+
+	private const int ExtremeGraphDetail = 5;
 
 	/// <summary>Quality preset name chosen in the launcher.</summary>
 	public static string QualityPresetName { get; private set; }
+
+	/// <summary>True for the PC-only Extreme level (see PcExtremeQuality).</summary>
+	public static bool ExtremeQuality { get; private set; }
 
 	public static bool VSync { get; private set; }
 
@@ -43,10 +49,11 @@ public static class PcLaunchArgs
 		string[] arguments = Environment.GetCommandLineArgs();
 		int graphDetail = ReadInt(arguments, GraphDetailArgument, DefaultGraphDetail, 0, GraphDetailPresets.Length - 1);
 		QualityPresetName = GraphDetailPresets[graphDetail];
+		ExtremeQuality = graphDetail == ExtremeGraphDetail;
 		VSync = ReadBool(arguments, VSyncArgument, DefaultVSync);
 		DrawFps = ReadBool(arguments, DrawFpsArgument, DefaultDrawFps);
 		Language = ReadLanguage(arguments);
-		Debug.Log("[PcLaunchArgs] graph detail " + graphDetail + " (" + QualityPresetName + "), vsync " + VSync + ", draw fps " + DrawFps + ", language " + Language);
+		Debug.Log("[PcLaunchArgs] graph detail " + graphDetail + " (" + QualityPresetName + ", extreme " + ExtremeQuality + "), vsync " + VSync + ", draw fps " + DrawFps + ", language " + Language);
 	}
 
 	/// <summary>Locale after -ckz2-language when it is supported, otherwise the default (English).</summary>
