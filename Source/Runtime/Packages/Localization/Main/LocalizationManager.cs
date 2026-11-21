@@ -64,9 +64,15 @@ namespace Glu.Localization
 			}
 			else if (pcId != id)
 			{
-				text = PcTutorialTexts.FillKeys(pcId, text);
+				text = PcTutorialTexts.FillKeys(pcId, text, this);
 			}
 			return StringDecorator(null, id, text);
+		}
+
+		/// <summary>PC port: whether the loaded strings file has id (PcTutorialTexts falls back to English key names).</summary>
+		public bool PcHasString(string id)
+		{
+			return stringManager.GetString(id) != null;
 		}
 
 		public string GetParticularString(string context, string id)

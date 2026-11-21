@@ -6261,50 +6261,66 @@ msgstr "每日奖励！"
 msgid ""
 "{0}{1}{2}{3}\n"
 "TO MOVE"
-msgstr ""
-"{0}{1}{2}{3}\n"
-"TO MOVE"
+msgstr "{0}{1}{2}{3} 移动"
 
 # PC only. {0}, {1}... are key names (W, LEFT MOUSE, SPACE); keep them.
 #: Source/Runtime/PcPort/PcTutorialTexts.cs
 msgid ""
 "MOUSE TO AIM\n"
 "{0} TO FIRE"
-msgstr ""
-"MOUSE TO AIM\n"
-"{0} TO FIRE"
+msgstr "鼠标瞄准\n{0}射击"
 
 # PC only. {0}, {1}... are key names (W, LEFT MOUSE, SPACE); keep them.
 #: Source/Runtime/PcPort/PcTutorialTexts.cs
 msgid "Hold {0} to shoot"
-msgstr "Hold {0} to shoot"
+msgstr "按住{0}射击"
 
 # PC only. {0}, {1}... are key names (W, LEFT MOUSE, SPACE); keep them.
 #: Source/Runtime/PcPort/PcTutorialTexts.cs
 msgid "Press {0} to use medkit"
-msgstr "Press {0} to use medkit"
+msgstr "按 {0} 使用医疗箱"
 
 # PC only. {0}, {1}... are key names (W, LEFT MOUSE, SPACE); keep them.
 #: Source/Runtime/PcPort/PcTutorialTexts.cs
 msgid "Press {0} or {1} to switch to bat"
-msgstr "Press {0} or {1} to switch to bat"
+msgstr "按 {0} 或{1}切换为球棒"
 
 # PC only. {0}, {1}... are key names (W, LEFT MOUSE, SPACE); keep them.
 #: Source/Runtime/PcPort/PcTutorialTexts.cs
 msgid "Press {0} to resupply ammo"
-msgstr "Press {0} to resupply ammo"
+msgstr "按 {0} 补充弹药"
 
 # PC only. {0}, {1}... are key names (W, LEFT MOUSE, SPACE); keep them.
 #: Source/Runtime/PcPort/PcTutorialTexts.cs
 msgid "Press {0} to collect bonus"
-msgstr "Press {0} to collect bonus"
+msgstr "按 {0} 收集奖励"
 
 # PC only. {0}, {1}... are key names (W, LEFT MOUSE, SPACE); keep them.
 #: Source/Runtime/PcPort/PcTutorialTexts.cs
 msgid "Press {0} to throw beacon grenade"
-msgstr "Press {0} to throw beacon grenade"
+msgstr "按 {0} 投掷诱敌手雷"
 
 # PC only. {0}, {1}... are key names (W, LEFT MOUSE, SPACE); keep them.
 #: Source/Runtime/PcPort/PcTutorialTexts.cs
 msgid "Press {0} for sniper, {1} to zoom"
-msgstr "Press {0} for sniper, {1} to zoom"
+msgstr "按 {0} 切换狙击枪，{1}开镜"
+
+# PC only. Key name inside the tutorial texts above (not the HUD key labels).
+#: Source/Runtime/PcPort/PcTutorialTexts.cs
+msgid "SPACE"
+msgstr "空格"
+
+# PC only. Key name inside the tutorial texts above (not the HUD key labels).
+#: Source/Runtime/PcPort/PcTutorialTexts.cs
+msgid "LEFT MOUSE"
+msgstr "鼠标左键"
+
+# PC only. Key name inside the tutorial texts above (not the HUD key labels).
+#: Source/Runtime/PcPort/PcTutorialTexts.cs
+msgid "RIGHT MOUSE"
+msgstr "鼠标右键"
+
+# PC only. Key name inside the tutorial texts above (not the HUD key labels).
+#: Source/Runtime/PcPort/PcTutorialTexts.cs
+msgid "MIDDLE MOUSE"
+msgstr "鼠标中键"
