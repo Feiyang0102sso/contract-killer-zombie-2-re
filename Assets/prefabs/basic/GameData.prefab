@@ -60,13 +60,13 @@ MonoBehaviour:
     PoolData: []
   - Story: 2
     MaxMissions: 1
-    Required: 1
+    Required: 0
     PoolData:
     - Type: 0
       Difficulty: 1
   - Story: 3
     MaxMissions: 5
-    Required: 3
+    Required: 0
     PoolData:
     - Type: 2
       Difficulty: 1
@@ -76,7 +76,7 @@ MonoBehaviour:
       Difficulty: 1
   - Story: 4
     MaxMissions: 6
-    Required: 4
+    Required: 0
     PoolData:
     - Type: 0
       Difficulty: 1
@@ -92,7 +92,7 @@ MonoBehaviour:
       Difficulty: 3
   - Story: 5
     MaxMissions: 6
-    Required: 5
+    Required: 0
     PoolData:
     - Type: 1
       Difficulty: 1
@@ -112,7 +112,7 @@ MonoBehaviour:
       Difficulty: 3
   - Story: 6
     MaxMissions: 7
-    Required: 5
+    Required: 0
     PoolData:
     - Type: 2
       Difficulty: 1
@@ -132,7 +132,7 @@ MonoBehaviour:
       Difficulty: 3
   - Story: 7
     MaxMissions: 7
-    Required: 5
+    Required: 0
     PoolData:
     - Type: 1
       Difficulty: 1
@@ -150,7 +150,7 @@ MonoBehaviour:
       Difficulty: 3
   - Story: 8
     MaxMissions: 7
-    Required: 5
+    Required: 0
     PoolData:
     - Type: 0
       Difficulty: 1
@@ -166,7 +166,7 @@ MonoBehaviour:
       Difficulty: 3
   - Story: 9
     MaxMissions: 7
-    Required: 5
+    Required: 0
     PoolData:
     - Type: 0
       Difficulty: 1
@@ -182,7 +182,7 @@ MonoBehaviour:
       Difficulty: 3
   - Story: 10
     MaxMissions: 5
-    Required: 5
+    Required: 0
     PoolData:
     - Type: 3
       Difficulty: 1
@@ -200,7 +200,7 @@ MonoBehaviour:
       Difficulty: 3
   - Story: 11
     MaxMissions: 6
-    Required: 5
+    Required: 0
     PoolData:
     - Type: 1
       Difficulty: 1
@@ -218,7 +218,7 @@ MonoBehaviour:
       Difficulty: 3
   - Story: 12
     MaxMissions: 6
-    Required: 5
+    Required: 0
     PoolData:
     - Type: 1
       Difficulty: 1
@@ -238,7 +238,7 @@ MonoBehaviour:
       Difficulty: 3
   - Story: 13
     MaxMissions: 7
-    Required: 5
+    Required: 0
     PoolData:
     - Type: 0
       Difficulty: 1
@@ -258,7 +258,7 @@ MonoBehaviour:
       Difficulty: 3
   - Story: 14
     MaxMissions: 7
-    Required: 5
+    Required: 0
     PoolData:
     - Type: 0
       Difficulty: 1
@@ -280,7 +280,7 @@ MonoBehaviour:
       Difficulty: 3
   - Story: 15
     MaxMissions: 8
-    Required: 5
+    Required: 0
     PoolData:
     - Type: 3
       Difficulty: 1
@@ -302,7 +302,7 @@ MonoBehaviour:
       Difficulty: 3
   - Story: 16
     MaxMissions: 8
-    Required: 5
+    Required: 0
     PoolData:
     - Type: 0
       Difficulty: 1
@@ -326,7 +326,7 @@ MonoBehaviour:
       Difficulty: 3
   - Story: 17
     MaxMissions: 8
-    Required: 5
+    Required: 0
     PoolData:
     - Type: 0
       Difficulty: 1
@@ -350,7 +350,7 @@ MonoBehaviour:
       Difficulty: 3
   - Story: 18
     MaxMissions: 8
-    Required: 5
+    Required: 0
     PoolData:
     - Type: 2
       Difficulty: 1
@@ -376,7 +376,7 @@ MonoBehaviour:
       Difficulty: 3
   - Story: 19
     MaxMissions: 8
-    Required: 5
+    Required: 0
     PoolData:
     - Type: 3
       Difficulty: 1
@@ -402,7 +402,7 @@ MonoBehaviour:
       Difficulty: 3
   - Story: 20
     MaxMissions: 8
-    Required: 5
+    Required: 0
     PoolData:
     - Type: 2
       Difficulty: 1
@@ -428,7 +428,7 @@ MonoBehaviour:
       Difficulty: 3
   - Story: 21
     MaxMissions: 8
-    Required: 5
+    Required: 0
     PoolData:
     - Type: 2
       Difficulty: 1
@@ -454,7 +454,7 @@ MonoBehaviour:
       Difficulty: 3
   - Story: 22
     MaxMissions: 8
-    Required: 5
+    Required: 0
     PoolData:
     - Type: 2
       Difficulty: 1
@@ -480,7 +480,7 @@ MonoBehaviour:
       Difficulty: 3
   - Story: 23
     MaxMissions: 8
-    Required: 5
+    Required: 0
     PoolData:
     - Type: 2
       Difficulty: 1
@@ -506,7 +506,7 @@ MonoBehaviour:
       Difficulty: 3
   - Story: 24
     MaxMissions: 8
-    Required: 5
+    Required: 0
     PoolData:
     - Type: 1
       Difficulty: 1
@@ -532,7 +532,7 @@ MonoBehaviour:
       Difficulty: 3
   - Story: 25
     MaxMissions: 8
-    Required: 5
+    Required: 0
     PoolData:
     - Type: 0
       Difficulty: 1
