@@ -1682,7 +1682,74 @@ public class PlayerData : MonoBehaviourAndLog
 
 	private void Save()
 	{
+		// PC port: nothing is written during a PcPitTrial (the trial never saves)
+		if (PcPitTrial.IsActive)
+		{
+			UnityEngine.Debug.Log("[PcPitTrial] save skipped");
+			return;
+		}
 		StorageManager.WriteXml(Const.SaveFileName, _data);
+	}
+
+	/// <summary>PC port: in-memory copy of the player state, taken and restored by PcPitTrial.</summary>
+	public class PcSnapshot
+	{
+		/// <summary>The save data (_data), serialized the same way as the save file.</summary>
+		public byte[] DataXml;
+
+		// State kept outside _data that a mission changes and the city map reads
+		public string CurrentLocation;
+
+		public bool IsSpecialHuntPlayed;
+
+		public string LastCompletedMissionLocation;
+
+		public int LastCompletedMission;
+
+		public int LastCompletedMissionSeed;
+
+		public bool LastCompletedMissionIsSpecialHunt;
+
+		public int CurrLevel;
+	}
+
+	/// <summary>PC port: saves the current state to disk, then returns an in-memory copy of it (PcPitTrial).</summary>
+	public PcSnapshot PcTakeSnapshot()
+	{
+		Save();
+		_flush = false;
+		_data.Statistics.Flush = false;
+		MemoryStream stream = new MemoryStream();
+		PcXmlPairs.Serialize(System.Xml.XmlWriter.Create(stream), _data);
+		PcSnapshot snapshot = new PcSnapshot();
+		snapshot.DataXml = stream.ToArray();
+		snapshot.CurrentLocation = _currentLocation;
+		snapshot.IsSpecialHuntPlayed = _isSpecialHuntPlayed;
+		snapshot.LastCompletedMissionLocation = _lastCompletedMissionLocation;
+		snapshot.LastCompletedMission = _lastCompletedMission;
+		snapshot.LastCompletedMissionSeed = _lastCompletedMissionSeed;
+		snapshot.LastCompletedMissionIsSpecialHunt = _lastCompletedMissionIsSpecialHunt;
+		snapshot.CurrLevel = currLevel;
+		return snapshot;
+	}
+
+	/// <summary>
+	/// PC port: puts back the state from PcTakeSnapshot (PcPitTrial). The disk already holds the same state,
+	/// so nothing is marked for saving.
+	/// </summary>
+	public void PcRestoreSnapshot(PcSnapshot snapshot)
+	{
+		MemoryStream stream = new MemoryStream(snapshot.DataXml);
+		_data = (Data)PcXmlPairs.Deserialize(System.Xml.XmlReader.Create(stream), typeof(Data));
+		_currentLocation = snapshot.CurrentLocation;
+		_isSpecialHuntPlayed = snapshot.IsSpecialHuntPlayed;
+		_lastCompletedMissionLocation = snapshot.LastCompletedMissionLocation;
+		_lastCompletedMission = snapshot.LastCompletedMission;
+		_lastCompletedMissionSeed = snapshot.LastCompletedMissionSeed;
+		_lastCompletedMissionIsSpecialHunt = snapshot.LastCompletedMissionIsSpecialHunt;
+		currLevel = snapshot.CurrLevel;
+		_flush = false;
+		_saveOnce = false;
 	}
 
 	public float PlayingTime

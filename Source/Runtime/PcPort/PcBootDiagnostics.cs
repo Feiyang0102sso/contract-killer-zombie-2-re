@@ -32,6 +32,8 @@ public class PcBootDiagnostics : MonoBehaviour
 		diagnostics.StartCoroutine(DumpShop());
 		diagnostics.StartCoroutine(CheckAudio());
 		diagnostics.StartCoroutine(CompleteMission());
+		diagnostics.StartCoroutine(PitTrial());
+		diagnostics.StartCoroutine(GoToMap());
 		diagnostics.StartCoroutine(AddMoney());
 		diagnostics.StartCoroutine(ReportPerformance());
 		diagnostics.StartCoroutine(CheckPlayerPath());
@@ -810,6 +812,48 @@ public class PcBootDiagnostics : MonoBehaviour
 		Debug.Log("[PcDiag] complete mission t=" + target + " scene=" + UnityEngine.SceneManagement.SceneManager.GetActiveScene().name
 			+ " soft=" + Singleton.PlayerData.SoftCurrency + " xp=" + Singleton.PlayerData.XP);
 		Cheat.CompleteMission();
+	}
+
+	/// <summary>
+	/// Test: -pcPitTrial 8,9,10 calls PcPitTrial.TryStart at those times, the same call the F1 key makes
+	/// (keys cannot be sent to a background window). Several times test the refusals and the first press right after the map appears.
+	/// </summary>
+	private static IEnumerator PitTrial()
+	{
+		string argument = GetArgument("-pcPitTrial");
+		if (argument == null)
+		{
+			yield break;
+		}
+		foreach (string item in argument.Split(','))
+		{
+			float target = float.Parse(item, System.Globalization.CultureInfo.InvariantCulture);
+			while (Time.realtimeSinceStartup < target)
+			{
+				yield return null;
+			}
+			Debug.Log("[PcDiag] pit trial t=" + target + " started=" + PcPitTrial.TryStart("-pcPitTrial"));
+		}
+	}
+
+	/// <summary>Test: -pcGoToMap 120,200 calls AppGame.GoToCityMap at those times (leaves a level without tapping through the result screens).</summary>
+	private static IEnumerator GoToMap()
+	{
+		string argument = GetArgument("-pcGoToMap");
+		if (argument == null)
+		{
+			yield break;
+		}
+		foreach (string item in argument.Split(','))
+		{
+			float target = float.Parse(item, System.Globalization.CultureInfo.InvariantCulture);
+			while (Time.realtimeSinceStartup < target)
+			{
+				yield return null;
+			}
+			Debug.Log("[PcDiag] go to map t=" + target + " from=" + UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+			Singleton.Game.GoToCityMap();
+		}
 	}
 
 	/// <summary>Test: -pcAudioCheck 60,90 lists the AudioSources playing at those times (sound cannot be heard here, so this is the only way to confirm playback).</summary>

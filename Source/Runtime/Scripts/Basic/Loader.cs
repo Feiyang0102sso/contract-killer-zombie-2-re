@@ -88,6 +88,8 @@ public class Loader : MonoBehaviour
 		{
 			return;
 		}
+		// PC port: leaving a PcPitTrial level puts the player state back before anything else loads
+		PcPitTrial.OnLoadLevel(level.sceneName);
 		_customLoadSteps = customLoadSteps;
 		Singleton.MetaMission.EndPart();
 		levelToLoad = level;
