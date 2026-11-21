@@ -111,12 +111,21 @@ public class QualitySetter : MonoBehaviourAndLog
 		LogTo("Other.Quality");
 		Application.targetFrameRate = 60;
 		SetupQualitySettings();
+#if UNITY_STANDALONE
+		// PC port: no frame cap and VSync from the launcher (after SetQualityLevel, which resets vSyncCount)
+		PcLaunchArgs.ApplyFrameSettings();
+#endif
 		UpdateQualitySetup();
 	}
 
 	private void SetupQualitySettings()
 	{
+#if UNITY_STANDALONE
+		// PC port: the preset comes from the launcher's GraphDetail instead of the device generation
+		SetQualitySettingByName(PcLaunchArgs.QualityPresetName);
+#else
 		SetupQualitySettingsIPhone();
+#endif
 	}
 
 	private bool ContainsQuality(params string[] list)

@@ -1,11 +1,11 @@
-// PC 桥接：iOS / 移动端专有 API 的替身，只在打 PC 包时编译。
-// API 更新器把 iPhone.generation 等旧 API 改成了 UnityEngine.iOS.Device 等，
-// 这些类型在编辑器和 iOS 平台存在，在 Windows 平台不存在。这里补上同名类型，游戏源码不用改。
-// 编辑器里由 Unity 自带的类型提供，因此用 !UNITY_EDITOR 排除，避免重复定义。
+// PC bridge: stand-ins for iOS / mobile-only APIs, compiled only in PC builds.
+// The API updater turned old APIs such as iPhone.generation into UnityEngine.iOS.Device and friends; those types exist
+// in the editor and on iOS but not on Windows. Same-named types are added here so the game source stays unchanged.
+// In the editor Unity's own types are used, hence !UNITY_EDITOR to avoid duplicate definitions.
 #if !UNITY_EDITOR && !UNITY_IOS && !UNITY_ANDROID
 namespace UnityEngine.iOS
 {
-	/// <summary>只保留游戏代码用到的设备代号。</summary>
+	/// <summary>Only the device generations the game code uses.</summary>
 	public enum DeviceGeneration
 	{
 		Unknown,
@@ -25,8 +25,8 @@ namespace UnityEngine.iOS
 	public static class Device
 	{
 		/// <summary>
-		/// PC 报告为 iPad 3 代：游戏会选最高画质（"iPad3"），开启所有按设备关闭的功能，
-		/// 并使用 iPad 的高分辨率界面贴图。
+		/// PC reports an iPad 3: every feature the game disables per device stays on and the iPad high-res UI textures
+		/// are used. The quality preset is not taken from this on PC: QualitySetter uses the launcher's GraphDetail.
 		/// </summary>
 		public static DeviceGeneration generation
 		{
@@ -36,7 +36,7 @@ namespace UnityEngine.iOS
 			}
 		}
 
-		/// <summary>iCloud 备份标记，PC 上没有意义。</summary>
+		/// <summary>iCloud backup flag, meaningless on PC.</summary>
 		public static void SetNoBackupFlag(string path)
 		{
 		}
@@ -67,7 +67,7 @@ namespace UnityEngine
 
 	public static class Handheld
 	{
-		/// <summary>移动端全屏播片。PC 暂不播放，直接视为播完（以后改用 VideoPlayer）。</summary>
+		/// <summary>Mobile full-screen movie. Not played on PC yet, treated as finished (VideoPlayer later).</summary>
 		public static bool PlayFullScreenMovie(string path, Color bgColor, FullScreenMovieControlMode controlMode, FullScreenMovieScalingMode scalingMode)
 		{
 			Debug.Log("[PcPort] Handheld.PlayFullScreenMovie skipped on PC: " + path);

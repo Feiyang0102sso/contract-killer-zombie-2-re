@@ -1,5 +1,6 @@
 @echo off
 rem One-click build: Windows x64 development build to Builds\ckz2.exe (asset bundles are rebuilt first).
+rem PcPilotBuild then replaces Unity's ckz2.exe with the launcher (Launcher\build_launcher.bat, needs MSVC).
 rem Unity is looked up in this order: the UNITY_EXE environment variable,
 rem D:\Unity\Unity <version>\Editor\Unity.exe, then the default Unity Hub location.
 rem The version comes from ProjectSettings\ProjectVersion.txt. Log: RunLogs\build.log.
@@ -42,7 +43,7 @@ echo [build] building... (a first run after clean.bat reimports everything and t
 "%UNITY_EXE%" -batchmode -quit -projectPath "%CD%" -executeMethod PcPilotBuild.Build -logFile "%LOG%"
 set "EXIT_CODE=%ERRORLEVEL%"
 
-findstr /l /c:"[PcAssetBundleRebuild] done" /c:"[PcPilotBuild] result" "%LOG%"
+findstr /l /c:"[PcAssetBundleRebuild] done" /c:"[PcPilotBuild] result" /c:"[PcPilotBuild] launcher" "%LOG%"
 if not "%EXIT_CODE%"=="0" (
     echo [build] FAILED, exit code %EXIT_CODE%. See the log above.
     goto :finish

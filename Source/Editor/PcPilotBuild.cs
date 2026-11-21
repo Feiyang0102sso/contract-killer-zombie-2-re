@@ -1,22 +1,30 @@
-// 试点构建：先按原版索引重打资源包（StreamingAssets/AssetBundles 不入库），再用 EditorBuildSettings 里的场景（去掉重复项）打 Windows x64 开发版。
-// 批处理调用：Unity.exe -batchmode -quit -projectPath <工程> -executeMethod PcPilotBuild.Build -logFile <日志>
+// Pilot build: rebuilds the asset bundles from the original index first (StreamingAssets/AssetBundles is not committed),
+// then builds a Windows x64 development player from the scenes in EditorBuildSettings (duplicates removed),
+// and finally replaces Unity's player stub Builds/ckz2.exe with the launcher (Launcher/build_launcher.bat).
+// Batch call: Unity.exe -batchmode -quit -projectPath <project> -executeMethod PcPilotBuild.Build -logFile <log>
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using UnityEditor;
 using UnityEditor.Build.Reporting;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 
 public static class PcPilotBuild
 {
-	/// <summary>输出路径（相对工程根目录）。</summary>
+	/// <summary>Output path, relative to the project root.</summary>
 	private const string OutputPath = "Builds/ckz2.exe";
+
+	/// <summary>Builds the launcher with MSVC and copies it over the player stub, relative to the project root.</summary>
+	private const string LauncherBuildScript = "Launcher/build_launcher.bat";
 
 	[MenuItem("PcPilot/Build Windows x64 (Development)")]
 	public static void Build()
 	{
-		// 资源包是构建产物，每次构建前重打，保证与当前素材一致
+		// Asset bundles are build output: rebuilt every time so they match the current assets
 		PcAssetBundleRebuild.Rebuild();
 
-		// ULegacy 导出时有两个同名关卡，场景列表里出现了重复路径，这里只保留第一次出现的
+		// The ULegacy export has two levels with the same name, so the scene list repeats a path; keep the first one
 		List<string> scenes = new List<string>();
 		foreach (EditorBuildSettingsScene scene in EditorBuildSettings.scenes)
 		{
@@ -42,10 +50,43 @@ public static class PcPilotBuild
 		BuildReport report = BuildPipeline.BuildPlayer(options);
 		BuildSummary summary = report.summary;
 		Debug.Log("[PcPilotBuild] result: " + summary.result + ", errors: " + summary.totalErrors + ", size: " + summary.totalSize + ", time: " + summary.totalTime);
-		// 只在批处理模式下用退出码报告失败；在编辑器菜单里调用时不能退出编辑器
-		if (summary.result != BuildResult.Succeeded && Application.isBatchMode)
+		bool succeeded = summary.result == BuildResult.Succeeded;
+		if (succeeded)
+		{
+			succeeded = BuildLauncher();
+		}
+		// Report failure through the exit code only in batch mode; the menu call must not quit the editor
+		if (!succeeded && Application.isBatchMode)
 		{
 			EditorApplication.Exit(1);
 		}
+	}
+
+	/// <summary>Runs Launcher/build_launcher.bat; its output goes to the Unity log.</summary>
+	private static bool BuildLauncher()
+	{
+		string projectDir = Directory.GetCurrentDirectory();
+		string scriptPath = Path.Combine(projectDir, LauncherBuildScript);
+		// "call" makes cmd return the script's exit /b code; without it a failure inside an if block can come back as 0
+		ProcessStartInfo startInfo = new ProcessStartInfo("cmd.exe", "/c call \"" + scriptPath + "\"");
+		startInfo.WorkingDirectory = projectDir;
+		startInfo.UseShellExecute = false;
+		startInfo.RedirectStandardOutput = true;
+		startInfo.RedirectStandardError = true;
+		startInfo.CreateNoWindow = true;
+		using (Process process = Process.Start(startInfo))
+		{
+			string output = process.StandardOutput.ReadToEnd();
+			string errors = process.StandardError.ReadToEnd();
+			process.WaitForExit();
+			Debug.Log("[PcPilotBuild] launcher build output:\n" + output + errors);
+			if (process.ExitCode != 0)
+			{
+				Debug.LogError("[PcPilotBuild] launcher build failed, exit code " + process.ExitCode);
+				return false;
+			}
+		}
+		Debug.Log("[PcPilotBuild] launcher done");
+		return true;
 	}
 }

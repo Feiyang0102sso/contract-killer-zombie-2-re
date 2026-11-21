@@ -30,6 +30,11 @@ for %%f in (*.csproj *.sln *.slnx) do call :remove_file "%%f"
 call :remove_file ".vsconfig"
 call :remove_dir ".vs"
 
+rem Launcher build output and VS cache: rebuilt by build.bat (Launcher\build_launcher.bat)
+call :remove_dir "Launcher\out"
+call :remove_dir "Launcher\bin"
+call :remove_dir "Launcher\vs\.vs"
+
 rem Reports and Python caches
 call :remove_file "PcPilotAudit.txt"
 call :remove_dir "tools\__pycache__"
