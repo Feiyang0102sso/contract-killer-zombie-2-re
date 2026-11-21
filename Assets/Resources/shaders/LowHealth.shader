@@ -4,14 +4,17 @@ Properties {
 }
 SubShader { 
  Pass {
-  ZTest False
+  // PC port: was "ZTest False" with default back-face culling; PcBlit's full-screen quad got rejected, the backbuffer kept
+  // the last frame (3D frozen at low health, HUD still updating). Same state as the working chromatic aberration shader.
+  ZTest Always
   ZWrite Off
+  Cull Off
 CGPROGRAM
 // UNITY_SHADER_NO_UPGRADE
 #pragma vertex vert
 #pragma fragment frag
 #pragma target 3.0
-// PC 移植：由 pc_pilot_tools/gles_to_hlsl.py 从原版 GLES 代码翻译
+// PC port: translated from the original GLES code by pc_pilot_tools/gles_to_hlsl.py
 float4 _Saturation;
 float _Opacity;
 sampler2D _MainTex;
