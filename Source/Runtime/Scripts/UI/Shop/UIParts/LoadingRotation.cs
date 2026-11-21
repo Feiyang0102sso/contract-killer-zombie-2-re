@@ -8,7 +8,8 @@ public class LoadingRotation : MonoBehaviour
 
 	private void Update()
 	{
-		delta += Time.deltaTime / Time.timeScale;
+		// PC port: real time via PcFrameRate.RealDeltaTime; deltaTime / timeScale jumped by 333 s on load frames
+		delta += PcFrameRate.RealDeltaTime;
 		if (delta > deltaThreshold)
 		{
 			transform.RotateAroundLocal(Vector3.forward, -0.5235984f);

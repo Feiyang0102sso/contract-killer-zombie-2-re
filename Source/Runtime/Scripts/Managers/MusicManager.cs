@@ -49,6 +49,9 @@ public class MusicManager : MonoBehaviour
 
 	private AudioSource _ambience;
 
+	/// <summary>PC port: real time not yet spent on ambience steps (see Update).</summary>
+	private float _ambienceStepTime;
+
 	private AudioSource _audioSource01;
 
 	private AudioSource _audioSource02;
@@ -267,6 +270,27 @@ public class MusicManager : MonoBehaviour
 		}
 	}
 
+	/// <summary>One original per-frame ambience fade step (moved out of Update unchanged, deltaTime passed in).</summary>
+	private void UpdateAmbienceStep(float deltaTime)
+	{
+		if (_intensity == Intensity.Silence || _intensity == Intensity.Calmness)
+		{
+			if (!_ambience.isPlaying)
+			{
+				_ambience.Play();
+			}
+			_ambience.volume = Mathf.Clamp(_ambience.volume + 0.5f * deltaTime, 0f, AmbienceVolume) * (Singleton.Exists() ? Singleton.Settings.MusicVolume : 1f);
+		}
+		else if (_ambience.isPlaying)
+		{
+			_ambience.volume = Mathf.Clamp(_ambience.volume - 0.5f * deltaTime, 0f, AmbienceVolume) * (Singleton.Exists() ? Singleton.Settings.MusicVolume : 1f);
+			if (_ambience.volume == 0f)
+			{
+				_ambience.Stop();
+			}
+		}
+	}
+
 	private void Update()
 	{
 		float unusedLocal1;
@@ -278,21 +302,15 @@ public class MusicManager : MonoBehaviour
 		}
 		if ((bool)_ambience)
 		{
-			if (_intensity == Intensity.Silence || _intensity == Intensity.Calmness)
+			// PC port: the original step below runs once per frame and multiplies by MusicVolume every time, so the
+			// level it settles at shrinks as the frame rate rises (240 Hz: about 12 dB quieter than 60 fps).
+			// Run it at the original ORI_FPS_LIMIT steps per real second instead, with one 60 fps frame's deltaTime.
+			_ambienceStepTime += Time.unscaledDeltaTime;
+			float stepDeltaTime = Time.timeScale / PcFrameRate.ORI_FPS_LIMIT;
+			while (_ambienceStepTime >= 1f / PcFrameRate.ORI_FPS_LIMIT)
 			{
-				if (!_ambience.isPlaying)
-				{
-					_ambience.Play();
-				}
-				_ambience.volume = Mathf.Clamp(_ambience.volume + 0.5f * Time.deltaTime, 0f, AmbienceVolume) * (Singleton.Exists() ? Singleton.Settings.MusicVolume : 1f);
-			}
-			else if (_ambience.isPlaying)
-			{
-				_ambience.volume = Mathf.Clamp(_ambience.volume - 0.5f * Time.deltaTime, 0f, AmbienceVolume) * (Singleton.Exists() ? Singleton.Settings.MusicVolume : 1f);
-				if (_ambience.volume == 0f)
-				{
-					_ambience.Stop();
-				}
+				_ambienceStepTime -= 1f / PcFrameRate.ORI_FPS_LIMIT;
+				UpdateAmbienceStep(stepDeltaTime);
 			}
 		}
 		if (_cooldown.IsRunning())

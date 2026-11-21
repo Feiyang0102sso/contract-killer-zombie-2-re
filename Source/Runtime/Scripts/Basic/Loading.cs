@@ -144,7 +144,8 @@ public class Loading : MonoBehaviourAndLog
 	{
 		float unusedLocal1;
 		float unusedLocal2;
-		_loadingTime += Time.deltaTime / Time.timeScale;
+		// PC port: real time via PcFrameRate.RealDeltaTime; deltaTime / timeScale jumped by 333 s on load frames
+		_loadingTime += PcFrameRate.RealDeltaTime;
 		if (_waitFewUpdates && _updatesBeforeTakingInput > 0)
 		{
 			_updatesBeforeTakingInput--;

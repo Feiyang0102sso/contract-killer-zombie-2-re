@@ -619,8 +619,12 @@ public class Zombie : Unit
 					}
 					num = Mathf.Clamp(num, -20f, 20f);
 					num2 = Mathf.Clamp(num2, -70f, 70f);
-					headPitch = Mathf.MoveTowards(headPitch, num, Time.deltaTime * 200f);
-					headYaw = Mathf.MoveTowards(headYaw, num2, Time.deltaTime * 200f);
+					// PC port: this step runs only every 0.1 s, yet the original sized it by one frame's deltaTime, so the head
+					// turned slower the higher the frame rate. Use the step of one original 60 fps frame (timeScale keeps
+					// bullet time as on iOS).
+					float headStep = Time.timeScale * 200f / PcFrameRate.ORI_FPS_LIMIT;
+					headPitch = Mathf.MoveTowards(headPitch, num, headStep);
+					headYaw = Mathf.MoveTowards(headYaw, num2, headStep);
 				}
 			}
 			else

@@ -34,7 +34,8 @@ public class InfectionLevelIndicator : MonoBehaviour
 		float value = Mathf.Ceil(Singleton.PlayerData.InfectionLevel);
 		float num = Util.FractionInInterval(infectionLevel, 0f, Singleton.GameData.InfectionLevel.Max);
 		float num2 = Util.FractionInInterval(value, 0f, Singleton.GameData.InfectionLevel.Max);
-		ProgressBar.Value = smooth ? Mathf.Lerp(ProgressBar.Value, num2, Time.deltaTime / Time.timeScale * 1f) : num2;
+		// PC port: real time via PcFrameRate.RealDeltaTime; deltaTime / timeScale jumped by 333 s on load frames
+		ProgressBar.Value = smooth ? Mathf.Lerp(ProgressBar.Value, num2, PcFrameRate.RealDeltaTime * 1f) : num2;
 		float num3 = Singleton.PlayerData.MinutesLeftTillInfectionLevel(Mathf.Floor(infectionLevel));
 		TimerText.Text = new DateTime(TimeSpan.FromMinutes(num3).Ticks).ToString("mm:ss");
 		TimerText.transform.parent.gameObject.SetActiveRecursively(infectionLevel > 0f);

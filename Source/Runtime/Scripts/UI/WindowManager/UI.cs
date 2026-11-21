@@ -305,7 +305,8 @@ public class UI : MonoBehaviour
 			enabled = false;
 			return;
 		}
-		_time += Time.deltaTime / Time.timeScale;
+		// PC port: real time via PcFrameRate.RealDeltaTime; deltaTime / timeScale jumped by 333 s on load frames
+		_time += PcFrameRate.RealDeltaTime;
 		if (_time > _nextActionTime)
 		{
 			ActionInfo actionInfo = _actionQueue.Dequeue();

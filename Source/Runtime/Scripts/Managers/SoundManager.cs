@@ -113,7 +113,8 @@ public class SoundManager : MonoBehaviourAndLog
 					continue;
 				}
 				float num = dynamicVolume - _managed[i].audioSource.volume;
-				float num2 = Mathf.Sign(num) * 2f * Time.deltaTime / Time.timeScale;
+				// PC port: real time via PcFrameRate.RealDeltaTime; deltaTime / timeScale jumped by 333 s on load frames
+				float num2 = Mathf.Sign(num) * 2f * PcFrameRate.RealDeltaTime;
 				if (Mathf.Abs(num2) > Mathf.Abs(num))
 				{
 					num2 = num;

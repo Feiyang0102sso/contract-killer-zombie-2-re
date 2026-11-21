@@ -103,9 +103,12 @@ public class PlayerData : MonoBehaviourAndLog
 
 		public int StartingBonusCollectedNumber;
 
-		public float PlayingTime;
+		// PC port: double instead of float. These add up one frame's deltaTime at a time over the whole save; in float the
+		// tiny steps of a high frame rate get rounded (165 fps: 29% fast after 9 h, frozen after 36 h). Old saves with
+		// float text load unchanged.
+		public double PlayingTime;
 
-		public float LevelTime;
+		public double LevelTime;
 
 		public bool PlayerReceivedTutorialHardCurrency;
 
@@ -341,7 +344,7 @@ public class PlayerData : MonoBehaviourAndLog
 				_session.Level = currLevel;
 				SoftCurrency += Singleton.GameData.GetPlayerLevelData(currLevel).LevelUpSC;
 				GameAnalytics.LogLevelAchieved(Level, _data.SoftCurrency, _data.HardCurrency);
-				GameAnalytics.LogLevelTime(Level, _data.LevelTime);
+				GameAnalytics.LogLevelTime(Level, (float)_data.LevelTime);
 				_data.LevelTime = 0f;
 				_data.InfectionLevel = 0f;
 			}
@@ -1592,8 +1595,10 @@ public class PlayerData : MonoBehaviourAndLog
 	{
 		if (Time.timeScale > 0f)
 		{
-			_data.PlayingTime += Time.deltaTime / Time.timeScale;
-			_data.LevelTime += Time.deltaTime / Time.timeScale;
+			// PC port: real time via PcFrameRate.RealDeltaTime; deltaTime / timeScale jumped by 333 s on load frames
+			_data.PlayingTime += PcFrameRate.RealDeltaTime;
+			// PC port: real time via PcFrameRate.RealDeltaTime; deltaTime / timeScale jumped by 333 s on load frames
+			_data.LevelTime += PcFrameRate.RealDeltaTime;
 		}
 		if (_updateAllowed || _saveOnce)
 		{
@@ -1684,7 +1689,7 @@ public class PlayerData : MonoBehaviourAndLog
 	{
 		get
 		{
-			return _data.PlayingTime;
+			return (float)_data.PlayingTime;
 		}
 	}
 

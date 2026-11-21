@@ -1513,6 +1513,10 @@ public class Character : MonoBehaviourAndLog
 		}
 		Vector3 force = new Vector3(hit.moveDirection.x, 0f, hit.moveDirection.z);
 		force *= 800f;
+		// PC port: called every frame while touching, and the forces add up until the next physics step, so the push grew
+		// with the frame rate. Scale to the force one original 60 fps frame gave; unscaled time keeps bullet time as
+		// strong as on iOS too (there the physics step also collected more frames when slowed down).
+		force *= PcFrameRate.OriginalFrames(Time.unscaledDeltaTime);
 		attachedRigidbody.AddForce(force);
 	}
 

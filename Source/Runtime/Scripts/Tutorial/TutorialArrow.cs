@@ -63,7 +63,8 @@ public class TutorialArrow : MonoBehaviour
 
 	private void Update()
 	{
-		float t = Time.deltaTime / Time.timeScale * _damping;
+		// PC port: real time via PcFrameRate.RealDeltaTime; deltaTime / timeScale jumped by 333 s on load frames
+		float t = PcFrameRate.RealDeltaTime * _damping;
 		transform.position = Vector3.Lerp(transform.position, _targetPosition, t);
 		transform.localEulerAngles = new Vector3(0f, 0f, Mathf.LerpAngle(transform.localEulerAngles.z, _targetAngle, t));
 		float unusedOffset1;

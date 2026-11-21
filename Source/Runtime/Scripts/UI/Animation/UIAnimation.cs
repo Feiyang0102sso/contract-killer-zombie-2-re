@@ -101,7 +101,8 @@ public abstract class UIAnimation : MonoBehaviour
 	{
 		if (_delay > 0f)
 		{
-			_delay -= Time.deltaTime / Time.timeScale;
+			// PC port: real time via PcFrameRate.RealDeltaTime; deltaTime / timeScale jumped by 333 s on load frames
+			_delay -= PcFrameRate.RealDeltaTime;
 		}
 		else
 		{
@@ -111,7 +112,8 @@ public abstract class UIAnimation : MonoBehaviour
 				return;
 			}
 			UpdateAnimation();
-			_time += Time.deltaTime / Time.timeScale;
+			// PC port: real time via PcFrameRate.RealDeltaTime; deltaTime / timeScale jumped by 333 s on load frames
+			_time += PcFrameRate.RealDeltaTime;
 		}
 	}
 }

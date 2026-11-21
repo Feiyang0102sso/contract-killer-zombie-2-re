@@ -80,7 +80,8 @@ public class SpriteFader : MonoBehaviour
 		if (!(_fadeSpeed == 0f))
 		{
 			Color color = _sprite.Color;
-			_alpha += _fadeSpeed * Time.deltaTime / Time.timeScale;
+			// PC port: real time via PcFrameRate.RealDeltaTime; deltaTime / timeScale jumped by 333 s on load frames
+			_alpha += _fadeSpeed * PcFrameRate.RealDeltaTime;
 			color.a = Mathf.Clamp01(_alpha);
 			_sprite.SetColor(color);
 			if (_alpha >= 1f && _fadeSpeed > 0f)

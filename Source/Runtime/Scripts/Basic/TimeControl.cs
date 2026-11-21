@@ -32,9 +32,11 @@ public class TimeControl : MonoBehaviour
 
 	private static float _physicsFixedTimestep = -1f;
 
-	private static float _realTime;
+	// PC port: double instead of float, for the same reason as PlayerData.PlayingTime: summing tiny high frame rate
+	// steps in float drifts after a few hours (400 fps: +17% after 2.3 h, frozen after 18 h).
+	private static double _realTime;
 
-	private static float _gameTime;
+	private static double _gameTime;
 
 	private static float _bulletTimeLeft;
 
@@ -95,7 +97,7 @@ public class TimeControl : MonoBehaviour
 	{
 		get
 		{
-			return _realTime;
+			return (float)_realTime;
 		}
 	}
 
@@ -103,7 +105,7 @@ public class TimeControl : MonoBehaviour
 	{
 		get
 		{
-			return _gameTime;
+			return (float)_gameTime;
 		}
 	}
 
@@ -132,7 +134,8 @@ public class TimeControl : MonoBehaviour
 
 	private void Update()
 	{
-		float num = Time.deltaTime / Time.timeScale;
+		// PC port: real time via PcFrameRate.RealDeltaTime; deltaTime / timeScale jumped by 333 s on load frames
+		float num = PcFrameRate.RealDeltaTime;
 		if (_bulletTimeLeft > 0f && !IsPaused())
 		{
 			_bulletTimeLeft -= num;

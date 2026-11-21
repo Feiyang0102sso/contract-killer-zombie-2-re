@@ -1963,18 +1963,20 @@ public class UIScrollList : MonoBehaviour, IEZDragDrop, IUIObject
 		}
 		if (isScrolling && noTouch && !autoScrolling)
 		{
-			scrollDelta -= scrollDelta * scrollDecelCoef;
+			// PC port: the fling decay, the edge braking and the stop threshold were per frame, so a fling glided
+			// 60/fps as far (144 Hz: 42%). Apply them per original 60 fps frame (PcFrameRate) instead.
+			scrollDelta *= PcFrameRate.PerFrameFactor(1f - scrollDecelCoef, timeDelta);
 			if (scrollPos < 0f)
 			{
 				scrollPos -= scrollPos * 1f * (timeDelta / 0.166f);
-				scrollDelta *= Mathf.Clamp01(1f + scrollPos / scrollMax);
+				scrollDelta *= PcFrameRate.PerFrameFactor(Mathf.Clamp01(1f + scrollPos / scrollMax), timeDelta);
 			}
 			else if (scrollPos > 1f)
 			{
 				scrollPos -= (scrollPos - 1f) * 1f * (timeDelta / 0.166f);
-				scrollDelta *= Mathf.Clamp01(1f - (scrollPos - 1f) / scrollMax);
+				scrollDelta *= PcFrameRate.PerFrameFactor(Mathf.Clamp01(1f - (scrollPos - 1f) / scrollMax), timeDelta);
 			}
-			if (Mathf.Abs(scrollDelta) < 0.0001f)
+			if (Mathf.Abs(PcFrameRate.PerOriginalFrame(scrollDelta, timeDelta)) < 0.0001f)
 			{
 				scrollDelta = 0f;
 				if (scrollPos > -0.0001f && scrollPos < 0.0001f)
@@ -2024,8 +2026,10 @@ public class UIScrollList : MonoBehaviour, IEZDragDrop, IUIObject
 		}
 		else
 		{
-			num3 = scrollPos + scrollDelta / scrollDecelCoef;
-			float num4 = Mathf.Abs(scrollDelta);
+			// PC port: scrollDelta is a step at the current frame rate; these formulas expect a 60 fps step
+			float originalScrollDelta = PcFrameRate.PerOriginalFrame(scrollDelta, timeDelta);
+			num3 = scrollPos + originalScrollDelta / scrollDecelCoef;
+			float num4 = Mathf.Abs(originalScrollDelta);
 			scrollTime = Time.fixedDeltaTime * (scrollStopThresholdLog - Mathf.Log10(num4)) / Mathf.Log10((num4 - num4 * scrollDecelCoef) / num4);
 			scrollTime = Mathf.Max(scrollTime, minSnapDuration);
 		}

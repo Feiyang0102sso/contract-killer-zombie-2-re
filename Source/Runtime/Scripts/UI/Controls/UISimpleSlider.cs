@@ -57,7 +57,8 @@ public class UISimpleSlider : MonoBehaviour, IEZDragDrop, IUIObject
 	{
 		if (_dragging || _dumping)
 		{
-			float num = Time.deltaTime / Time.timeScale * damping;
+			// PC port: real time via PcFrameRate.RealDeltaTime; deltaTime / timeScale jumped by 333 s on load frames
+			float num = PcFrameRate.RealDeltaTime * damping;
 			if (_dragging)
 			{
 				num *= 2f;
