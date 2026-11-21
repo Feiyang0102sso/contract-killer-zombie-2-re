@@ -65,6 +65,8 @@ public class UIAlign : MonoBehaviour
 		if (enabled)
 		{
 			UpdateAlignment();
+			// PC port: realign when the window size or resolution changes (see PcUIAlignFix)
+			PcUIAlignFix.Register(this);
 		}
 	}
 
@@ -72,6 +74,12 @@ public class UIAlign : MonoBehaviour
 	{
 		if (m_camera == null)
 		{
+			// PC port: in edit mode ([ExecuteInEditMode], e.g. while the build loads a scene) there is no UIManager;
+			// UIManager.instance is null there and the NullReferenceException left these components disabled in the build
+			if (!Application.isPlaying)
+			{
+				return false;
+			}
 			EZCameraSettings[] uiCameras = UIManager.instance.uiCameras;
 			if (uiCameras.Length == 0)
 			{
