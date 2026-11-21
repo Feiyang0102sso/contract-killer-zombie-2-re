@@ -1,11 +1,11 @@
-// PC port: a model moved out of a used ActivateItem by PcLegacyActive.RescueAfterDisappear (e.g. the empty ammo crate).
-// In 3.5 the model stayed a child of the item, so destroying the item (or a node above it, e.g. the tutorial's
-// DestroyObject removing a CreateObject node with its spawned crate) also removed the model. This keeps that link.
+// PC port: an object moved out of its parent by PcLegacyActive (characters and effects of a finished mission node, the
+// empty crate of a used ammo box). In 3.5 it stayed a child, so destroying that parent (or anything above it, e.g. a
+// DestroyObject removing a CreateObject node with what it spawned) also removed the object. This keeps that link.
 using UnityEngine;
 
 public class PcLegacyShell : MonoBehaviour
 {
-	/// <summary>The item the model was moved out of.</summary>
+	/// <summary>The parent the object was moved out of.</summary>
 	private GameObject _formerParent;
 
 	public void Init(GameObject formerParent)

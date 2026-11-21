@@ -44,9 +44,22 @@ public static class PcLegacyActive
 		Transform newParent = node.transform.parent;
 		foreach (Transform child in rescued)
 		{
-			child.SetParent(newParent, true);
+			MoveOut(child, newParent);
 			Debug.Log("[PcLegacyActive] keep '" + child.name + "' running, moved out before '" + node.name + "' is deactivated");
 		}
+	}
+
+	/// <summary>
+	/// Moves child under newParent (keeping world position) and keeps the 3.5 lifetime link to its old parent: in 3.5 it
+	/// stayed a child, so destroying the old parent destroyed it too (see PcLegacyShell). E.g. Outdoor_Square Story7: the
+	/// Charger spawned by "5.1) [Task] KA"'s CreateObject for the boss intro is removed by "5.2) [Task] smasher"'s
+	/// DestroyObject (which destroys that CreateObject); without the link it survived and a second Smasher appeared.
+	/// </summary>
+	private static void MoveOut(Transform child, Transform newParent)
+	{
+		GameObject formerParent = child.parent.gameObject;
+		child.SetParent(newParent, true);
+		child.gameObject.AddComponent<PcLegacyShell>().Init(formerParent);
 	}
 
 	/// <summary>Same walk as DeactivateNode's [Task] loop: collects own-active Characters, skips ActivateItems, goes into the rest.</summary>
@@ -84,7 +97,7 @@ public static class PcLegacyActive
 		Transform newParent = node.transform.parent;
 		foreach (Transform child in rescued)
 		{
-			child.SetParent(newParent, true);
+			MoveOut(child, newParent);
 			Debug.Log("[PcLegacyActive] keep '" + child.name + "' running after '" + node.name + "' was deactivated");
 		}
 	}
@@ -105,9 +118,8 @@ public static class PcLegacyActive
 		CollectActiveUnderInactive(item.transform, rescued);
 		foreach (Transform child in rescued)
 		{
-			child.SetParent(null, true);
 			// still goes away when the item is destroyed, as it did as a child in 3.5
-			child.gameObject.AddComponent<PcLegacyShell>().Init(item);
+			MoveOut(child, null);
 			Debug.Log("[PcLegacyActive] keep '" + child.name + "' after '" + item.name + "' disappeared");
 		}
 	}

@@ -539,6 +539,8 @@ public class RagdollManager : MonoBehaviourAndLog
 			ActivatePreinstancedObject(value, true);
 			// PC port: keep ragdoll joints from stretching under PhysX 4 (see PcRagdollJoints)
 			PcRagdollJoints.EnableProjection(value);
+			// PC port: material-less renderers (scientist ragdoll eyes) would draw magenta (see PcMissingMaterials)
+			PcMissingMaterials.HideRenderersWithoutMaterial(value);
 			int num = _requested.FindIndex((GameObject x) => x == prefab);
 			if (num != -1)
 			{
@@ -551,6 +553,8 @@ public class RagdollManager : MonoBehaviourAndLog
 		GameObject created = UnityEngine.Object.Instantiate(prefab) as GameObject;
 		// PC port: keep ragdoll joints from stretching under PhysX 4 (see PcRagdollJoints)
 		PcRagdollJoints.EnableProjection(created);
+		// PC port: material-less renderers (scientist ragdoll eyes) would draw magenta (see PcMissingMaterials)
+		PcMissingMaterials.HideRenderersWithoutMaterial(created);
 		return created;
 	}
 
@@ -558,6 +562,8 @@ public class RagdollManager : MonoBehaviourAndLog
 	{
 		// PC port: dismembered limb pieces come through here; keep their joints from stretching too
 		PcRagdollJoints.EnableProjection(gameObject);
+		// PC port: a cut-off head carries the material-less eyes too (see PcMissingMaterials)
+		PcMissingMaterials.HideRenderersWithoutMaterial(gameObject);
 		if (IsRagdoll(gameObject))
 		{
 			_numRagdollsSpawnedThisFrame++;
