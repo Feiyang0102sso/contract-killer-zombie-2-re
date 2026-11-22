@@ -1,12 +1,12 @@
-"""用还原的 C# 源码替换 AssetRipper 反编译出的脚本，并沿用原脚本的 GUID。
+"""Replace the scripts decompiled by AssetRipper with the restored C# source, reusing the original scripts' GUIDs.
 
-场景和预制体通过 MonoScript 的 GUID 引用脚本，所以每个还原源码文件必须拿到
-反编译时同名类所用的 GUID。对应规则：(命名空间, 文件名) 与反编译文件的
-(目录路径, 文件名) 一致。
+Scenes and prefabs reference scripts by the MonoScript GUID, so every restored source file must get
+the GUID used by the same-named class at decompile time. Matching rule: (namespace, file name) equals the
+decompiled file's (directory path, file name).
 
-用法：
-    python replace_scripts.py <试点工程目录> <还原仓库的 Assets 目录>
-    （迁移前从零搭试点工程时用；迁移后代码在 Source/，本脚本只作记录。）
+Usage:
+    python replace_scripts.py <pilot project dir> <Assets dir of the restoration repo>
+    (Used when building the pilot project from scratch before migration; after migration the code lives in Source/, and this script is kept only as a record.)
 """
 
 import re
@@ -14,17 +14,17 @@ import shutil
 import sys
 from pathlib import Path
 
-# 反编译脚本所在目录（相对试点工程 Assets）
+# Directories holding the decompiled scripts (relative to the pilot project's Assets)
 DECOMPILED_DIRS = ["Scripts/Assembly-CSharp", "Scripts/LitJSON"]
-# 主程序集的反编译根目录：其下的目录层级就是命名空间
+# Decompile root of the main assembly: the directory hierarchy below it is the namespace
 DECOMPILED_MAIN_DIR = "Scripts/Assembly-CSharp"
-# 要从还原仓库复制的源码目录（相对还原仓库 Assets）
+# Source directories to copy from the restoration repo (relative to its Assets)
 SOURCE_DIRS = ["Packages", "Scripts", "Rendering"]
-# 还原仓库里的第三方程序集：原样复制
+# Third-party assemblies in the restoration repo: copied as is
 SOURCE_DLLS = ["3rd_party/LitJSON.dll"]
-# 匹配源码里第一个命名空间声明
+# Match the first namespace declaration in the source
 NAMESPACE_PATTERN = re.compile(r"^\s*namespace\s+([\w.]+)", re.MULTILINE)
-# 引用资源的文本文件后缀：用来统计丢失的脚本引用
+# Suffixes of text files that reference assets: used to count missing script references
 REFERENCING_SUFFIXES = [".unity", ".prefab", ".asset"]
 
 META_TEMPLATE = """fileFormatVersion: 2
@@ -38,7 +38,7 @@ MonoImporter:
 
 
 def read_guid(meta_path):
-    """从 .meta 文件读出 guid。"""
+    """Read the guid from a .meta file."""
     for line in meta_path.read_text(encoding="utf-8").splitlines():
         if line.startswith("guid:"):
             return line.split(":", 1)[1].strip()
@@ -46,7 +46,7 @@ def read_guid(meta_path):
 
 
 def build_decompiled_map(assets_dir):
-    """反编译脚本：(命名空间, 类名) -> guid。"""
+    """Decompiled scripts: (namespace, class name) -> guid."""
     result = {}
     main_dir = assets_dir / DECOMPILED_MAIN_DIR
     for cs_path in main_dir.rglob("*.cs"):
@@ -62,7 +62,7 @@ def build_decompiled_map(assets_dir):
 
 
 def source_key(cs_path):
-    """还原源码：(第一个命名空间, 文件名)。"""
+    """Restored source: (first namespace, file name)."""
     text = cs_path.read_text(encoding="utf-8-sig", errors="replace")
     match = NAMESPACE_PATTERN.search(text)
     namespace = ""
@@ -72,7 +72,7 @@ def source_key(cs_path):
 
 
 def collect_referenced_guids(assets_dir):
-    """统计场景、预制体、资源文件里引用到的所有 guid。"""
+    """Collect every guid referenced by scene, prefab and asset files."""
     guid_pattern = re.compile(r"guid: ([0-9a-f]{32})")
     referenced = set()
     for path in assets_dir.rglob("*"):
@@ -85,7 +85,7 @@ def collect_referenced_guids(assets_dir):
 
 
 def main():
-    """入口：删除反编译脚本 → 复制还原源码 → 写 .meta → 报告未匹配项。"""
+    """Entry point: delete decompiled scripts -> copy restored source -> write .meta -> report unmatched items."""
     pilot_assets = Path(sys.argv[1]) / "Assets"
     source_assets = Path(sys.argv[2])
 
@@ -93,7 +93,7 @@ def main():
     referenced = collect_referenced_guids(pilot_assets)
     print(f"[map] guids referenced by scenes/prefabs/assets: {len(referenced)}")
 
-    # 1. 删除反编译脚本（连同目录自身的 .meta）
+    # 1. Delete the decompiled scripts (together with the directory's own .meta)
     for relative in DECOMPILED_DIRS:
         target = pilot_assets / relative
         if target.exists():
@@ -103,7 +103,7 @@ def main():
             dir_meta.unlink()
         print(f"[clean] removed {relative}")
 
-    # 2. 复制还原源码，按 (命名空间, 文件名) 沿用 guid
+    # 2. Copy the restored source, reusing the guid by (namespace, file name)
     used_keys = set()
     copied = 0
     matched = 0
@@ -129,7 +129,7 @@ def main():
         shutil.copy2(source_assets / relative, destination)
         print(f"[copy] dll: {relative}")
 
-    # 3. 报告：反编译里有、源码里没对上的类，重点看被资源引用的
+    # 3. Report: classes present in the decompiled output but unmatched in the source; focus on those referenced by assets
     missing_referenced = []
     missing_other = 0
     for key in sorted(decompiled):

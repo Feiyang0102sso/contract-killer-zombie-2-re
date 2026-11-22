@@ -4,7 +4,7 @@
 // Unity 6 decides by AudioSource.spatialBlend alone, and the API updater mapped panLevel straight to it,
 // so the GameData presets (PanLevel = 1) made the original 2D sounds fully 3D: UI, mission, power-up and
 // voice-over sounds played at a stale position with a 25 m linear rolloff and were silent.
-// The 2D table is generated from the original import settings by tools/audio_2d_extract.py (PcAudio.Generated.cs).
+// The 2D table is generated from the original import settings by tools/portNewUnity/asset_convert/audio_2d_extract.py (PcAudio.Generated.cs).
 using UnityEngine;
 
 public static partial class PcAudio

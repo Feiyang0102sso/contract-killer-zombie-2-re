@@ -3,7 +3,7 @@
 Each replacement requires the original text to occur exactly once, otherwise it exits with an error, so nothing is changed in the wrong place.
 This list doubles as the record of the changes moved into ckz2_repo_pc.
 
-Usage: python tools/api_fixes.py <project root> (edits the code under Source/Runtime)
+Usage: python tools/portNewUnity/cs_migrate/api_fixes.py <project root> (edits the code under Source/Runtime)
 """
 
 import sys

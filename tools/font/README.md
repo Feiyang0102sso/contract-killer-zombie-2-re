@@ -1,11 +1,11 @@
-# tools/fonts
+# tools/font
 
-Inputs of `tools/make_cn_font.py`, which rebuilds the Simplified Chinese bitmap font
+Inputs of `tools/font/make_cn_font.py`, which rebuilds the Simplified Chinese bitmap font
 (`Assets/ui/fonts/ChineseSimplified.txt` + `ChineseSimplified_0.png`) from the characters used in
 `Assets/localization/zh-Hans.txt`. Run it after changing Chinese texts (Windows only, it renders with GDI):
 
 ```
-../.venv/Scripts/python.exe tools/make_cn_font.py
+../.venv/Scripts/python.exe tools/font/make_cn_font.py
 ```
 
 | File | What it is |

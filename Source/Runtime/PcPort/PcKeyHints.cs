@@ -2,7 +2,7 @@
 // Text: clones an original SpriteText as template (keeps font, layer, rendering), parented under the button;
 //   the text comes from PcKeyBindings.
 // Red banner (optional): a sprite from the banner sheet (Resources/PcPort/PcKeyBanners.png, made by
-//   tools/make_key_banners.py) placed as a child of the text, centered behind it and sized to it.
+//   tools/art/make_key_banners.py) placed as a child of the text, centered behind it and sized to it.
 //   Moving the text moves the banner; PcKeyHintRoot makes a Scene-view click on the banner select the text.
 // Labels are children of the button, so they hide with it.
 //
@@ -29,7 +29,7 @@ public static class PcKeyHints
 	/// <summary>Pick-up banner behind the text (Button +z faces away from the camera; z scale 0.05, so 0.2 ~= 1 cm).</summary>
 	private const float PickUpBannerBehindZ = 0.2f;
 
-	// ---- Banner sheet (layout must match tools/make_key_banners.py) ----
+	// ---- Banner sheet (layout must match tools/art/make_key_banners.py) ----
 	/// <summary>Banner sheet (Resources path).</summary>
 	private const string BannerSheetPath = "PcPort/PcKeyBanners";
 	private const int BannerSheetColumns = 4;

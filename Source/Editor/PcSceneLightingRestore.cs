@@ -1,6 +1,6 @@
 // Writes the original lightmap assignment and light probes back into the scenes: each scene gets a PcSceneLighting
 // object (runtime component: PcPort/PcSceneLighting.cs).
-// Data comes from the untouched export via tools/scene_lighting_extract.py, in pc_data/lighting/<scene name>.json.
+// Data comes from the untouched export via tools/portNewUnity/asset_convert/scene_lighting_extract.py, in pc_data/lighting/<scene name>.json.
 // Renderers are matched by component fileID (GlobalObjectId.targetObjectId; it survives Unity 6 re-saving the scene).
 // Safe to run again: an existing PcSceneLighting object is reused, so a rerun only changes the fields.
 // Batch mode: Unity.exe -batchmode -quit -projectPath <project> -executeMethod PcSceneLightingRestore.RestoreAll -logFile <log>

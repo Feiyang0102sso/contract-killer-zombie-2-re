@@ -10,14 +10,15 @@ shader and multiplies the texture by _OnPressMultiplier (1.5), so only one frame
 A preview with both states is written next to the output.
 
 Usage (from ckz2_repo_pc):
-    ../.venv/Scripts/python.exe tools/make_exit_button.py
+    ../.venv/Scripts/python.exe tools/art/make_exit_button.py
 """
 from pathlib import Path
 
 from PIL import Image, ImageChops, ImageDraw, ImageFilter
 
 # ---- Paths ----
-PROJECT_DIR = Path(__file__).resolve().parent.parent
+# tools/<category>/<script>.py -> project root
+PROJECT_DIR = Path(__file__).resolve().parents[2]
 SOURCE_ATLAS = PROJECT_DIR / "Assets" / "Resources" / "copiedtextures" / "GUICityMap.png"
 OUTPUT_PNG = PROJECT_DIR / "Assets" / "Resources" / "PcPort" / "PcExitButton.png"
 PREVIEW_PNG = PROJECT_DIR / "tools" / "out" / "PcExitButton_preview.png"

@@ -1,15 +1,15 @@
-"""解析 Unity 3.5 导出的旧版 NavMesh（Detour 二进制），提取可行走多边形，输出 JSON 供编辑器重新烘焙。
+"""Parse the legacy NavMesh (Detour binary) exported from Unity 3.5, extract the walkable polygons, and write JSON for the editor to re-bake.
 
-数据布局（由 m_MeshData 实测，与 Recast 示例的 tile 存档格式一致）：
-    MSET 头：magic 'MSET'，version，numTiles，dtNavMeshParams(orig[3], tileWidth, tileHeight, maxTiles, maxPolys)
-    每个 tile：tileRef(u32)，dataSize(u32)，然后是 dtMeshHeader('DNAV') + verts + polys + ...
-dtMeshHeader 字段（version 13）：magic, version, x, y, layer, userId, polyCount, vertCount, maxLinkCount,
+Data layout (measured from m_MeshData, consistent with the tile save format of the Recast sample):
+    MSET header: magic 'MSET', version, numTiles, dtNavMeshParams(orig[3], tileWidth, tileHeight, maxTiles, maxPolys)
+    Per tile: tileRef(u32), dataSize(u32), then dtMeshHeader('DNAV') + verts + polys + ...
+dtMeshHeader fields (version 13): magic, version, x, y, layer, userId, polyCount, vertCount, maxLinkCount,
     detailMeshCount, detailVertCount, detailTriCount, bvNodeCount, offMeshConCount, offMeshBase,
     unknown, walkableHeight, walkableRadius, walkableClimb, bmin[3], bmax[3], bvQuantFactor
-dtPoly（Unity 3.5 的变体，36 字节，由数据实测）：firstLink(u32), verts[6](u16), neis[6](u16), flags(u16),
-    未知(u16), vertCount(u8)@32, areaAndtype(u8)@33, 填充(2)
+dtPoly (Unity 3.5 variant, 36 bytes, measured from the data): firstLink(u32), verts[6](u16), neis[6](u16), flags(u16),
+    unknown(u16), vertCount(u8)@32, areaAndtype(u8)@33, padding(2)
 
-用法：python navmesh_extract.py <NavMesh.asset> [<输出.json>]
+Usage: python navmesh_extract.py <NavMesh.asset> [<output.json>]
 """
 
 import json
@@ -18,24 +18,24 @@ import struct
 import sys
 from pathlib import Path
 
-MESH_SET_MAGIC = b"TESM"   # 'MSET' 小端
-TILE_MAGIC = b"VAND"       # 'DNAV' 小端
+MESH_SET_MAGIC = b"TESM"   # 'MSET' little-endian
+TILE_MAGIC = b"VAND"       # 'DNAV' little-endian
 MAX_VERTS_PER_POLY = 6
 POLY_SIZE = 36
-HEADER_INTS = 16           # magic .. unknown，共 16 个 int
-# 外部 off-mesh 连接的多边形类型（areaAndtype 高 2 位）
+HEADER_INTS = 16           # magic .. unknown, 16 ints in total
+# Polygon type of external off-mesh connections (high 2 bits of areaAndtype)
 POLY_TYPE_OFFMESH = 1
 
 
 def read_mesh_data(asset_path):
-    """从 YAML 里取出 m_MeshData 的十六进制串。"""
+    """Get the hex string of m_MeshData from the YAML."""
     text = Path(asset_path).read_text(encoding="utf-8")
     match = re.search(r"m_MeshData: ([0-9a-f]+)", text)
     return bytes.fromhex(match.group(1))
 
 
 def parse_tile(data, offset):
-    """解析一个 tile，返回 (多边形顶点列表, 头信息)。"""
+    """Parse one tile, returns (list of polygon vertices, header info)."""
     header = struct.unpack_from("<4s15i", data, offset)
     if header[0] != TILE_MAGIC:
         raise ValueError(f"bad tile magic at {offset}: {header[0]!r}")
@@ -78,7 +78,7 @@ def parse_tile(data, offset):
 
 
 def extract(asset_path):
-    """解析整个 NavMesh，合并所有 tile 的顶点和三角形。"""
+    """Parse the whole NavMesh, merging the vertices and triangles of all tiles."""
     data = read_mesh_data(asset_path)
     if data[:4] != MESH_SET_MAGIC:
         raise ValueError(f"bad mesh set magic: {data[:4]!r}")
@@ -94,7 +94,7 @@ def extract(asset_path):
         verts, polygons, info = parse_tile(data, cursor)
         base = len(all_vertices)
         all_vertices.extend(verts)
-        # 凸多边形按扇形三角化
+        # Convex polygons are triangulated as a fan
         for poly in polygons:
             for k in range(1, len(poly) - 1):
                 triangles.append([base + poly[0], base + poly[k], base + poly[k + 1]])
@@ -104,13 +104,13 @@ def extract(asset_path):
 
 
 def main():
-    """解析并打印概况，可选输出 JSON。"""
+    """Parse and print an overview, optionally write JSON."""
     result = extract(sys.argv[1])
     print(f"[navmesh] tiles={len(result['tiles'])} vertices={len(result['vertices'])} triangles={len(result['triangles'])}")
     for info in result["tiles"]:
         print(f"[navmesh] tile: {info}")
     if len(sys.argv) > 2:
-        # Unity 的 JsonUtility 不支持嵌套数组，另外输出扁平数组
+        # Unity's JsonUtility does not support nested arrays, so a flat array is also written
         flat_vertices = []
         for vertex in result["vertices"]:
             flat_vertices.extend(vertex)

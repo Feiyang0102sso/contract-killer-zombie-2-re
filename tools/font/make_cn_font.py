@@ -6,20 +6,20 @@ Run it after changing Chinese texts, then build as usual (the font goes into the
 
 Rendering reproduces the original font, which Glu made with AngelCode BMFont:
   - Windows GDI GetGlyphOutlineW (GGO_BITMAP, the same call BMFont uses), so Windows only;
-  - Droid Sans Fallback (tools/fonts/DroidSansFallback.ttf, Android 4.4, Apache 2.0), loaded privately (not installed);
+  - Droid Sans Fallback (tools/font/DroidSansFallback.ttf, Android 4.4, Apache 2.0), loaded privately (not installed);
   - BMFont settings from the original header: size 66 (cell height), no smoothing, outline 2, spacing 7.
 Checked against the original atlas: every glyph rendered here is pixel-identical, at the same offsets.
 Kept as data, not rendered:
-  - glyphs copied as images from tools/fonts/ChineseSimplified_preserved/ (PRESERVED_GLYPHS): '@' silver and
+  - glyphs copied as images from tools/font/ChineseSimplified_preserved/ (PRESERVED_GLYPHS): '@' silver and
     '^' gold currency icons (the game writes prices as "@123"), and '£' 'б', which in the original came from
     another font;
-  - kerning pairs from tools/fonts/ChineseSimplified_kerning.txt (see KERNING_FILE).
+  - kerning pairs from tools/font/ChineseSimplified_kerning.txt (see KERNING_FILE).
 
 Atlas: 2048 x 2048 while everything fits, otherwise 4096 x 4096 (EZ GUI reads one page only); the texture's
 .meta maxTextureSize is set to match, or Unity would shrink a 4096 atlas.
 
 Usage (from ckz2_repo_pc):
-    ../.venv/Scripts/python.exe tools/make_cn_font.py
+    ../.venv/Scripts/python.exe tools/font/make_cn_font.py
 """
 import ctypes
 import re
@@ -29,13 +29,14 @@ from pathlib import Path
 from PIL import Image
 
 # ---- Paths ----
-PROJECT_DIR = Path(__file__).resolve().parent.parent
+# tools/<category>/<script>.py -> project root
+PROJECT_DIR = Path(__file__).resolve().parents[2]
 TEXT_FILE = PROJECT_DIR / "Assets" / "localization" / "zh-Hans.txt"
-FONT_FILE = PROJECT_DIR / "tools" / "fonts" / "DroidSansFallback.ttf"
-PRESERVED_DIR = PROJECT_DIR / "tools" / "fonts" / "ChineseSimplified_preserved"
+FONT_FILE = PROJECT_DIR / "tools" / "font" / "DroidSansFallback.ttf"
+PRESERVED_DIR = PROJECT_DIR / "tools" / "font" / "ChineseSimplified_preserved"
 # Kerning pairs of the original font (Latin, Cyrillic, quotes). Kept as data: this font's 'kern' table is split into
 # 30 subtables with an empty first one, and GDI's GetKerningPairs only reads the first, so it returns nothing.
-KERNING_FILE = PROJECT_DIR / "tools" / "fonts" / "ChineseSimplified_kerning.txt"
+KERNING_FILE = PROJECT_DIR / "tools" / "font" / "ChineseSimplified_kerning.txt"
 OUTPUT_TXT = PROJECT_DIR / "Assets" / "ui" / "fonts" / "ChineseSimplified.txt"
 OUTPUT_PNG = PROJECT_DIR / "Assets" / "ui" / "fonts" / "ChineseSimplified_0.png"
 OUTPUT_PNG_META = PROJECT_DIR / "Assets" / "ui" / "fonts" / "ChineseSimplified_0.png.meta"

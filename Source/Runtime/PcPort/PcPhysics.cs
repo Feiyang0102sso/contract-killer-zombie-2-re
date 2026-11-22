@@ -1,30 +1,34 @@
-// PC 移植：CharacterController 的行为向 Unity 3.5（PhysX 2.8）看齐。
+// PC port: makes CharacterController behave like Unity 3.5 (PhysX 2.8).
 //
-// 3.5 的控制器有两个特点，Unity 5 以后都变了：
-// 1. 不会把已经重叠的控制器推开（新版默认开着 overlap recovery）；
-// 2. 一开始就和静态几何体重叠时，Move 的扫掠在距离 0 处就被挡住，控制器原地不动（新版的扫掠忽略初始重叠，直接穿过去）。
-// 教程关的 TargetToAttack（坠毁直升机里的假人，僵尸的攻击目标）就是一开始插在路面下 0.09 m、和直升机网格重叠的。
-// 原版里它被卡在原地；新版要么被推飞，要么穿地掉下去，僵尸失去目标，教程卡住。见 tools/README.md 白天修复第 1 节。
+// The 3.5 controller differs from Unity 5+ in two ways:
+// 1. It does not push an already overlapping controller out (newer versions have overlap recovery on by default);
+// 2. When it starts inside static geometry, the Move sweep is blocked at distance 0 and the controller stays put
+//    (the newer sweep ignores initial overlaps and passes straight through). Point 2 is inferred: the original data
+//    starts overlapped and the tutorial works on iOS; no PhysX 2.8 documentation was found.
+// The tutorial's TargetToAttack (the dummy in the crashed helicopter, the zombies' attack target) starts 0.09 m below
+// the road and overlapping the helicopter mesh.
+// In the original it stays stuck in place; in the new version it is either flung away or falls through the ground, the
+// zombies lose their target and the tutorial stalls. See pc_pilot_tools/README.md, day fixes section 1.
 using System.Collections.Generic;
 using UnityEngine;
 
 public static class PcPhysics
 {
 	/// <summary>
-	/// 每个控制器第一次 Move 时的判定结果（实例 ID → 是否钉在原地）。
-	/// 只认“一开始就摆在几何体里”的情况：第一次 Move 时没重叠的控制器，以后永远照常 Move。
-	/// 不这样限制的话，玩家在柱子边被挤进去一点就会永远走不动（白天修复第 6 节，player82）。
+	/// Result decided at each controller's first Move (instance ID -> pinned in place or not).
+	/// Only controllers placed inside geometry from the start count: one not overlapping at its first Move always moves normally.
+	/// Without this limit, a player squeezed slightly into a pillar would never move again (day fixes section 6, player82).
 	/// </summary>
 	private static readonly Dictionary<int, bool> _pinned = new Dictionary<int, bool>();
 
 	/// <summary>
-	/// 判定“和静态几何体重叠”时，胶囊半径先缩小这么多。
-	/// 站在地上的控制器和地面之间只有约 0.01 m 的间隙，留出余量，免得把正常站着的角色误判成卡住；
-	/// TargetToAttack 插进路面 0.09 m，仍能判出来。
+	/// The capsule radius is shrunk by this much when testing for overlap with static geometry.
+	/// A controller standing on the ground has only about 0.01 m of gap to it; the margin keeps normally standing
+	/// characters from being judged stuck. TargetToAttack is 0.09 m into the road, so it is still caught.
 	/// </summary>
 	private const float OverlapTolerance = 0.05f;
 
-	/// <summary>关掉 CharacterController 的 overlap recovery（3.5 没有这个功能）。</summary>
+	/// <summary>Turns off the CharacterController's overlap recovery (3.5 has no such feature).</summary>
 	public static void MatchLegacyController(CharacterController controller)
 	{
 		if (controller == null)
@@ -35,9 +39,10 @@ public static class PcPhysics
 	}
 
 	/// <summary>
-	/// 代替 controller.Move(motion)：控制器第一次 Move 时就和静态几何体重叠（场景里摆进几何体的假人），
-	/// 像 3.5 一样永远原地不动；否则照常 Move。会主动移动的角色不参与（见 CanBePinned）。
-	/// owner 是角色根物体，它下面的碰撞体（受击区等）不算。
+	/// Replaces controller.Move(motion): a controller that overlaps static geometry at its first Move (a dummy placed
+	/// inside geometry in the scene) stays in place forever, as in 3.5; otherwise it moves normally. Characters that move
+	/// by themselves are excluded (see CanBePinned).
+	/// owner is the character root; colliders under it (hit zones etc.) do not count.
 	/// </summary>
 	public static CollisionFlags LegacyMove(CharacterController controller, Vector3 motion, Transform owner)
 	{
@@ -60,8 +65,9 @@ public static class PcPhysics
 	}
 
 	/// <summary>
-	/// 会主动移动的角色（玩家、Bot / 幸存者、Animal / 乌鸦）不参与“钉住”：全关卡巡检（tour5）里幸存者和乌鸦一开始也和几何体重叠，
-	/// 钉住它们会让护送任务走不动、乌鸦飞不起来，而原版这些都是正常的。只剩 HumanInHelicopter 这类不主动移动的假人。
+	/// Characters that move by themselves (Player, Bot / survivors, Animal / crows) are never pinned: in the all-level tour
+	/// (tour5) survivors and crows also start overlapping geometry, and pinning them stalls escort tasks and grounds the
+	/// crows, while both work in the original. That leaves dummies that never move, such as HumanInHelicopter.
 	/// </summary>
 	private static bool CanBePinned(Transform owner)
 	{
@@ -72,7 +78,7 @@ public static class PcPhysics
 		return true;
 	}
 
-	/// <summary>控制器的胶囊（按缩放换算到世界空间，半径减去容差）是否和会与它碰撞的静态碰撞体重叠。</summary>
+	/// <summary>Whether the controller's capsule (scaled to world space, radius minus the tolerance) overlaps a static collider it collides with.</summary>
 	private static bool IsStuckInStaticGeometry(CharacterController controller, Transform owner)
 	{
 		Transform transform = controller.transform;
@@ -91,7 +97,7 @@ public static class PcPhysics
 		Collider[] overlaps = Physics.OverlapCapsule(top, bottom, checkRadius, CollisionMask(controller.gameObject.layer), QueryTriggerInteraction.Ignore);
 		foreach (Collider overlap in overlaps)
 		{
-			// 自己的碰撞体、其他控制器、带刚体的物体都不算静态几何体
+			// Own colliders, other controllers and objects with a rigidbody are not static geometry
 			if (overlap == controller || overlap.transform.IsChildOf(owner))
 			{
 				continue;
@@ -105,7 +111,7 @@ public static class PcPhysics
 		return false;
 	}
 
-	/// <summary>按物理设置的层碰撞矩阵，返回与 layer 会发生碰撞的层的掩码。</summary>
+	/// <summary>Mask of the layers that collide with layer, from the physics layer collision matrix.</summary>
 	private static int CollisionMask(int layer)
 	{
 		int mask = 0;

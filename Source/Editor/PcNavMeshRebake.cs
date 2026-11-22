@@ -1,10 +1,10 @@
-// 用原版导航网格重新生成 Unity 6 的导航数据。
-// 原版的寻路数据（Unity 3.5 的 Detour 二进制）由 tools/navmesh_extract.py 解析成 JSON，
-// 放在工程根目录的 pc_data/navmesh/<旧 NavMesh 资源 GUID>.json。这里逐个打开场景：
-//   1. 按 pc_data/navmesh/scene_map.tsv（场景 -> 旧 NavMesh 资源 GUID）找到对应 JSON；
-//   2. 用射线把顶点贴到场景的真实地面（原版顶点高度是量化过的），再用这些多边形作为唯一输入构建 NavMeshData（代理半径取很小，因为原版多边形已经按半径收缩过）；
-//   3. 存成 Assets/NewNavMesh/<场景名>.asset，挂到场景的 NavMeshSettings.m_NavMeshData 上，保存场景。
-// 批处理调用：Unity.exe -batchmode -quit -projectPath <工程> -executeMethod PcNavMeshRebake.RebakeAll -logFile <日志>
+// Rebuilds Unity 6 navigation data from the original navmeshes.
+// The original pathfinding data (Unity 3.5 Detour binary) is parsed into JSON by tools/portNewUnity/asset_convert/navmesh_extract.py,
+// stored as pc_data/navmesh/<old NavMesh asset GUID>.json under the project root. This opens the scenes one by one:
+//   1. finds the JSON through pc_data/navmesh/scene_map.tsv (scene -> old NavMesh asset GUID);
+//   2. snaps the vertices to the scene's real ground with raycasts (the original vertex heights are quantized), then builds NavMeshData with these polygons as the only input (tiny agent radius, since the original polygons are already shrunk by the radius);
+//   3. saves it as Assets/NewNavMesh/<scene name>.asset, assigns it to the scene's NavMeshSettings.m_NavMeshData and saves the scene.
+// Batch call: Unity.exe -batchmode -quit -projectPath <project> -executeMethod PcNavMeshRebake.RebakeAll -logFile <log>
 using System.Collections.Generic;
 using System.IO;
 
@@ -21,16 +21,17 @@ public static class PcNavMeshRebake
 
 	private const string HolderName = "PcNavMesh";
 
-	/// <summary>重新生成时的代理半径：原版多边形已经收缩过，这里只留一点余量。</summary>
+	/// <summary>Agent radius for the rebuild: the original polygons are already shrunk, so only a small margin is left.</summary>
 	private const float RebuildAgentRadius = 0.05f;
 
-	/// <summary>体素大小：越小越贴合原版多边形。</summary>
+	/// <summary>Voxel size: the smaller, the closer to the original polygons.</summary>
 	private const float VoxelSize = 0.05f;
 
 	/// <summary>
-	/// 个别场景用更细的体素和更小的半径（体素、半径都是 0.025）。
-	/// 加油站白天 / 夜晚 / Story2 三关里连接两片区域的木板坡道、窄通道在 0.05 下被切断，玩家路线算出 PathPartial；
-	/// 但 0.025 加上贴地会把教程关的路线切断（PcNavMeshExperiment 实测），所以只对这几个场景用 0.025。
+	/// A few scenes use finer voxels and a smaller radius (both 0.025).
+	/// In the gas station day / night / Story2 levels, the plank ramps and narrow passages joining two areas are cut at
+	/// 0.05 and the player route comes out PathPartial; but 0.025 plus ground snapping cuts the tutorial route
+	/// (measured with PcNavMeshExperiment), so only these scenes use 0.025.
 	/// </summary>
 	private const float FineSize = 0.025f;
 
@@ -45,7 +46,7 @@ public static class PcNavMeshRebake
 	};
 
 	/// <summary>
-	/// 场景路径 -> 旧 NavMesh 资源 GUID，由原始导出生成（保存过的场景会被 Unity 6 重写，丢掉这条引用）。
+	/// Scene path -> old NavMesh asset GUID, generated from the untouched export (Unity 6 rewrites a saved scene and drops this reference).
 	/// </summary>
 	private const string SceneMapFile = "pc_data/navmesh/scene_map.tsv";
 
@@ -63,7 +64,7 @@ public static class PcNavMeshRebake
 		return map;
 	}
 
-	/// <summary>JSON 结构（与 navmesh_extract.py 的输出对应）。</summary>
+	/// <summary>JSON layout (matches the output of navmesh_extract.py).</summary>
 	[System.Serializable]
 	private class NavMeshJson
 	{
@@ -112,7 +113,7 @@ public static class PcNavMeshRebake
 	private static bool RebakeScene(string scenePath, string jsonPath)
 	{
 		NavMeshJson source = JsonUtility.FromJson<NavMeshJson>(File.ReadAllText(jsonPath));
-		// 先打开场景：要用场景里的碰撞体校正顶点高度
+		// Open the scene first: its colliders are used to correct the vertex heights
 		UnityEngine.SceneManagement.Scene scene = EditorSceneManager.OpenScene(scenePath, OpenSceneMode.Single);
 		Physics.SyncTransforms();
 		int snapped = SnapToGround(source.flatVertices);
@@ -156,13 +157,13 @@ public static class PcNavMeshRebake
 		AssetDatabase.DeleteAsset(assetPath);
 		AssetDatabase.CreateAsset(data, assetPath);
 
-		// 早先的版本用 NavMeshSurface 挂数据，但它在 OnEnable 才注册，晚于场景里 NavMeshAgent 的创建，删掉
+		// Earlier versions held the data in a NavMeshSurface, but it registers only in OnEnable, after the scene's NavMeshAgents are created; remove it
 		GameObject holder = GameObject.Find(HolderName);
 		if (holder != null)
 		{
 			Object.DestroyImmediate(holder);
 		}
-		// 挂到场景自身的导航设置上（与原版一样）：场景加载时先载入导航数据，再创建代理
+		// Assign it to the scene's own navigation settings (as in the original): on scene load the navigation data is loaded before the agents are created
 		SerializedObject navMeshSettings = new SerializedObject(UnityEditor.AI.NavMeshBuilder.navMeshSettingsObject);
 		navMeshSettings.FindProperty("m_NavMeshData").objectReferenceValue = data;
 		navMeshSettings.ApplyModifiedPropertiesWithoutUndo();
@@ -172,7 +173,7 @@ public static class PcNavMeshRebake
 		return true;
 	}
 
-	/// <summary>核对：每个场景新导航网格的面积与原版多边形面积之比（应接近 1）。</summary>
+	/// <summary>Check: per scene, the area of the new navmesh over the area of the original polygons (should be close to 1).</summary>
 	[MenuItem("PcPilot/Verify Rebaked NavMesh")]
 	public static void VerifyAll()
 	{
@@ -203,7 +204,7 @@ public static class PcNavMeshRebake
 				ratio = rebakedArea / originalArea;
 			}
 			Debug.Log("[PcNavMeshVerify] " + Path.GetFileNameWithoutExtension(scenePath) + " original=" + originalArea.ToString("F1") + " rebaked=" + rebakedArea.ToString("F1") + " ratio=" + ratio.ToString("F3"));
-			// 面积差太多的场景导出新网格，便于和原版对比
+			// Dump the new mesh of scenes whose area is far off, to compare with the original
 			if (ratio < 0.9f)
 			{
 				string objPath = Path.Combine(JsonDir, "rebaked_" + Path.GetFileNameWithoutExtension(scenePath) + ".obj");
@@ -240,16 +241,17 @@ public static class PcNavMeshRebake
 		return area;
 	}
 
-	/// <summary>射线起点高于顶点的距离（原版顶点高度的量化误差约 0.2 米）。</summary>
+	/// <summary>How far above the vertex the ray starts (the original vertex heights are quantized, error about 0.2 m).</summary>
 	private const float SnapRayStartAbove = 0.5f;
 
-	/// <summary>射线最大长度。</summary>
+	/// <summary>Maximum ray length.</summary>
 	private const float SnapRayLength = 1.0f;
 
 	/// <summary>
-	/// 原版 Detour 多边形顶点的高度是量化过的，细长多边形两条长边的高度可能差 0.2 米左右，
-	/// 重新生成时会被判成陡坡而丢掉。这里从每个顶点上方向下打射线，命中场景碰撞体就改用实际地面高度。
-	/// 返回校正的顶点数。
+	/// The original Detour vertex heights are quantized: the two long edges of a thin polygon can differ by about 0.2 m,
+	/// and the rebuild would treat it as a steep slope and drop it. A ray is cast down from above each vertex; when it
+	/// hits a scene collider, the real ground height is used instead.
+	/// Returns the number of corrected vertices.
 	/// </summary>
 	private static int SnapToGround(float[] flatVertices)
 	{

@@ -1,11 +1,11 @@
-"""从未改动的 ULegacy 导出里提取旧版粒子组件（Unity 3.5 的 legacy particles），输出 JSON 供编辑器转换。
+"""Extract legacy particle components (Unity 3.5 legacy particles) from the unmodified ULegacy export, and write JSON for the editor to convert.
 
-旧版粒子在 Unity 2018.3 被删除，Unity 6 导入时把这些组件静默丢掉，所以只能从原始导出的 YAML 读参数：
-    EllipsoidParticleEmitter (classID 15)、ParticleAnimator (12)、ParticleRenderer (26)、WorldParticleCollider (76)
-以挂载它们的 GameObject 的 fileID 为键。工程素材是导出的副本，fileID 不变（场景被 Unity 6 重存过也不变）。
+Legacy particles were removed in Unity 2018.3 and Unity 6 silently drops these components on import, so the parameters can only be read from the original exported YAML:
+    EllipsoidParticleEmitter (classID 15), ParticleAnimator (12), ParticleRenderer (26), WorldParticleCollider (76)
+keyed by the fileID of the GameObject they are attached to. The project assets are copies of the export, so fileIDs do not change (also when the scene is re-saved by Unity 6).
 
-用法：python legacy_particles_extract.py <导出根目录> <输出.json>
-    例：python tools/legacy_particles_extract.py ../unity_assets/ULegacy-Ripper_0.0.6 pc_data/particles/legacy_particles.json
+Usage: python legacy_particles_extract.py <export root> <output.json>
+    Example: python tools/portNewUnity/asset_convert/legacy_particles_extract.py ../unity_assets/ULegacy-Ripper_0.0.6 pc_data/particles/legacy_particles.json
 """
 
 import json
@@ -13,7 +13,7 @@ import re
 import sys
 from pathlib import Path
 
-# 要提取的组件：classID → JSON 里的分组名
+# Components to extract: classID → group name in the JSON
 LEGACY_CLASSES = {
     "15": "emitter",
     "12": "animator",
@@ -27,7 +27,7 @@ FILE_REFERENCE = re.compile(r"\{fileID: (-?\d+)(?:, guid: ([0-9a-f]+), type: \d+
 
 
 def parse_value(text):
-    """把 YAML 里的标量或 {x: .., y: ..} 内联映射转成 Python 值。"""
+    """Convert a YAML scalar or an inline {x: .., y: ..} mapping into a Python value."""
     text = text.strip()
     if text.startswith("{fileID"):
         match = FILE_REFERENCE.match(text)
@@ -47,10 +47,10 @@ def parse_value(text):
 
 
 def parse_component(lines):
-    """解析一个组件文档的正文（不含首行类型名）。
+    """Parse the body of one component document (without the first line with the type name).
 
-    只处理这几类组件会用到的结构：两格缩进的字段、四格缩进的子字段（colorAnimation[i]、UV Animation、
-    m_CollidesWith），以及 m_Materials 这样的列表。
+    Only handles the structures these components use: fields indented by two spaces, sub-fields indented by four (colorAnimation[i], UV Animation,
+    m_CollidesWith), and lists such as m_Materials.
     """
     fields = {}
     current_key = None
@@ -60,7 +60,7 @@ def parse_component(lines):
         indent = len(line) - len(line.lstrip(" "))
         stripped = line.strip()
         if stripped.startswith("- "):
-            # 列表项，属于上一个两格缩进的字段
+            # List item, belongs to the previous two-space-indented field
             fields.setdefault(current_key, [])
             if not isinstance(fields[current_key], list):
                 fields[current_key] = []
@@ -81,7 +81,7 @@ def parse_component(lines):
 
 
 def split_documents(text):
-    """把 Unity YAML 拆成 (classID, fileID, 正文行列表)。"""
+    """Split Unity YAML into (classID, fileID, list of body lines)."""
     documents = []
     current = None
     for line in text.splitlines():
@@ -95,7 +95,7 @@ def split_documents(text):
 
 
 def extract_asset(path, relative_path):
-    """提取一个场景或预制体里的全部旧版粒子，按 GameObject 归组。"""
+    """Extract all legacy particles in one scene or prefab, grouped by GameObject."""
     text = path.read_text(encoding="utf-8")
     game_object_names = {}
     by_game_object = {}
@@ -108,7 +108,7 @@ def extract_asset(path, relative_path):
         group = LEGACY_CLASSES.get(class_id)
         if group is None:
             continue
-        # lines[0] 是类型名（例如 "EllipsoidParticleEmitter:"）
+        # lines[0] is the type name (e.g. "EllipsoidParticleEmitter:")
         fields = parse_component(lines[1:])
         owner = fields["m_GameObject"]["fileID"]
         entry = by_game_object.setdefault(owner, {"gameObjectFileId": owner})
@@ -122,7 +122,7 @@ def extract_asset(path, relative_path):
 
 
 def color_from_rgba(value):
-    """Unity 的 ColorRGBA32 序列化成一个 uint：最低字节是 r，最高字节是 a。"""
+    """Serialize a Unity ColorRGBA32 into one uint: the lowest byte is r, the highest byte is a."""
     packed = int(value)
     red = packed & 0xFF
     green = (packed >> 8) & 0xFF
@@ -132,13 +132,13 @@ def color_from_rgba(value):
 
 
 def vector(fields, key):
-    """取三维向量字段，返回 [x, y, z]。"""
+    """Get a 3D vector field, returns [x, y, z]."""
     value = fields[key]
     return [value["x"], value["y"], value["z"]]
 
 
 def flatten(entry):
-    """把原始字段整理成编辑器脚本用的扁平结构（字段名与 PcLegacyParticleConvert.LegacyEntry 一致）。"""
+    """Arrange the raw fields into the flat structure used by the editor script (field names match PcLegacyParticleConvert.LegacyEntry)."""
     emitter = entry["emitter"]
     animator = entry["animator"]
     renderer = entry["renderer"]
@@ -146,7 +146,7 @@ def flatten(entry):
         "assetPath": entry["assetPath"],
         "gameObjectFileId": str(entry["gameObjectFileId"]),
         "gameObjectName": entry["gameObjectName"],
-        # 发射器
+        # Emitter
         "emitterEnabled": emitter["m_Enabled"] == 1,
         "emit": emitter["m_Emit"] == 1,
         "minSize": emitter["minSize"],
@@ -167,7 +167,7 @@ def flatten(entry):
         "oneShot": emitter["m_OneShot"] == 1,
         "ellipsoid": vector(emitter, "m_Ellipsoid"),
         "minEmitterRange": emitter["m_MinEmitterRange"],
-        # 动画器
+        # Animator
         "doesAnimateColor": animator["Does Animate Color?"] == 1,
         "colorAnimation": [],
         "sizeGrow": animator["sizeGrow"],
@@ -175,7 +175,7 @@ def flatten(entry):
         "force": vector(animator, "force"),
         "damping": animator["damping"],
         "autodestruct": animator["autodestruct"] == 1,
-        # 渲染器
+        # Renderer
         "rendererEnabled": renderer["m_Enabled"] == 1,
         "materialGuids": [],
         "renderMode": int(renderer["m_StretchParticles"]),
@@ -186,7 +186,7 @@ def flatten(entry):
         "uvTilesX": int(renderer["UV Animation"]["x Tile"]),
         "uvTilesY": int(renderer["UV Animation"]["y Tile"]),
         "uvCycles": renderer["UV Animation"]["cycles"],
-        # 碰撞（WorldParticleCollider，可选）
+        # Collision (WorldParticleCollider, optional)
         "hasCollider": "collider" in entry,
         "bounceFactor": 0.0,
         "collisionEnergyLoss": 0.0,
@@ -202,7 +202,7 @@ def flatten(entry):
         collider = entry["collider"]
         result["bounceFactor"] = collider["m_BounceFactor"]
         result["collisionEnergyLoss"] = collider["m_CollisionEnergyLoss"]
-        # 32 位掩码按有符号 int 存，C# 的 LayerMask 是 int
+        # The 32-bit mask is stored as a signed int, and the C# LayerMask is int
         bits = int(collider["m_CollidesWith"]["m_Bits"])
         if bits >= 2 ** 31:
             bits -= 2 ** 32

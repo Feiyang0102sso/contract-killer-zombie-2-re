@@ -7,14 +7,15 @@ so the video stream is copied unchanged (no re-encode) and only the audio is con
 Output: Assets/Resources/Movies/Scene_01.mp4, loaded by MoviePlayerPc as Resources "Movies/Scene_01".
 
 Usage (from ckz2_repo_pc):
-    ../.venv/Scripts/python.exe tools/convert_intro_movie.py [path to ffmpeg.exe]
+    ../.venv/Scripts/python.exe tools/portNewUnity/asset_convert/convert_intro_movie.py [path to ffmpeg.exe]
 """
 import subprocess
 import sys
 from pathlib import Path
 
 # ---- Paths ----
-PROJECT_DIR = Path(__file__).resolve().parent.parent
+# tools/<category>/<script>.py -> project root
+PROJECT_DIR = Path(__file__).resolve().parents[2]
 SOURCE_MOVIE = PROJECT_DIR.parent / "Payload-ori" / "ckzombies2.app" / "Data" / "Raw" / "Movies" / "Scene_01.mov"
 OUTPUT_MOVIE = PROJECT_DIR / "Assets" / "Resources" / "Movies" / "Scene_01.mp4"
 DEFAULT_FFMPEG = Path(r"E:\ffmpeg-6.1.1-full_build\bin\ffmpeg.exe")

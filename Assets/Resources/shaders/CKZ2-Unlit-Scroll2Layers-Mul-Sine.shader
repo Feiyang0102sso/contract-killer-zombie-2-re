@@ -34,7 +34,7 @@ CGPROGRAM
 #pragma fragment frag
 #pragma target 3.0
 #pragma multi_compile _ LIGHTMAP_ON
-// PC 移植：由 pc_pilot_tools/gles_to_hlsl.py 从原版 GLES 代码翻译
+// PC port: translated from the original GLES code by tools/portNewUnity/asset_convert/gles_to_hlsl.py
 #if defined(LIGHTMAP_ON)
 float _SineFreqY2;
 float _SineFreqY;
@@ -218,7 +218,7 @@ CGPROGRAM
 #pragma fragment frag
 #pragma target 3.0
 #pragma multi_compile _ LIGHTMAP_ON
-// PC 移植：由 pc_pilot_tools/gles_to_hlsl.py 从原版 GLES 代码翻译
+// PC port: translated from the original GLES code by tools/portNewUnity/asset_convert/gles_to_hlsl.py
 #if defined(LIGHTMAP_ON)
 float _ScrollY;
 float _ScrollX;
@@ -378,7 +378,7 @@ CGPROGRAM
 #pragma fragment frag
 #pragma target 3.0
 #pragma multi_compile _ LIGHTMAP_ON
-// PC 移植：由 pc_pilot_tools/gles_to_hlsl.py 从原版 GLES 代码翻译
+// PC port: translated from the original GLES code by tools/portNewUnity/asset_convert/gles_to_hlsl.py
 #if defined(LIGHTMAP_ON)
 float _ScrollY;
 float _ScrollX;

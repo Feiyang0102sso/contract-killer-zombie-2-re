@@ -19,7 +19,7 @@ CGPROGRAM
 #pragma vertex vert
 #pragma fragment frag
 #pragma target 3.0
-// PC 移植：由 pc_pilot_tools/gles_to_hlsl.py 从原版 GLES 代码翻译
+// PC port: translated from the original GLES code by tools/portNewUnity/asset_convert/gles_to_hlsl.py
 float4 _MainTex_ST;
 float _RimPower;
 float _RimIntensity;
@@ -247,7 +247,7 @@ CGPROGRAM
 #pragma vertex vert
 #pragma fragment frag
 #pragma target 3.0
-// PC 移植：由 pc_pilot_tools/gles_to_hlsl.py 从原版 GLES 代码翻译
+// PC port: translated from the original GLES code by tools/portNewUnity/asset_convert/gles_to_hlsl.py
 float _RimPower;
 float _RimIntensity;
 float _ProbeStrength;
@@ -468,7 +468,7 @@ CGPROGRAM
 #pragma vertex vert
 #pragma fragment frag
 #pragma target 3.0
-// PC 移植：由 pc_pilot_tools/gles_to_hlsl.py 从原版 GLES 代码翻译
+// PC port: translated from the original GLES code by tools/portNewUnity/asset_convert/gles_to_hlsl.py
 float _RimPower;
 float _RimIntensity;
 float _ProbeStrength;
@@ -678,7 +678,7 @@ CGPROGRAM
 #pragma vertex vert
 #pragma fragment frag
 #pragma target 3.0
-// PC 移植：由 pc_pilot_tools/gles_to_hlsl.py 从原版 GLES 代码翻译
+// PC port: translated from the original GLES code by tools/portNewUnity/asset_convert/gles_to_hlsl.py
 float _RimPower;
 float _RimIntensity;
 float _ProbeStrength;
@@ -836,7 +836,7 @@ CGPROGRAM
 #pragma vertex vert
 #pragma fragment frag
 #pragma target 3.0
-// PC 移植：由 pc_pilot_tools/gles_to_hlsl.py 从原版 GLES 代码翻译
+// PC port: translated from the original GLES code by tools/portNewUnity/asset_convert/gles_to_hlsl.py
 float _ProbeStrength;
 float4 _MainTex_ST;
 sampler2D _MainTex;
@@ -932,7 +932,7 @@ CGPROGRAM
 #pragma vertex vert
 #pragma fragment frag
 #pragma target 3.0
-// PC 移植：由 pc_pilot_tools/gles_to_hlsl.py 从原版 GLES 代码翻译
+// PC port: translated from the original GLES code by tools/portNewUnity/asset_convert/gles_to_hlsl.py
 float4 _MainTex_ST;
 sampler2D _MainTex;
 struct appdata_pc {

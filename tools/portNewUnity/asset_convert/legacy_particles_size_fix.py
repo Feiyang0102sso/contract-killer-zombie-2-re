@@ -5,7 +5,7 @@ without opening scenes in the editor (that churns EZGUI meshes). Only touches pa
 listed in pc_data/particles/legacy_particles.json, matched by GameObject fileID. Safe to re-run.
 Keep it in sync with ApplySizeGrow if the converter changes.
 
-Usage (from the repo root): python tools/legacy_particles_size_fix.py . [--write]
+Usage (from the repo root): python tools/portNewUnity/asset_convert/legacy_particles_size_fix.py . [--write]
 Without --write it only reports how many particles each asset would get.
 """
 import json

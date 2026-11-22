@@ -1,6 +1,6 @@
-"""把 DllImport("__Internal") 的 extern 声明改成：iOS 上照旧，其他平台转调 PcNative 的同名函数。
+"""Rewrite DllImport("__Internal") extern declarations: unchanged on iOS, forwarded to the same-named PcNative function on other platforms.
 
-只处理 PcPort/PcNative.cs 里已经实现的函数；其余 extern 保持不变。调用处不改。
+Only functions already implemented in PcPort/PcNative.cs are handled; other externs stay unchanged. Call sites are not modified.
 
     #if UNITY_IOS
         [DllImport("__Internal")]
@@ -12,7 +12,7 @@
         }
     #endif
 
-用法：python tools/bridge_externs.py <工程根目录>（改 Source/Runtime 下的代码）
+Usage: python tools/portNewUnity/cs_migrate/bridge_externs.py <project root> (rewrites code under Source/Runtime)
 """
 
 import re
@@ -20,22 +20,22 @@ import sys
 from pathlib import Path
 
 PC_NATIVE_FILE = "PcPort/PcNative.cs"
-# PcNative 里的公开静态函数名
+# Public static method names in PcNative
 PC_NATIVE_METHOD = re.compile(r"public static \S+ (\w+)\(")
-# 一条 DllImport + extern 声明（属性行与声明行之间只有空白）
+# One DllImport + extern declaration (only whitespace between the attribute line and the declaration line)
 EXTERN_DECL = re.compile(
     r"(?P<indent>[ \t]*)\[DllImport\(\"__Internal\"[^\]]*\)\]\s*\n"
     r"[ \t]*(?P<mods>(?:public |private |internal |protected )*)static extern "
-    # 形参里可能有 MarshalAs(...) 这样的括号，所以匹配到 ");" 为止
+    # Parameters may contain parentheses such as MarshalAs(...), so match up to ");"
     r"(?P<ret>[\w.\[\]<>]+) (?P<name>\w+)\((?P<params>[^;]*)\);"
 )
-# 参数上的特性，例如 [Out][MarshalAs(UnmanagedType.LPArray)]
-# 要求 [ 后面紧跟字母，避免误删数组类型的 []
+# Attributes on parameters, e.g. [Out][MarshalAs(UnmanagedType.LPArray)]
+# Require a letter right after [ to avoid stripping the [] of array types
 PARAM_ATTRIBUTE = re.compile(r"\[[A-Za-z][^\]]*\]")
 
 
 def load_pc_native_methods(assets_dir):
-    """读取 PcNative 已实现的函数名。"""
+    """Read the method names already implemented in PcNative."""
     text = (assets_dir / PC_NATIVE_FILE).read_text(encoding="utf-8-sig")
     names = set()
     for name in PC_NATIVE_METHOD.findall(text):
@@ -44,7 +44,7 @@ def load_pc_native_methods(assets_dir):
 
 
 def build_arguments(params):
-    """由形参列表生成实参列表：去掉特性和类型，保留 ref/out。"""
+    """Build the argument list from the parameter list: drop attributes and types, keep ref/out."""
     params = PARAM_ATTRIBUTE.sub("", params).strip()
     if not params:
         return ""
@@ -59,17 +59,17 @@ def build_arguments(params):
 
 
 def make_replacement(match):
-    """生成 #if UNITY_IOS 两路代码。"""
+    """Generate both branches of the #if UNITY_IOS block."""
     indent = match.group("indent")
     mods = match.group("mods")
     ret = match.group("ret")
     name = match.group("name")
     params = match.group("params")
-    # PC 路径上的形参不需要封送特性
+    # Parameters on the PC path do not need marshaling attributes
     plain_params = PARAM_ATTRIBUTE.sub("", params).strip()
     body_lines = []
     if name in IMPLEMENTED:
-        # PcNative 有真正的实现：转调
+        # PcNative has a real implementation: forward the call
         arguments = build_arguments(params)
         call = f"PcNative.{name}({arguments})"
         if ret == "void":
@@ -77,7 +77,7 @@ def make_replacement(match):
         else:
             body_lines.append(f"{indent}\treturn {call};")
     else:
-        # 其余插件：就地空实现，out 参数赋默认值，返回类型默认值
+        # Other plugins: empty stub in place, out parameters get default values, return the default of the return type
         body_lines.append(f"{indent}\tPcNative.Stub(\"{name}\");")
         for out_name in collect_out_params(plain_params):
             body_lines.append(f"{indent}\t{out_name} = default;")
@@ -97,7 +97,7 @@ def make_replacement(match):
 
 
 def collect_out_params(plain_params):
-    """返回所有 out 形参的名字。"""
+    """Return the names of all out parameters."""
     names = []
     if not plain_params:
         return names
@@ -108,12 +108,12 @@ def collect_out_params(plain_params):
     return names
 
 
-# PcNative 已实现的函数名，main() 里填充
+# Method names implemented in PcNative, filled in main()
 IMPLEMENTED = set()
 
 
 def main():
-    """遍历 Assets 下所有 .cs，替换全部 DllImport("__Internal") extern 声明。"""
+    """Walk all .cs files under Assets and replace every DllImport("__Internal") extern declaration."""
     assets_dir = Path(sys.argv[1]) / "Source" / "Runtime"
     implemented = load_pc_native_methods(assets_dir)
     IMPLEMENTED.update(implemented)
@@ -132,7 +132,7 @@ def main():
         replaced = []
 
         def replace(match):
-            # 已经桥接过的声明（前一行是 #if UNITY_IOS）不重复处理
+            # Skip declarations that are already bridged (previous line is #if UNITY_IOS)
             start = match.start()
             before = text[:start].rstrip("\n").rsplit("\n", 1)[-1]
             if before.strip() == "#if UNITY_IOS":

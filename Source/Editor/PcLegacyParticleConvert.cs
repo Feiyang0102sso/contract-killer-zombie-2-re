@@ -1,6 +1,6 @@
 // Converts legacy particles (Unity 3.5 EllipsoidParticleEmitter / ParticleAnimator / ParticleRenderer / WorldParticleCollider)
 // into ParticleSystem + ParticleSystemRenderer + PcPort/LegacyParticleEmitter.
-// Legacy parameters are extracted from the untouched export by tools/legacy_particles_extract.py into
+// Legacy parameters are extracted from the untouched export by tools/portNewUnity/asset_convert/legacy_particles_extract.py into
 // pc_data/particles/legacy_particles.json, keyed by GameObject fileID (stable even after Unity 6 re-saves the scene).
 // Safe to re-run: objects that already have ParticleSystem / LegacyParticleEmitter are reconfigured, not duplicated.
 // Batch mode: Unity.exe -batchmode -quit -projectPath <project> -executeMethod PcLegacyParticleConvert.ConvertAll -logFile <log>

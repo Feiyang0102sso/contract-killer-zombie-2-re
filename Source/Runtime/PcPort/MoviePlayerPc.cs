@@ -3,7 +3,7 @@
 // on Windows it returns at once, so the intro was skipped. This plays the same movie with a VideoPlayer
 // the way iOS did: black background, aspect fit, and with canSkip any tap (here: click, touch or key) stops it.
 // The VideoPlayer decodes into a RenderTexture and MovieScreen draws it with OnGUI over everything else.
-// The movie is Resources/Movies/<name>.mp4, converted from the original .mov by tools/convert_intro_movie.py.
+// The movie is Resources/Movies/<name>.mp4, converted from the original .mov by tools/portNewUnity/asset_convert/convert_intro_movie.py.
 using System.IO;
 using UnityEngine;
 using UnityEngine.Video;

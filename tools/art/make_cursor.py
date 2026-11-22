@@ -8,14 +8,15 @@ Output: Assets/Resources/PcPort/PcCursor<size>.png, plus a preview sheet in tool
 The hotspot (arrow tip) is HOTSPOT on the 64 grid; PcCursor.HotspotOnGrid must match it.
 
 Usage (from ckz2_repo_pc):
-    ../.venv/Scripts/python.exe tools/make_cursor.py
+    ../.venv/Scripts/python.exe tools/art/make_cursor.py
 """
 from pathlib import Path
 
 from PIL import Image, ImageChops, ImageDraw, ImageFilter
 
 # ---- Paths ----
-PROJECT_DIR = Path(__file__).resolve().parent.parent
+# tools/<category>/<script>.py -> project root
+PROJECT_DIR = Path(__file__).resolve().parents[2]
 OUTPUT_DIR = PROJECT_DIR / "Assets" / "Resources" / "PcPort"
 PREVIEW_PNG = PROJECT_DIR / "tools" / "out" / "PcCursor_preview.png"
 

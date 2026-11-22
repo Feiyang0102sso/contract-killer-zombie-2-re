@@ -1,4 +1,4 @@
-// PC port: custom mouse cursor (translucent cyan arrow with glow, drawn by tools/make_cursor.py) instead of the
+// PC port: custom mouse cursor (translucent cyan arrow with glow, drawn by tools/art/make_cursor.py) instead of the
 // system arrow. Uses the hardware cursor (CursorMode.Auto), so it follows the mouse without frame lag.
 // The hardware cursor is drawn in physical pixels and is not scaled by Windows, so the size closest to
 // 32 px times the display scale is picked (100% -> 32, 150% -> 48, 200% -> 64).
@@ -17,7 +17,7 @@ public static class PcCursor
 	/// <summary>Windows DPI at 100% display scale.</summary>
 	private const float BaseDpi = 96f;
 
-	/// <summary>Grid the shape was designed on, and the arrow tip on it (must match tools/make_cursor.py).</summary>
+	/// <summary>Grid the shape was designed on, and the arrow tip on it (must match tools/art/make_cursor.py).</summary>
 	private const float DesignGrid = 64f;
 
 	private static readonly Vector2 HotspotOnGrid = new Vector2(6f, 5f);

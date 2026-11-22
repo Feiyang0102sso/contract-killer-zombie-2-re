@@ -1,24 +1,25 @@
-"""修复：新版 XmlSerializer 不允许把可空类型（bool? int? ...）标成 [XmlAttribute]。
+"""Fix: the newer XmlSerializer does not allow nullable types (bool? int? ...) to be marked [XmlAttribute].
 
-Unity 3.5 的 Mono 2.6 允许这种写法，新版会在构造序列化器时直接抛异常，导致整份 XML（资源包索引、
-商店配置）都解析失败。改法：可空字段本身加 [XmlIgnore]，另加一个同名特性的字符串代理属性负责读写。
-值为 null 时代理返回 null，XmlSerializer 不写这个特性，与原行为一致。
+Mono 2.6 in Unity 3.5 allows this, but the newer version throws as soon as the serializer is constructed, so the
+whole XML (asset bundle index, store config) fails to parse. Fix: mark the nullable field itself with [XmlIgnore]
+and add a string proxy property with the same attribute name to handle reading and writing.
+When the value is null the proxy returns null, so XmlSerializer omits the attribute, matching the original behavior.
 
-用法：python tools/nullable_xml_fix.py <工程根目录>（改 Source/Runtime 下的代码）
+Usage: python tools/portNewUnity/cs_migrate/nullable_xml_fix.py <project root> (rewrites code under Source/Runtime)
 """
 
 import re
 import sys
 from pathlib import Path
 
-# 可空字段：[XmlAttribute("名称")] 下一行是 public T? 字段名;
+# Nullable field: [XmlAttribute("name")] followed on the next line by public T? fieldName;
 NULLABLE_ATTRIBUTE = re.compile(
     r'(?P<indent>[ \t]*)\[XmlAttribute(?:\((?:AttributeName\s*=\s*)?"(?P<xml>[^"]*)"\))?\][ \t]*\n'
-    # 类型可能带点号（嵌套枚举，如 PlayerData.Slots）
+    # The type may contain dots (nested enum, e.g. PlayerData.Slots)
     r'[ \t]*(?P<access>public|private|protected|internal) (?P<type>[\w.]+)\? (?P<name>\w+);'
 )
 
-# 各类型的解析表达式（{v} 为字符串值）
+# Parse expression for each type ({v} is the string value)
 PARSERS = {
     "int": "XmlConvert.ToInt32({v})",
     "long": "XmlConvert.ToInt64({v})",
@@ -27,11 +28,11 @@ PARSERS = {
     "bool": "PcXml.ParseBool({v})",
 }
 
-# 代理属性名后缀
+# Suffix of the proxy property name
 PROXY_SUFFIX = "_XmlText"
 
 def make_replacement(match):
-    """生成 [XmlIgnore] 字段 + 字符串代理属性。"""
+    """Generate the [XmlIgnore] field plus the string proxy property."""
     i = match.group("indent")
     xml_name = match.group("xml") or match.group("name")
     access = match.group("access")
@@ -41,7 +42,7 @@ def make_replacement(match):
         parser = PARSERS[value_type].format(v="value")
         formatter = f"XmlConvert.ToString({name}.Value)"
     else:
-        # 其余视为枚举：XmlSerializer 默认按成员名读写
+        # Anything else is treated as an enum: XmlSerializer reads/writes by member name by default
         parser = f"({value_type})System.Enum.Parse(typeof({value_type}), value)"
         formatter = f"{name}.Value.ToString()"
     lines = [
@@ -75,7 +76,7 @@ def make_replacement(match):
 
 
 def main():
-    """遍历 Assets 下所有 .cs 并改写。"""
+    """Walk all .cs files under Assets and rewrite them."""
     assets_dir = Path(sys.argv[1]) / "Source" / "Runtime"
     total = 0
     for cs_path in sorted(assets_dir.rglob("*.cs")):

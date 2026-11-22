@@ -8,7 +8,7 @@ Each banner is drawn centered in its cell; the game maps the whole cell onto the
 (PcKeyHints.BannerIndex picks the cell), so keep shapes inside the cell with a small margin.
 
 Usage (from ckz2_repo_pc):
-    ../.venv/Scripts/python.exe tools/make_key_banners.py
+    ../.venv/Scripts/python.exe tools/art/make_key_banners.py
 """
 import shutil
 import struct
@@ -18,7 +18,8 @@ import time
 from pathlib import Path
 
 # ---- Output ----
-PROJECT_DIR = Path(__file__).resolve().parent.parent
+# tools/<category>/<script>.py -> project root
+PROJECT_DIR = Path(__file__).resolve().parents[2]
 OUTPUT_PNG = PROJECT_DIR / "Assets" / "Resources" / "PcPort" / "PcKeyBanners.png"
 EDGE_EXE = Path(r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe")
 # Seconds to wait for Edge to write the screenshot
@@ -562,7 +563,8 @@ def read_png_size(png_path):
 
 def render_png(svg_text, png_path):
     """Renders the SVG with headless Edge (transparent background) into png_path."""
-    with tempfile.TemporaryDirectory(prefix="key_banners_") as work_dir:
+    # Edge's background processes can still hold files in its profile when we clean up; leave those behind
+    with tempfile.TemporaryDirectory(prefix="key_banners_", ignore_cleanup_errors=True) as work_dir:
         work_dir = Path(work_dir)
         svg_path = work_dir / "sheet.svg"
         shot_path = work_dir / "sheet.png"

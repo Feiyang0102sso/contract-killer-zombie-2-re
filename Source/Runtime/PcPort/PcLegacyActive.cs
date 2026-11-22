@@ -16,7 +16,7 @@
 // For Mission.DeactivateNode this is done before the node goes inactive: a deactivation, even a brief one, stops the
 // object's legacy animations and coroutines. E.g. a Thrower (no ragdoll) whose death completes a kill-all task froze in
 // the first frame of its death animation.
-// See tools/README.md, daytime fixes section 2.
+// See pc_pilot_tools/README.md, day fixes section 2.
 using System.Collections.Generic;
 using UnityEngine;
 

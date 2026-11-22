@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # Level tour: for the first mission of each level scene, launch the game once, enter that mission directly (-pcMission), take screenshots and keep the log.
 # Before each run the save is restored to the same copy (past the tutorial, on the map) so every run starts the same way.
-# Usage (from the project root): bash tools/scene_tour.sh <exe> <save backup dir> <output dir> [mission index ...]
-#   Example: bash tools/scene_tour.sh Builds/ckz2.exe RunLogs/save_backup_0150 RunLogs/tour1
+# Usage (from the project root): bash tools/test/scene_tour.sh <exe> <save backup dir> <output dir> [mission index ...]
+#   Example: bash tools/test/scene_tour.sh Builds/ckz2.exe RunLogs/save_backup_0150 RunLogs/tour1
 # Mission indices come from Missions in prefabs/basic/GameData.prefab (the first one of each scene).
 set -u
 
@@ -25,7 +25,7 @@ for MISSION in $MISSIONS; do
 	echo "[tour] mission $MISSION $(date +%H:%M:%S)"
 	rm -rf "$SAVE_DIR"
 	cp -r "$SAVE_BACKUP" "$SAVE_DIR"
-	powershell -File tools/run_and_capture.ps1 -Exe "$EXE" -Log "$OUT_DIR/player_$MISSION.log" \
+	powershell -File tools/test/run_and_capture.ps1 -Exe "$EXE" -Log "$OUT_DIR/player_$MISSION.log" \
 		-ShotDir "$OUT_DIR/shots_$MISSION" -Times "$SHOTS" -Taps "$TAPS" -Mission "50:$MISSION" -PathCheck 88 > /dev/null
 	# Player route: -pcPathCheck replays PlayerProgress.BuildPath; count incomplete segments (PathPartial / PathInvalid)
 	BROKEN=$(grep "path node" "$OUT_DIR/player_$MISSION.log" | grep -c "status=Path\(Partial\|Invalid\)")
