@@ -125,8 +125,5 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/_Trimmed/ThePit_trimmed.unity
     guid: 8434ca786171fd644bc09277db20e5f0
-  - enabled: 1
-    path: Assets/Scenes/_TestMaps/TestMap_Crates.unity
-    guid: 46b1a36d4fe719d4bbacef5543237ae6
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

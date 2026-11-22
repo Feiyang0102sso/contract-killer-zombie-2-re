@@ -39,10 +39,9 @@ toolchain/unity357_win/
 # Saves written when playing in the editor (StorageManager.PersistentDataPath = <project>/Save)
 /Save/
 /RunLogs/
-/PcPilotAudit.txt
-# Previews written by tools/*.py
+# Previews written by tools/port_pc/art/*.py
 /tools/out/
-# Rebuilt by PcPilotBuild.Build before every build (PcAssetBundleRebuild)
+# Rebuilt by PcBuild.Build before every build (PcAssetBundleRebuild)
 /Assets/StreamingAssets/
 /Assets/StreamingAssets.meta
 

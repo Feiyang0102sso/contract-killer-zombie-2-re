@@ -1,0 +1,7 @@
+{
+  "name": "com.ckz2.port-new-unity",
+  "version": "1.0.0",
+  "displayName": "CKZ2 Port New Unity Tools",
+  "description": "Optional editor tools that rebuild data Unity 6 drops when importing the Unity 3.5 export (particles, navmesh, lighting, CharacterController, shader check). Not in the manifest by default; see tools/README.md.",
+  "unity": "6000.3"
+}

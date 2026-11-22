@@ -14,7 +14,7 @@ CGPROGRAM
 #pragma vertex vert
 #pragma fragment frag
 #pragma target 3.0
-// PC port: translated from the original GLES code by tools/portNewUnity/asset_convert/gles_to_hlsl.py
+// PC port: translated from the original GLES code by gles_to_hlsl.py
 sampler2D _MainTex;
 sampler2D _Bloom;
 struct appdata_pc {
@@ -54,7 +54,7 @@ CGPROGRAM
 #pragma vertex vert
 #pragma fragment frag
 #pragma target 3.0
-// PC port: translated from the original GLES code by tools/portNewUnity/asset_convert/gles_to_hlsl.py
+// PC port: translated from the original GLES code by gles_to_hlsl.py
 float4 _MainTex_TexelSize;
 float4 _Parameter;
 sampler2D _MainTex;
@@ -113,7 +113,7 @@ CGPROGRAM
 #pragma vertex vert
 #pragma fragment frag
 #pragma target 3.0
-// PC port: translated from the original GLES code by tools/portNewUnity/asset_convert/gles_to_hlsl.py
+// PC port: translated from the original GLES code by gles_to_hlsl.py
 float4 _MainTex_TexelSize;
 sampler2D _MainTex;
 struct appdata_pc {
@@ -169,7 +169,7 @@ CGPROGRAM
 #pragma vertex vert
 #pragma fragment frag
 #pragma target 3.0
-// PC port: translated from the original GLES code by tools/portNewUnity/asset_convert/gles_to_hlsl.py
+// PC port: translated from the original GLES code by gles_to_hlsl.py
 float4 _MainTex_TexelSize;
 sampler2D _MainTex;
 struct appdata_pc {
@@ -225,7 +225,7 @@ CGPROGRAM
 #pragma vertex vert
 #pragma fragment frag
 #pragma target 3.0
-// PC port: translated from the original GLES code by tools/portNewUnity/asset_convert/gles_to_hlsl.py
+// PC port: translated from the original GLES code by gles_to_hlsl.py
 float4 _Parameter;
 sampler2D _MainTex;
 float4 _ColorMix;
@@ -280,7 +280,7 @@ CGPROGRAM
 #pragma vertex vert
 #pragma fragment frag
 #pragma target 3.0
-// PC port: translated from the original GLES code by tools/portNewUnity/asset_convert/gles_to_hlsl.py
+// PC port: translated from the original GLES code by gles_to_hlsl.py
 float4 _MainTex_TexelSize;
 float4 _Parameter;
 sampler2D _MainTex;

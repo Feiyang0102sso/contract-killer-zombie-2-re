@@ -29,7 +29,7 @@ from pathlib import Path
 from PIL import Image
 
 # ---- Paths ----
-# tools/<category>/<script>.py -> project root
+# tools/font/<script>.py -> project root
 PROJECT_DIR = Path(__file__).resolve().parents[2]
 TEXT_FILE = PROJECT_DIR / "Assets" / "localization" / "zh-Hans.txt"
 FONT_FILE = PROJECT_DIR / "tools" / "font" / "DroidSansFallback.ttf"

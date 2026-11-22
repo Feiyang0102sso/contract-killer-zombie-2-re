@@ -1,7 +1,7 @@
 // PC bridge: restores the lightmap assignment and light probes of Unity 3.5 scenes.
 // Unity 6 drops the lightmap list, every renderer's lightmapIndex / lightmapScaleOffset and the 3.5-format LightProbes asset
 // when it opens a 3.5 scene, so the scenes have no lightmaps and probe-lit characters get SH = 0 (black). The editor tool
-// PcSceneLightingRestore writes the original data (extracted by tools/portNewUnity/asset_convert/scene_lighting_extract.py) into this component of
+// NewUnitySceneLightingRestore writes the original data (extracted by scene_lighting_extract.py) into this component of
 // each scene. At runtime:
 //   1. Awake: set LightmapSettings.lightmaps and restore each renderer's lightmapIndex; renderers that are not statically
 //      batched also get their lightmapScaleOffset back (for batched ones the original build baked it into the combined UV2);

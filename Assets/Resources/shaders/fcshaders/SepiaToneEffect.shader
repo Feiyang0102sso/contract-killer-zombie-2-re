@@ -13,7 +13,7 @@ CGPROGRAM
 #pragma vertex vert
 #pragma fragment frag
 #pragma target 3.0
-// PC port: translated from the original GLES code by tools/portNewUnity/asset_convert/gles_to_hlsl.py
+// PC port: translated from the original GLES code by gles_to_hlsl.py
 sampler2D _MainTex;
 static const float4x4 pc_TextureMatrix0 = float4x4(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1);
 struct appdata_pc {

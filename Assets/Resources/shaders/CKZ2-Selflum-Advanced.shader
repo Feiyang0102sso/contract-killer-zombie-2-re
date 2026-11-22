@@ -15,7 +15,7 @@ CGPROGRAM
 #pragma fragment frag
 #pragma target 3.0
 #pragma multi_compile_fwdbase
-// PC port: translated from the original GLES code by tools/portNewUnity/asset_convert/gles_to_hlsl.py
+// PC port: translated from the original GLES code by gles_to_hlsl.py
 #if defined(DIRECTIONAL) && defined(SHADOWS_SCREEN) && !defined(LIGHTMAP_ON) && defined(VERTEXLIGHT_ON)
 float4 _MainTex_ST;
 float4 _Illum_ST;
@@ -587,7 +587,7 @@ CGPROGRAM
 #pragma fragment frag
 #pragma target 3.0
 #pragma multi_compile_fwdadd
-// PC port: translated from the original GLES code by tools/portNewUnity/asset_convert/gles_to_hlsl.py
+// PC port: translated from the original GLES code by gles_to_hlsl.py
 #if defined(POINT)
 float4 _MainTex_ST;
 sampler2D _MainTex;

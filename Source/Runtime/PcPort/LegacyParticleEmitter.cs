@@ -1,78 +1,78 @@
-// PC 桥接：旧版粒子发射器（Unity 3.5 的 EllipsoidParticleEmitter）的兼容组件。
-// 旧版粒子系统在 Unity 2018.3 被删除，导入时组件被静默丢掉。编辑器工具 PcLegacyParticleConvert
-// 从原始导出里读出旧参数，给物体加上 ParticleSystem（负责模拟和渲染：寿命、力、阻尼、颜色动画、尺寸增长、贴图动画）
-// 和本组件（负责发射：旧版的发射逻辑与 ParticleSystem 不同，这里照旧版自己发射，ParticleSystem 的发射模块关闭）。
-// 游戏代码（EffectsManager）用到的手动发射接口：min/maxSize、min/maxEnergy、rndAngularVelocity 和 Emit(...)，与旧版相同。
+// PC bridge: stand-in component for the legacy particle emitter (Unity 3.5 EllipsoidParticleEmitter).
+// The legacy particle system was removed in Unity 2018.3 and its components are silently dropped on import. The editor tool NewUnityLegacyParticleConvert
+// reads the legacy parameters from the untouched export and gives the object a ParticleSystem (simulation and rendering: lifetime, forces, damping, color animation, size growth, texture animation)
+// plus this component (emission: legacy emission differs from ParticleSystem's, so this emits the legacy way and the ParticleSystem emission module is off).
+// The manual emission API used by game code (EffectsManager): min/maxSize, min/maxEnergy, rndAngularVelocity and Emit(...), same as the legacy one.
 using UnityEngine;
 
 public class LegacyParticleEmitter : MonoBehaviour
 {
-	/// <summary>旧版椭球的尺寸按直径理解（换成半径要乘 0.5）。旧版文档没有写明，属于推断。</summary>
+	/// <summary>The legacy ellipsoid size is read as a diameter (times 0.5 for the radius). The legacy docs do not say so; this is inferred.</summary>
 	private const float EllipsoidRadiusScale = 0.5f;
 
-	/// <summary>是否自动发射（旧版 ParticleEmitter.emit）。</summary>
+	/// <summary>Whether it emits automatically (legacy ParticleEmitter.emit).</summary>
 	public bool emit;
 
-	/// <summary>粒子最小尺寸（旧版 ParticleEmitter.minSize）。</summary>
+	/// <summary>Minimum particle size (legacy ParticleEmitter.minSize).</summary>
 	public float minSize = 0.1f;
 
-	/// <summary>粒子最大尺寸（旧版 ParticleEmitter.maxSize）。</summary>
+	/// <summary>Maximum particle size (legacy ParticleEmitter.maxSize).</summary>
 	public float maxSize = 0.1f;
 
-	/// <summary>粒子最短寿命，秒（旧版 ParticleEmitter.minEnergy）。</summary>
+	/// <summary>Minimum particle lifetime, seconds (legacy ParticleEmitter.minEnergy).</summary>
 	public float minEnergy = 3f;
 
-	/// <summary>粒子最长寿命，秒（旧版 ParticleEmitter.maxEnergy）。</summary>
+	/// <summary>Maximum particle lifetime, seconds (legacy ParticleEmitter.maxEnergy).</summary>
 	public float maxEnergy = 3f;
 
-	/// <summary>每秒最少发射数；oneShot 时是一次发射的最少个数。</summary>
+	/// <summary>Minimum particles per second; with oneShot, the minimum per burst.</summary>
 	public float minEmission;
 
-	/// <summary>每秒最多发射数；oneShot 时是一次发射的最多个数。</summary>
+	/// <summary>Maximum particles per second; with oneShot, the maximum per burst.</summary>
 	public float maxEmission;
 
-	/// <summary>世界坐标系下的初速度。</summary>
+	/// <summary>Initial velocity in world space.</summary>
 	public Vector3 worldVelocity;
 
-	/// <summary>本地坐标系下的初速度。</summary>
+	/// <summary>Initial velocity in local space.</summary>
 	public Vector3 localVelocity;
 
-	/// <summary>每个轴上叠加的随机速度范围（取 -rnd 到 +rnd）。</summary>
+	/// <summary>Random velocity added per axis (from -rnd to +rnd).</summary>
 	public Vector3 rndVelocity;
 
-	/// <summary>继承发射器自身移动速度的比例。</summary>
+	/// <summary>Fraction of the emitter's own velocity the particles inherit.</summary>
 	public float emitterVelocityScale;
 
-	/// <summary>初始角速度，度/秒。</summary>
+	/// <summary>Initial angular velocity, degrees per second.</summary>
 	public float angularVelocity;
 
-	/// <summary>随机角速度范围，度/秒（旧版 ParticleEmitter.rndAngularVelocity）。</summary>
+	/// <summary>Random angular velocity range, degrees per second (legacy ParticleEmitter.rndAngularVelocity).</summary>
 	public float rndAngularVelocity;
 
-	/// <summary>是否随机初始旋转角。</summary>
+	/// <summary>Whether the initial rotation is random.</summary>
 	public bool rndRotation;
 
-	/// <summary>是否在世界坐标系里模拟。</summary>
+	/// <summary>Whether particles are simulated in world space.</summary>
 	public bool useWorldSpace;
 
-	/// <summary>一次发射一批，等这一批全部消失再发下一批。</summary>
+	/// <summary>Emits one burst, and the next only after the whole burst is gone.</summary>
 	public bool oneShot;
 
-	/// <summary>发射区域：椭球尺寸。</summary>
+	/// <summary>Emission area: ellipsoid size.</summary>
 	public Vector3 ellipsoid;
 
-	/// <summary>发射区域：椭球内不发射的中心部分（0～1）。</summary>
+	/// <summary>Emission area: inner part of the ellipsoid that does not emit (0 to 1).</summary>
 	public float minEmitterRange;
 
-	/// <summary>颜色动画开着时，旧版用动画颜色覆盖发射颜色；ParticleSystem 的颜色动画是相乘，所以发射时传白色。</summary>
+	/// <summary>With color animation on, the legacy system replaces the emit color with the animated one; ParticleSystem multiplies, so particles are emitted white.</summary>
 	public bool doesAnimateColor;
 
-	/// <summary>粒子全部消失后销毁物体（旧版 ParticleAnimator.autodestruct）。</summary>
+	/// <summary>Destroys the object once all particles are gone (legacy ParticleAnimator.autodestruct).</summary>
 	public bool autodestruct;
 
 	private ParticleSystem _particleSystem;
 
-	/// <summary>连续发射时攒下的不足一个的粒子数。</summary>
+	/// <summary>Fractional particle count carried over between frames of continuous emission.</summary>
 	private float _emissionDebt;
 
 	private Vector3 _lastPosition;
@@ -127,7 +127,7 @@ public class LegacyParticleEmitter : MonoBehaviour
 		}
 	}
 
-	/// <summary>按旧版发射器的参数自动发射 count 个粒子。</summary>
+	/// <summary>Emits count particles using the legacy emitter parameters.</summary>
 	private void EmitAutomatic(int count, Vector3 emitterVelocity)
 	{
 		for (int i = 0; i < count; i++)
@@ -161,7 +161,7 @@ public class LegacyParticleEmitter : MonoBehaviour
 		}
 	}
 
-	/// <summary>椭球内的随机点（本地坐标）。</summary>
+	/// <summary>Random point inside the ellipsoid (local space).</summary>
 	private Vector3 RandomPointInEllipsoid()
 	{
 		Vector3 direction = Random.onUnitSphere;
@@ -170,7 +170,7 @@ public class LegacyParticleEmitter : MonoBehaviour
 		return Vector3.Scale(direction * distance, radius);
 	}
 
-	/// <summary>发射单个粒子，参数含义与旧版 ParticleEmitter.Emit 相同（位置和速度在模拟坐标系里）。</summary>
+	/// <summary>Emits one particle; parameters mean the same as in legacy ParticleEmitter.Emit (position and velocity in simulation space).</summary>
 	public void Emit(Vector3 position, Vector3 velocity, float size, float energy, Color color, float rotation, float angularVelocity)
 	{
 		if (_particleSystem == null)

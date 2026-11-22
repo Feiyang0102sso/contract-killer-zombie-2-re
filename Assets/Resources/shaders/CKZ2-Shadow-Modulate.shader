@@ -21,7 +21,7 @@ CGPROGRAM
 #pragma vertex vert
 #pragma fragment frag
 #pragma target 3.0
-// PC port: translated from the original GLES code by tools/portNewUnity/asset_convert/gles_to_hlsl.py
+// PC port: translated from the original GLES code by gles_to_hlsl.py
 float4 _Occluder3;
 float4 _Occluder2;
 float4 _Occluder1;

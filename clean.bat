@@ -35,9 +35,8 @@ call :remove_dir "Launcher\out"
 call :remove_dir "Launcher\bin"
 call :remove_dir "Launcher\vs\.vs"
 
-rem Reports and Python caches
-call :remove_file "PcPilotAudit.txt"
-call :remove_dir "tools\__pycache__"
+rem Python caches: every __pycache__ under tools\ (for /r lists each folder, remove_dir skips missing ones)
+for /r "tools" /d %%d in (__pycache__) do call :remove_dir "%%d"
 
 echo [clean] done
 exit /b 0

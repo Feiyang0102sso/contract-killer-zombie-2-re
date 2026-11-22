@@ -208,12 +208,6 @@ public class Boot : MonoBehaviourAndLog
 	{
 		Object.DestroyImmediate(UIManager.instance.gameObject);
 		GameAnalytics.LogAssetBundlesCompleted(true);
-		// PC port: editor test maps skip the tutorial and the city map
-		if (PcTestMap.TryStart())
-		{
-			_done = false;
-			return;
-		}
 		Singleton.Tutorial.Init();
 		if (Tutorial.IsRunning() && Singleton.Tutorial.State.AutoStartMission() != null)
 		{

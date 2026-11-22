@@ -34,7 +34,7 @@ CGPROGRAM
 #pragma fragment frag
 #pragma target 3.0
 #pragma multi_compile _ LIGHTMAP_ON
-// PC port: translated from the original GLES code by tools/portNewUnity/asset_convert/gles_to_hlsl.py
+// PC port: translated from the original GLES code by gles_to_hlsl.py
 #if defined(LIGHTMAP_ON)
 float _SineFreqY2;
 float _SineFreqY;
@@ -218,7 +218,7 @@ CGPROGRAM
 #pragma fragment frag
 #pragma target 3.0
 #pragma multi_compile _ LIGHTMAP_ON
-// PC port: translated from the original GLES code by tools/portNewUnity/asset_convert/gles_to_hlsl.py
+// PC port: translated from the original GLES code by gles_to_hlsl.py
 #if defined(LIGHTMAP_ON)
 float _ScrollY;
 float _ScrollX;
@@ -378,7 +378,7 @@ CGPROGRAM
 #pragma fragment frag
 #pragma target 3.0
 #pragma multi_compile _ LIGHTMAP_ON
-// PC port: translated from the original GLES code by tools/portNewUnity/asset_convert/gles_to_hlsl.py
+// PC port: translated from the original GLES code by gles_to_hlsl.py
 #if defined(LIGHTMAP_ON)
 float _ScrollY;
 float _ScrollX;

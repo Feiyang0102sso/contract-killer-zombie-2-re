@@ -8,7 +8,7 @@
 //   - The GameData entry is left as shipped (MinLevel 99), so the act mission pools never pick it.
 //   - Icon: a copy of the special hunt button (the big icon with the glow, tinted with the survival orange like it)
 //     with its own white glyph, a zombie hand rising from the pool (Resources/PcPort/PcPitIcon, drawn by
-//     tools/art/make_pit_icons.py). MapNarrative.GetMissionButton returns it for The Pit, and MapLocation.GetMissionColor
+//     make_pit_icons.py). MapNarrative.GetMissionButton returns it for The Pit, and MapLocation.GetMissionColor
 //     gives it the survival orange instead of the hard-mission yellow.
 using UnityEngine;
 

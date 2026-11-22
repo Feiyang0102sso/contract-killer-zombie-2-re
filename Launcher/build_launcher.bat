@@ -2,7 +2,7 @@
 rem Builds the launcher (vs\Launcher.sln, Release x64) with MSBuild to bin\x64\Release\ckz2.exe,
 rem then copies it over Builds\ckz2.exe when that folder holds a Unity build.
 rem Needs Visual Studio or Build Tools with the "Desktop development with C++" workload (found with vswhere).
-rem PcPilotBuild.Build (build.bat or the PcPilot menu) calls this after the Unity build; run it alone to update only the exe.
+rem PcBuild.Build (build.bat or the CKZ2/Build menu) calls this after the Unity build; run it alone to update only the exe.
 rem Comments are in English on purpose: cmd reads .bat files in the OEM code page.
 setlocal
 cd /d "%~dp0"
