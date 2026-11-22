@@ -72,6 +72,11 @@ public class UsualMissionInfoPopup : MissionInfoPopup
 			text = flag4 ? Strings.GetString("HARD MISSION") : Strings.GetString("EASY MISSION");
 		}
 		storyline = Color.white;
+		// PC port: The Pit shows its own mission name ("The Pit Fighter") instead of the difficulty, upper case like the other titles
+		if (PcPitMission.IsPit(mapNarrative.SelectedMissionIndex))
+		{
+			text = Strings.GetString(mapNarrative.SelectedMissionDescription.Title).ToUpperInvariant();
+		}
 		if (TitleText != null)
 		{
 			TitleText.Text = text;
@@ -83,6 +88,11 @@ public class UsualMissionInfoPopup : MissionInfoPopup
 		}
 		bool flag5 = missionDifficulty == Mission.Difficulty.Normal && !flag;
 		int num5 = Mission.AmountForTag("Bonus", type, missionDifficulty);
+		// PC port: the count above comes from the mission type only; The Pit's scene has no bonus crate spots
+		if (PcPitMission.IsPit(mapNarrative.SelectedMissionIndex))
+		{
+			num5 = 0;
+		}
 		for (int i = 0; i < num5; i++)
 		{
 			GameObject item = Util.CreateGameObject(flag5 ? "BonusCrateUsual" : "BonusCrateGold");

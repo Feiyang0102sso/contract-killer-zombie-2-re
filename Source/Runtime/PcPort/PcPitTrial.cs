@@ -1,5 +1,7 @@
-// PC port: F1 on the city map starts a trial of The Pit, an unused level of the original
-// (mission THEPIT: KillAll, Hard, MinLevel 99 above the level cap of 30, so the game never offers it).
+// PC port: trial of The Pit, an unused level of the original, from the city map without saving
+// (mission THEPIT: KillAll, Hard, MinLevel 99 above the level cap of 30, so the original never offers it).
+// The F1 key binding was removed once The Pit became a regular map mission (PcPitMission); TryStart is still
+// reachable through the -pcPitTrial test argument (PcBootDiagnostics).
 //   - Starts from the current save: the state is saved once, then copied in memory (PlayerData.PcTakeSnapshot).
 //   - Never saves: PlayerData.Save writes nothing while the trial runs, so quitting the game mid-trial is safe too.
 //   - Leaving the level any way (mission won, failed, quit from the pause menu) puts the copy back before the next
@@ -13,9 +15,6 @@ using UnityEngine;
 
 public class PcPitTrial : MonoBehaviour
 {
-	/// <summary>Key that starts the trial on the city map.</summary>
-	private const KeyCode TrialKey = KeyCode.F1;
-
 	/// <summary>GameData.Missions entry of The Pit.</summary>
 	private const string MissionDescriptor = "THEPIT";
 
@@ -50,15 +49,6 @@ public class PcPitTrial : MonoBehaviour
 		GameObject holder = new GameObject("PcPitTrial");
 		DontDestroyOnLoad(holder);
 		holder.AddComponent<PcPitTrial>();
-		Debug.Log("[PcPitTrial] press " + TrialKey + " on the city map to play The Pit (no saving)");
-	}
-
-	private void Update()
-	{
-		if (Input.GetKeyDown(TrialKey))
-		{
-			TryStart(TrialKey.ToString());
-		}
 	}
 
 	/// <summary>
@@ -120,6 +110,10 @@ public class PcPitTrial : MonoBehaviour
 		if (Singleton.UI.Fader.IsFading())
 		{
 			return "the screen is still fading, try again in a moment";
+		}
+		if (PlayerData.Instance.HasMission(FindMissionIndex()))
+		{
+			return "The Pit is already on the map, play it from there";
 		}
 		return null;
 	}

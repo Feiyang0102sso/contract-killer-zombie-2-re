@@ -16,7 +16,9 @@ public class GameData : MonoBehaviour
 		OrangeArea,
 		TealArea,
 		AmberArea,
-		GoldenArea
+		GoldenArea,
+		// PC port: area of The Pit's own map spot (PcPitMission), no shipped mission uses it
+		PcPitArea
 	}
 
 	public enum SceneType

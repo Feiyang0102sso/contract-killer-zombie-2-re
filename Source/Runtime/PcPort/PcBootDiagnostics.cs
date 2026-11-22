@@ -35,6 +35,7 @@ public class PcBootDiagnostics : MonoBehaviour
 		diagnostics.StartCoroutine(PitTrial());
 		diagnostics.StartCoroutine(GoToMap());
 		diagnostics.StartCoroutine(CompleteTask());
+		diagnostics.StartCoroutine(diagnostics.MapSlots());
 		diagnostics.StartCoroutine(AddMoney());
 		diagnostics.StartCoroutine(ReportPerformance());
 		diagnostics.StartCoroutine(CheckPlayerPath());
@@ -855,6 +856,24 @@ public class PcBootDiagnostics : MonoBehaviour
 			Debug.Log("[PcDiag] complete task t=" + target + " scene=" + UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
 			Cheat.CompleteTask();
 		}
+	}
+
+	/// <summary>Test: -pcMapSlots 60 renders the whole city map with an icon on every mission spot into -pcShotDir (PcMapSlotsCapture).</summary>
+	private IEnumerator MapSlots()
+	{
+		string argument = GetArgument("-pcMapSlots");
+		string directory = GetArgument("-pcShotDir");
+		if (argument == null || directory == null)
+		{
+			yield break;
+		}
+		float target = float.Parse(argument, System.Globalization.CultureInfo.InvariantCulture);
+		while (Time.realtimeSinceStartup < target)
+		{
+			yield return null;
+		}
+		Debug.Log("[PcDiag] map slots t=" + target + " scene=" + UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+		yield return PcMapSlotsCapture.Run(directory);
 	}
 
 	/// <summary>Test: -pcGoToMap 120,200 calls AppGame.GoToCityMap at those times (leaves a level without tapping through the result screens).</summary>

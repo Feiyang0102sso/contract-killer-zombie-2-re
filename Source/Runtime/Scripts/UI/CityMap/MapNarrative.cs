@@ -573,6 +573,8 @@ public class MapNarrative : MonoBehaviour
 	private void Awake()
 	{
 		_instance = this;
+		// PC port: map spot of The Pit
+		PcPitMission.Setup(this);
 	}
 
 	private void Start()
@@ -608,6 +610,8 @@ public class MapNarrative : MonoBehaviour
 		{
 			GenerateSurvival(Mission.Type.SurvivalArena);
 		}
+		// PC port: The Pit is always on the map, like the survival missions
+		PcPitMission.EnsureAssigned(this);
 		if (!SpecialHuntIsAssigned() && !SpecialHuntIsQueued() && SpecialHuntIsEnabled())
 		{
 			GenerateSpecialHunt();
@@ -656,6 +660,11 @@ public class MapNarrative : MonoBehaviour
 	public GameObject GetMissionButton(int missionIndex)
 	{
 		if (!PlayerData.Instance.IsSpecialHuntReceived && missionIndex == Singleton.ShopData.SpecialHunt.missionIndex)
+		{
+			return SpecialHuntButton;
+		}
+		// PC port: placeholder icon of The Pit
+		if (PcPitMission.IsPit(missionIndex))
 		{
 			return SpecialHuntButton;
 		}

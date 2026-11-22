@@ -1111,6 +1111,11 @@ public class PlayerData : MonoBehaviourAndLog
 			{
 				num--;
 			}
+			else if (PcPitMission.IsPit(activeMission.Value))
+			{
+				// PC port: The Pit is an extra, like the survival missions
+				num--;
+			}
 		}
 		return num;
 	}
