@@ -28,7 +28,7 @@ public class NativeMessage : MonoBehaviour
 #else
 	private static void NM_showAlertWithTitleMessageAndButton(string title, string message, string buttonTitle)
 	{
-		PcNative.Stub("NM_showAlertWithTitleMessageAndButton");
+		NonIosNative.Stub("NM_showAlertWithTitleMessageAndButton");
 	}
 #endif
 

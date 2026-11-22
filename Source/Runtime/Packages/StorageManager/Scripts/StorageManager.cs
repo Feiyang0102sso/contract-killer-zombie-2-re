@@ -91,7 +91,7 @@ public class StorageManager
 		XmlSerializer xmlSerializer = new XmlSerializer(data.GetType());
 		xmlSerializer.Serialize(XmlWriter.Create(memoryStream), data);
 #else
-		PcXmlPairs.Serialize(XmlWriter.Create(memoryStream), data);
+		NewUnityXmlPairs.Serialize(XmlWriter.Create(memoryStream), data);
 #endif
 		using (FileStream stream = File.Create(temporaryPathName))
 		{
@@ -119,7 +119,7 @@ public class StorageManager
 		XmlSerializer xmlSerializer = new XmlSerializer(type);
 		obj = xmlSerializer.Deserialize(XmlReader.Create(memoryStream));
 #else
-		obj = PcXmlPairs.Deserialize(XmlReader.Create(memoryStream), type);
+		obj = NewUnityXmlPairs.Deserialize(XmlReader.Create(memoryStream), type);
 #endif
 		return obj;
 	}

@@ -230,7 +230,7 @@ public static class PlayHavenInterface
 #else
 	private static void DisplayAlert(string title, string text)
 	{
-		PcNative.Stub("DisplayAlert");
+		NonIosNative.Stub("DisplayAlert");
 	}
 #endif
 }

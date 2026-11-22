@@ -54,7 +54,7 @@ namespace Glu.UnityBuildSystem
 #else
 		private static void GetBundleId(StringBuilder sb, int size)
 		{
-			PcNative.GetBundleId(sb, size);
+			NonIosNative.GetBundleId(sb, size);
 		}
 #endif
 
@@ -64,7 +64,7 @@ namespace Glu.UnityBuildSystem
 #else
 		private static void GetBundleVersion(StringBuilder sb, int size)
 		{
-			PcNative.GetBundleVersion(sb, size);
+			NonIosNative.GetBundleVersion(sb, size);
 		}
 #endif
 	}

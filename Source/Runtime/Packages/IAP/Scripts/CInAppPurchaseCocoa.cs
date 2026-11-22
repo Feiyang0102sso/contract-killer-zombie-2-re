@@ -122,7 +122,7 @@ public class CInAppPurchaseCocoa : ICInAppPurchase
 #else
 	private static void InitializeIAP(string[] productIDs, string[] hashes)
 	{
-		PcNative.Stub("InitializeIAP");
+		NonIosNative.Stub("InitializeIAP");
 	}
 #endif
 
@@ -132,7 +132,7 @@ public class CInAppPurchaseCocoa : ICInAppPurchase
 #else
 	private static bool IsIAPInitialized()
 	{
-		PcNative.Stub("IsIAPInitialized");
+		NonIosNative.Stub("IsIAPInitialized");
 		return default(bool);
 	}
 #endif
@@ -143,7 +143,7 @@ public class CInAppPurchaseCocoa : ICInAppPurchase
 #else
 	private static bool IsIAPEnabled()
 	{
-		PcNative.Stub("IsIAPEnabled");
+		NonIosNative.Stub("IsIAPEnabled");
 		return default(bool);
 	}
 #endif
@@ -154,7 +154,7 @@ public class CInAppPurchaseCocoa : ICInAppPurchase
 #else
 	private static IntPtr GetValidatedProducts()
 	{
-		PcNative.Stub("GetValidatedProducts");
+		NonIosNative.Stub("GetValidatedProducts");
 		return default(IntPtr);
 	}
 #endif
@@ -165,7 +165,7 @@ public class CInAppPurchaseCocoa : ICInAppPurchase
 #else
 	private static void BuyProductWithID(string product)
 	{
-		PcNative.Stub("BuyProductWithID");
+		NonIosNative.Stub("BuyProductWithID");
 	}
 #endif
 
@@ -175,7 +175,7 @@ public class CInAppPurchaseCocoa : ICInAppPurchase
 #else
 	private static void RestoreTransactions()
 	{
-		PcNative.Stub("RestoreTransactions");
+		NonIosNative.Stub("RestoreTransactions");
 	}
 #endif
 
@@ -185,7 +185,7 @@ public class CInAppPurchaseCocoa : ICInAppPurchase
 #else
 	private static int GetRestoreCompletedTransactionsStatus()
 	{
-		PcNative.Stub("GetRestoreCompletedTransactionsStatus");
+		NonIosNative.Stub("GetRestoreCompletedTransactionsStatus");
 		return default(int);
 	}
 #endif
@@ -196,7 +196,7 @@ public class CInAppPurchaseCocoa : ICInAppPurchase
 #else
 	private static int GetLastKnownStatusOfLatestTransaction()
 	{
-		PcNative.Stub("GetLastKnownStatusOfLatestTransaction");
+		NonIosNative.Stub("GetLastKnownStatusOfLatestTransaction");
 		return default(int);
 	}
 #endif
@@ -207,7 +207,7 @@ public class CInAppPurchaseCocoa : ICInAppPurchase
 #else
 	private static IntPtr RetrievePurchasedProduct(int occurence, bool keepProduct)
 	{
-		PcNative.Stub("RetrievePurchasedProduct");
+		NonIosNative.Stub("RetrievePurchasedProduct");
 		return default(IntPtr);
 	}
 #endif
@@ -218,7 +218,7 @@ public class CInAppPurchaseCocoa : ICInAppPurchase
 #else
 	private static int GetPurchasedItemsCount()
 	{
-		PcNative.Stub("GetPurchasedItemsCount");
+		NonIosNative.Stub("GetPurchasedItemsCount");
 		return default(int);
 	}
 #endif
@@ -229,7 +229,7 @@ public class CInAppPurchaseCocoa : ICInAppPurchase
 #else
 	private static void ClearPurchasedItems(int count)
 	{
-		PcNative.Stub("ClearPurchasedItems");
+		NonIosNative.Stub("ClearPurchasedItems");
 	}
 #endif
 }

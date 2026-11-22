@@ -344,11 +344,11 @@ public class ChromaticAberrationWithVignetting : MonoBehaviour
 		}
 		if (m_chromaticAberration != 0f || m_vignetting)
 		{
-			PcBlit.ToScreen(sourceText, m_material, 1);
+			NewUnityBlit.ToScreen(sourceText, m_material, 1);
 		}
 		else
 		{
-			PcBlit.ToScreen(sourceText, null);
+			NewUnityBlit.ToScreen(sourceText, null);
 		}
 	}
 

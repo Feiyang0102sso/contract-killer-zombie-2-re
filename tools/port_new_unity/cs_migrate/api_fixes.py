@@ -42,34 +42,34 @@ FIXES = [
      "",
      "remove smoothSphereCollisions"),
     # Graphics.Blit(src, null, ...): in 3.5 null means the screen; newer versions write back into Camera.main's targetTexture when it has one (exactly what PostEffectManager does),
-    # leaving the back buffer empty and the whole screen white. Use PcBlit.ToScreen to draw straight to the back buffer instead.
+    # leaving the back buffer empty and the whole screen white. Use NewUnityBlit.ToScreen to draw straight to the back buffer instead.
     ("Scripts/Camera/ChromaticAberrationWithVignetting.cs",
      "Graphics.Blit(sourceText, null, m_material, 1);",
-     "PcBlit.ToScreen(sourceText, m_material, 1);",
-     "Blit to screen -> PcBlit.ToScreen"),
+     "NewUnityBlit.ToScreen(sourceText, m_material, 1);",
+     "Blit to screen -> NewUnityBlit.ToScreen"),
     ("Scripts/Camera/ChromaticAberrationWithVignetting.cs",
      "Graphics.Blit(sourceText, null, null);",
-     "PcBlit.ToScreen(sourceText, null);",
-     "Blit to screen -> PcBlit.ToScreen"),
+     "NewUnityBlit.ToScreen(sourceText, null);",
+     "Blit to screen -> NewUnityBlit.ToScreen"),
     ("Scripts/Camera/LowHealth.cs",
      "Graphics.Blit(sourceText, null, _lowHealth);",
-     "PcBlit.ToScreen(sourceText, _lowHealth);",
-     "Blit to screen -> PcBlit.ToScreen"),
+     "NewUnityBlit.ToScreen(sourceText, _lowHealth);",
+     "Blit to screen -> NewUnityBlit.ToScreen"),
     ("Scripts/Camera/MobileBloom.cs",
      "Graphics.Blit(sourceText, null, apply, good ? 4 : 0);",
-     "PcBlit.ToScreen(sourceText, apply, good ? 4 : 0);",
-     "Blit to screen -> PcBlit.ToScreen"),
+     "NewUnityBlit.ToScreen(sourceText, apply, good ? 4 : 0);",
+     "Blit to screen -> NewUnityBlit.ToScreen"),
     # BoxCollider.extents was removed; extents = size / 2
     ("Scripts/Chars/Human/HumanWeapon.cs",
      "gameObject.GetComponent<BoxCollider>().extents = meshRenderer.bounds.extents;",
      "gameObject.GetComponent<BoxCollider>().size = meshRenderer.bounds.extents * 2f;",
      "BoxCollider.extents -> size"),
     # The old light probe API GetInterpolatedLightProbe(float[27]) was removed, and Unity 6 cannot read the 3.5 probe data either.
-    # PcSceneLighting interpolates the original probe data instead, with exactly the same parameters and coefficient layout as 3.5.
+    # NewUnitySceneLighting interpolates the original probe data instead, with exactly the same parameters and coefficient layout as 3.5.
     ("Scripts/Game/Visual.cs",
      "LightmapSettings.lightProbes.GetInterpolatedLightProbe(position, renderer, _probe);",
-     "PcSceneLighting.GetInterpolatedLightProbe(position, renderer, _probe);",
-     "GetInterpolatedLightProbe -> PcSceneLighting"),
+     "NewUnitySceneLighting.GetInterpolatedLightProbe(position, renderer, _probe);",
+     "GetInterpolatedLightProbe -> NewUnitySceneLighting"),
     # Rigidbody.SetMaxAngularVelocity became a property
     ("Scripts/Items/Weapons/Launcher.cs",
      "gameObject2.GetComponent<Rigidbody>().SetMaxAngularVelocity(100f);",
@@ -125,7 +125,7 @@ FIXES = [
      "\t\t\t\tif (datum.Key.Equals(key))",
      "\t\t\t\tif (datum.Key != null && datum.Key.Equals(key))",
      "ABTesting Parameters null key guard"),
-    # StorageManager's XML read/write entry points go through PcXmlPairs, fixing how KeyValuePair lists are saved and loaded (see PcPort/PcXmlPairs.cs)
+    # StorageManager's XML read/write entry points go through NewUnityXmlPairs, fixing how KeyValuePair lists are saved and loaded (see NewUnityXmlPairs.cs)
     ("Packages/StorageManager/Scripts/StorageManager.cs",
      "\t\tXmlSerializer xmlSerializer = new XmlSerializer(data.GetType());\n"
      "\t\txmlSerializer.Serialize(XmlWriter.Create(memoryStream), data);",
@@ -135,7 +135,7 @@ FIXES = [
      "#else\n"
      "\t\tPcXmlPairs.Serialize(XmlWriter.Create(memoryStream), data);\n"
      "#endif",
-     "StorageManager.WriteXmlToLocation -> PcXmlPairs"),
+     "StorageManager.WriteXmlToLocation -> NewUnityXmlPairs"),
     ("Packages/StorageManager/Scripts/StorageManager.cs",
      "\t\tXmlSerializer xmlSerializer = new XmlSerializer(type);\n"
      "\t\tobj = xmlSerializer.Deserialize(XmlReader.Create(memoryStream));",
@@ -143,9 +143,9 @@ FIXES = [
      "\t\tXmlSerializer xmlSerializer = new XmlSerializer(type);\n"
      "\t\tobj = xmlSerializer.Deserialize(XmlReader.Create(memoryStream));\n"
      "#else\n"
-     "\t\tobj = PcXmlPairs.Deserialize(XmlReader.Create(memoryStream), type);\n"
+     "\t\tobj = NewUnityXmlPairs.Deserialize(XmlReader.Create(memoryStream), type);\n"
      "#endif",
-     "StorageManager.ReadXmlFromLocation -> PcXmlPairs"),
+     "StorageManager.ReadXmlFromLocation -> NewUnityXmlPairs"),
     # Shop config: the groups / itemRefs getters return a new filtered copy (FindAll). When newer XmlSerializer reads a collection property
     # it first sets an empty list and then adds elements to the list returned by the getter, so everything went into the temporary copy and the shop had no groups (null reference and black screen when opening the shop).
     # Old Mono filled a new list and set it once. Move the XML attributes onto rawGroups / rawItemRefs, which read and write the fields directly; element names are unchanged.
@@ -195,7 +195,7 @@ FIXES = [
      "\t\thealth = healthTotal;\n",
      "Character.Awake: disable CharacterController overlap recovery"),
     # A 3.5 controller that starts out overlapping static geometry stays put; the newer sweep ignores the initial overlap and passes straight through.
-    # TargetToAttack starts 0.09 m below the road surface and falls through once overlap recovery is off, so Move must follow the 3.5 behaviour as well (PcPhysics.LegacyMove).
+    # TargetToAttack starts 0.09 m below the road surface and falls through once overlap recovery is off, so Move must follow the 3.5 behaviour as well (NewUnityPhysics.LegacyMove).
     ("Scripts/Chars/Basic/Character.cs",
      "\t\t\tcharacterController.Move(vector);\n",
      "\t\t\tPcPhysics.LegacyMove(characterController, vector, transform);\n",
@@ -235,12 +235,12 @@ FIXES = [
     # Newer XmlSerializer writes KeyValuePair keys as empty elements, so the second key repeats on load and the whole save fails to load and is treated as a new game (pc_pilot_tools/README.md, day fixes section 5).
     ("Packages/StorageManager/Scripts/XmlDictionary.cs",
      "\t\t\tTKey key = (TKey)xmlSerializer.Deserialize(reader);\n",
-     "\t\t\tTKey key = (TKey)PcXmlPairs.DeserializeKey(reader, xmlSerializer, typeof(TKey));\n",
-     "XmlDictionary.ReadXml: KeyValuePair keys via PcXmlPairs"),
+     "\t\t\tTKey key = (TKey)NewUnityXmlPairs.DeserializeKey(reader, xmlSerializer, typeof(TKey));\n",
+     "XmlDictionary.ReadXml: KeyValuePair keys via NewUnityXmlPairs"),
     ("Packages/StorageManager/Scripts/XmlDictionary.cs",
      "\t\t\txmlSerializer.Serialize(writer, key);\n",
      "\t\t\tPcXmlPairs.SerializeKey(writer, xmlSerializer, key);\n",
-     "XmlDictionary.WriteXml: KeyValuePair keys via PcXmlPairs"),
+     "XmlDictionary.WriteXml: KeyValuePair keys via NewUnityXmlPairs"),
     # Resources contains assets with the same name but different types (the export also put dependent materials and meshes into Resources: weaponicons/shotgun1.mat and Shotgun1.png,
     # weapons/*.asset meshes and *.prefab). An untyped Resources.Load may return the material / mesh first, which becomes null after "as":
     # the free 12-Gauge Pump hits a null reference in Weapon.CreateHudIcon when entering a level (pc_pilot_tools/README.md, day fixes section 9). Specify the type as intended.

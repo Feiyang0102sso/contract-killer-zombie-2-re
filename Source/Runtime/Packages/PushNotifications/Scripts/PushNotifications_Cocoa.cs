@@ -426,7 +426,7 @@ public class PushNotifications_Cocoa : PushNotifications
 #else
 	private static int PushNotificationsGetBadgeNumber()
 	{
-		PcNative.Stub("PushNotificationsGetBadgeNumber");
+		NonIosNative.Stub("PushNotificationsGetBadgeNumber");
 		return default(int);
 	}
 #endif
@@ -437,7 +437,7 @@ public class PushNotifications_Cocoa : PushNotifications
 #else
 	private static void PushNotificationsSetBadgeNumber(int val)
 	{
-		PcNative.Stub("PushNotificationsSetBadgeNumber");
+		NonIosNative.Stub("PushNotificationsSetBadgeNumber");
 	}
 #endif
 
@@ -447,7 +447,7 @@ public class PushNotifications_Cocoa : PushNotifications
 #else
 	private static void PushNotificationsGetTimezoneOlson(StringBuilder dest, int n)
 	{
-		PcNative.Stub("PushNotificationsGetTimezoneOlson");
+		NonIosNative.Stub("PushNotificationsGetTimezoneOlson");
 	}
 #endif
 

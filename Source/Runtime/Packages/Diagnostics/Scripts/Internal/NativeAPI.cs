@@ -12,7 +12,7 @@ namespace Glu.Diagnostics.Internal
 #else
 		public static void Glu_Diagnostics_Abort()
 		{
-			PcNative.Stub("Glu_Diagnostics_Abort");
+			NonIosNative.Stub("Glu_Diagnostics_Abort");
 		}
 #endif
 	}

@@ -31,7 +31,7 @@ public class TapjoyPluginIOS : MonoBehaviour
 #else
 	public static void _SetCallbackHandler(string handlerName)
 	{
-		PcNative.Stub("_SetCallbackHandler");
+		NonIosNative.Stub("_SetCallbackHandler");
 	}
 #endif
 
@@ -41,7 +41,7 @@ public class TapjoyPluginIOS : MonoBehaviour
 #else
 	private static void _RequestTapjoyConnect(string appID, string secretKey)
 	{
-		PcNative.Stub("_RequestTapjoyConnect");
+		NonIosNative.Stub("_RequestTapjoyConnect");
 	}
 #endif
 
@@ -51,7 +51,7 @@ public class TapjoyPluginIOS : MonoBehaviour
 #else
 	private static void _SetFlagKeyValue(string flagKey, string flagValue)
 	{
-		PcNative.Stub("_SetFlagKeyValue");
+		NonIosNative.Stub("_SetFlagKeyValue");
 	}
 #endif
 
@@ -61,7 +61,7 @@ public class TapjoyPluginIOS : MonoBehaviour
 #else
 	private static void _EnableLogging(bool enable)
 	{
-		PcNative.Stub("_EnableLogging");
+		NonIosNative.Stub("_EnableLogging");
 	}
 #endif
 
@@ -71,7 +71,7 @@ public class TapjoyPluginIOS : MonoBehaviour
 #else
 	private static void _ActionComplete(string actionID)
 	{
-		PcNative.Stub("_ActionComplete");
+		NonIosNative.Stub("_ActionComplete");
 	}
 #endif
 
@@ -81,7 +81,7 @@ public class TapjoyPluginIOS : MonoBehaviour
 #else
 	private static void _SetUserID(string userID)
 	{
-		PcNative.Stub("_SetUserID");
+		NonIosNative.Stub("_SetUserID");
 	}
 #endif
 
@@ -91,7 +91,7 @@ public class TapjoyPluginIOS : MonoBehaviour
 #else
 	private static void _ShowOffers()
 	{
-		PcNative.Stub("_ShowOffers");
+		NonIosNative.Stub("_ShowOffers");
 	}
 #endif
 
@@ -101,7 +101,7 @@ public class TapjoyPluginIOS : MonoBehaviour
 #else
 	private static void _ShowOffersWithCurrencyID(string currencyID, bool isSelectorVisible)
 	{
-		PcNative.Stub("_ShowOffersWithCurrencyID");
+		NonIosNative.Stub("_ShowOffersWithCurrencyID");
 	}
 #endif
 
@@ -111,7 +111,7 @@ public class TapjoyPluginIOS : MonoBehaviour
 #else
 	private static void _GetFullScreenAd()
 	{
-		PcNative.Stub("_GetFullScreenAd");
+		NonIosNative.Stub("_GetFullScreenAd");
 	}
 #endif
 
@@ -121,7 +121,7 @@ public class TapjoyPluginIOS : MonoBehaviour
 #else
 	private static void _GetFullScreenAdWithCurrencyID(string currencyID)
 	{
-		PcNative.Stub("_GetFullScreenAdWithCurrencyID");
+		NonIosNative.Stub("_GetFullScreenAdWithCurrencyID");
 	}
 #endif
 
@@ -131,7 +131,7 @@ public class TapjoyPluginIOS : MonoBehaviour
 #else
 	private static void _SetCurrencyMultiplier(float multiplier)
 	{
-		PcNative.Stub("_SetCurrencyMultiplier");
+		NonIosNative.Stub("_SetCurrencyMultiplier");
 	}
 #endif
 
@@ -141,7 +141,7 @@ public class TapjoyPluginIOS : MonoBehaviour
 #else
 	private static void _ShowFullScreenAd()
 	{
-		PcNative.Stub("_ShowFullScreenAd");
+		NonIosNative.Stub("_ShowFullScreenAd");
 	}
 #endif
 
@@ -151,7 +151,7 @@ public class TapjoyPluginIOS : MonoBehaviour
 #else
 	private static void _GetDailyRewardAd()
 	{
-		PcNative.Stub("_GetDailyRewardAd");
+		NonIosNative.Stub("_GetDailyRewardAd");
 	}
 #endif
 
@@ -161,7 +161,7 @@ public class TapjoyPluginIOS : MonoBehaviour
 #else
 	private static void _GetDailyRewardAdWithCurrencyID(string currencyID)
 	{
-		PcNative.Stub("_GetDailyRewardAdWithCurrencyID");
+		NonIosNative.Stub("_GetDailyRewardAdWithCurrencyID");
 	}
 #endif
 
@@ -171,7 +171,7 @@ public class TapjoyPluginIOS : MonoBehaviour
 #else
 	private static void _ShowDailyRewardAd()
 	{
-		PcNative.Stub("_ShowDailyRewardAd");
+		NonIosNative.Stub("_ShowDailyRewardAd");
 	}
 #endif
 
@@ -181,7 +181,7 @@ public class TapjoyPluginIOS : MonoBehaviour
 #else
 	private static void _ShowDefaultEarnedCurrencyAlert()
 	{
-		PcNative.Stub("_ShowDefaultEarnedCurrencyAlert");
+		NonIosNative.Stub("_ShowDefaultEarnedCurrencyAlert");
 	}
 #endif
 
@@ -191,7 +191,7 @@ public class TapjoyPluginIOS : MonoBehaviour
 #else
 	private static void _GetTapPoints()
 	{
-		PcNative.Stub("_GetTapPoints");
+		NonIosNative.Stub("_GetTapPoints");
 	}
 #endif
 
@@ -201,7 +201,7 @@ public class TapjoyPluginIOS : MonoBehaviour
 #else
 	private static void _SpendTapPoints(int points)
 	{
-		PcNative.Stub("_SpendTapPoints");
+		NonIosNative.Stub("_SpendTapPoints");
 	}
 #endif
 
@@ -211,7 +211,7 @@ public class TapjoyPluginIOS : MonoBehaviour
 #else
 	private static void _AwardTapPoints(int points)
 	{
-		PcNative.Stub("_AwardTapPoints");
+		NonIosNative.Stub("_AwardTapPoints");
 	}
 #endif
 
@@ -221,7 +221,7 @@ public class TapjoyPluginIOS : MonoBehaviour
 #else
 	private static int _QueryTapPoints()
 	{
-		PcNative.Stub("_QueryTapPoints");
+		NonIosNative.Stub("_QueryTapPoints");
 		return default(int);
 	}
 #endif
@@ -232,7 +232,7 @@ public class TapjoyPluginIOS : MonoBehaviour
 #else
 	private static void _GetDisplayAd()
 	{
-		PcNative.Stub("_GetDisplayAd");
+		NonIosNative.Stub("_GetDisplayAd");
 	}
 #endif
 
@@ -242,7 +242,7 @@ public class TapjoyPluginIOS : MonoBehaviour
 #else
 	private static void _ShowDisplayAd()
 	{
-		PcNative.Stub("_ShowDisplayAd");
+		NonIosNative.Stub("_ShowDisplayAd");
 	}
 #endif
 
@@ -252,7 +252,7 @@ public class TapjoyPluginIOS : MonoBehaviour
 #else
 	private static void _HideDisplayAd()
 	{
-		PcNative.Stub("_HideDisplayAd");
+		NonIosNative.Stub("_HideDisplayAd");
 	}
 #endif
 
@@ -262,7 +262,7 @@ public class TapjoyPluginIOS : MonoBehaviour
 #else
 	private static void _GetDisplayAdWithCurrencyID(string currencyID)
 	{
-		PcNative.Stub("_GetDisplayAdWithCurrencyID");
+		NonIosNative.Stub("_GetDisplayAdWithCurrencyID");
 	}
 #endif
 
@@ -272,7 +272,7 @@ public class TapjoyPluginIOS : MonoBehaviour
 #else
 	private static void _SetDisplayAdSize(string size)
 	{
-		PcNative.Stub("_SetDisplayAdSize");
+		NonIosNative.Stub("_SetDisplayAdSize");
 	}
 #endif
 
@@ -282,7 +282,7 @@ public class TapjoyPluginIOS : MonoBehaviour
 #else
 	private static void _EnableDisplayAdAutoRefresh(bool enable)
 	{
-		PcNative.Stub("_EnableDisplayAdAutoRefresh");
+		NonIosNative.Stub("_EnableDisplayAdAutoRefresh");
 	}
 #endif
 
@@ -292,7 +292,7 @@ public class TapjoyPluginIOS : MonoBehaviour
 #else
 	private static void _MoveDisplayAd(int x, int y)
 	{
-		PcNative.Stub("_MoveDisplayAd");
+		NonIosNative.Stub("_MoveDisplayAd");
 	}
 #endif
 
@@ -302,7 +302,7 @@ public class TapjoyPluginIOS : MonoBehaviour
 #else
 	private static void _SetTransitionEffect(int transition)
 	{
-		PcNative.Stub("_SetTransitionEffect");
+		NonIosNative.Stub("_SetTransitionEffect");
 	}
 #endif
 
@@ -312,7 +312,7 @@ public class TapjoyPluginIOS : MonoBehaviour
 #else
 	private static void _SendIAPEvent(string name, float price, int quantity, string currencyCode)
 	{
-		PcNative.Stub("_SendIAPEvent");
+		NonIosNative.Stub("_SendIAPEvent");
 	}
 #endif
 

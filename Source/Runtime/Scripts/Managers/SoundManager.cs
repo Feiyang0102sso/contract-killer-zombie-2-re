@@ -80,7 +80,7 @@ public class SoundManager : MonoBehaviourAndLog
 		_defaultPreset = new GameData.AudioSourcePreset();
 		_defaultPreset.Capture(_managed[0].audioSource);
 		// PC port: Capture reads spatialBlend (0); the 3.5 default panLevel was 1
-		_defaultPreset.PanLevel = PcAudio.LegacyDefaultPanLevel;
+		_defaultPreset.PanLevel = NewUnityAudio.LegacyDefaultPanLevel;
 		Singleton.GameEvents.OnMissionCompleted += new Action<string>(OnMissionCompleted);
 		Singleton.GameEvents.OnMissionFailed += new Action<string, GameEvents.MissionFailure, Mission.Type>(OnMissionFailed);
 		_instance = this;
@@ -364,7 +364,7 @@ public class SoundManager : MonoBehaviourAndLog
 				audioSourcePreset = (!(audioSourcePreset != null) ? _defaultPreset : audioSourcePreset);
 				audioSourcePreset.Apply(_managed[managedIndex].audioSource);
 				// PC port: sounds that were 2D in 3.5 ignore the preset's panLevel
-				PcAudio.ApplyLegacyClipMode(_managed[managedIndex].audioSource, soundName);
+				NewUnityAudio.ApplyLegacyClipMode(_managed[managedIndex].audioSource, soundName);
 				_managed[managedIndex].priority += audioSourcePreset.Priority;
 				_managed[managedIndex].audioSource.Play();
 				return audioClip;
@@ -411,7 +411,7 @@ public class SoundManager : MonoBehaviourAndLog
 				audioSourcePreset = (!(audioSourcePreset != null) ? _defaultPreset : audioSourcePreset);
 				audioSourcePreset.Apply(_managed[managedIndex].audioSource);
 				// PC port: sounds that were 2D in 3.5 ignore the preset's panLevel
-				PcAudio.ApplyLegacyClipMode(_managed[managedIndex].audioSource, soundName);
+				NewUnityAudio.ApplyLegacyClipMode(_managed[managedIndex].audioSource, soundName);
 				_managed[managedIndex].audioSource.Play();
 				return audioClip;
 			}

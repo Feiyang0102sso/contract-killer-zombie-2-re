@@ -1,8 +1,8 @@
 // Converts legacy particles (Unity 3.5 EllipsoidParticleEmitter / ParticleAnimator / ParticleRenderer / WorldParticleCollider)
-// into ParticleSystem + ParticleSystemRenderer + PcPort/LegacyParticleEmitter.
+// into ParticleSystem + ParticleSystemRenderer + NewUnityLegacyParticleEmitter.
 // Legacy parameters are extracted from the untouched export by legacy_particles_extract.py into
 // tools/port_new_unity/asset_convert/data/particles/legacy_particles.json, keyed by GameObject fileID (stable even after Unity 6 re-saves the scene).
-// Safe to re-run: objects that already have ParticleSystem / LegacyParticleEmitter are reconfigured, not duplicated.
+// Safe to re-run: objects that already have ParticleSystem / NewUnityLegacyParticleEmitter are reconfigured, not duplicated.
 // Batch mode: Unity.exe -batchmode -quit -projectPath <project> -executeMethod NewUnityLegacyParticleConvert.ConvertAll -logFile <log>
 using System.Collections.Generic;
 using System.IO;
@@ -246,7 +246,7 @@ public static class NewUnityLegacyParticleConvert
 		return new Vector3(values[0], values[1], values[2]);
 	}
 
-	/// <summary>Adds (or reconfigures) ParticleSystem, its renderer and LegacyParticleEmitter on the object.</summary>
+	/// <summary>Adds (or reconfigures) ParticleSystem, its renderer and NewUnityLegacyParticleEmitter on the object.</summary>
 	private static void Apply(GameObject target, LegacyEntry entry)
 	{
 		ParticleSystem system = target.GetComponent<ParticleSystem>();
@@ -275,7 +275,7 @@ public static class NewUnityLegacyParticleConvert
 			main.scalingMode = ParticleSystemScalingMode.Hierarchy;
 		}
 
-		// Emission is driven by LegacyParticleEmitter
+		// Emission is driven by NewUnityLegacyParticleEmitter
 		ParticleSystem.EmissionModule emission = system.emission;
 		emission.enabled = false;
 		ParticleSystem.ShapeModule shape = system.shape;
@@ -289,10 +289,10 @@ public static class NewUnityLegacyParticleConvert
 		ApplyCollision(system, entry);
 		ApplyRenderer(target, entry);
 
-		LegacyParticleEmitter emitter = target.GetComponent<LegacyParticleEmitter>();
+		NewUnityLegacyParticleEmitter emitter = target.GetComponent<NewUnityLegacyParticleEmitter>();
 		if (emitter == null)
 		{
-			emitter = target.AddComponent<LegacyParticleEmitter>();
+			emitter = target.AddComponent<NewUnityLegacyParticleEmitter>();
 		}
 		emitter.enabled = entry.emitterEnabled;
 		emitter.emit = entry.emit;

@@ -35,7 +35,7 @@ public static class Integrity
 #else
 	public static bool IsJailbroken()
 	{
-		return PcNative.IsJailbroken();
+		return NonIosNative.IsJailbroken();
 	}
 #endif
 
@@ -45,7 +45,7 @@ public static class Integrity
 #else
 	public static bool IsEncrypted()
 	{
-		return PcNative.IsEncrypted();
+		return NonIosNative.IsEncrypted();
 	}
 #endif
 }

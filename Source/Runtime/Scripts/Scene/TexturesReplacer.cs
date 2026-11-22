@@ -92,7 +92,7 @@ public static class TexturesReplacer
 				}
 				material.mainTexture = texture2D;
 				// PC port: in the editor this material is a project asset; revert it when Play ends
-				PcEditorAssetGuard.Track(material);
+				DevEditorAssetGuard.Track(material);
 				Debug.Log("Replacing texture: " + texture2D);
 			}
 		}

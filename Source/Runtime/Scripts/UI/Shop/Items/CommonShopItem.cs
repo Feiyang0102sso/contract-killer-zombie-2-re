@@ -12,7 +12,7 @@ public class CommonShopItem : ShopConfigItem
 	[XmlIgnore]
 	public int? basePrice;
 
-	/// <summary>PC 移植：basePrice 的 XML 读写代理（新版 XmlSerializer 不支持可空类型的特性）。</summary>
+	/// <summary>New Unity port: XML read/write proxy for basePrice (the newer XmlSerializer rejects [XmlAttribute] on nullable types).</summary>
 	[XmlAttribute("price")]
 	public string basePrice_XmlText
 	{
@@ -41,7 +41,7 @@ public class CommonShopItem : ShopConfigItem
 	[XmlIgnore]
 	public bool? hidden;
 
-	/// <summary>PC 移植：hidden 的 XML 读写代理（新版 XmlSerializer 不支持可空类型的特性）。</summary>
+	/// <summary>New Unity port: XML read/write proxy for hidden (the newer XmlSerializer rejects [XmlAttribute] on nullable types).</summary>
 	[XmlAttribute("hidden")]
 	public string hidden_XmlText
 	{
@@ -60,14 +60,14 @@ public class CommonShopItem : ShopConfigItem
 				hidden = null;
 				return;
 			}
-			hidden = PcXml.ParseBool(value);
+			hidden = NewUnityXml.ParseBool(value);
 		}
 	}
 
 	[XmlIgnore]
 	public bool? isSale;
 
-	/// <summary>PC 移植：isSale 的 XML 读写代理（新版 XmlSerializer 不支持可空类型的特性）。</summary>
+	/// <summary>New Unity port: XML read/write proxy for isSale (the newer XmlSerializer rejects [XmlAttribute] on nullable types).</summary>
 	[XmlAttribute("isSale")]
 	public string isSale_XmlText
 	{
@@ -86,14 +86,14 @@ public class CommonShopItem : ShopConfigItem
 				isSale = null;
 				return;
 			}
-			isSale = PcXml.ParseBool(value);
+			isSale = NewUnityXml.ParseBool(value);
 		}
 	}
 
 	[XmlIgnore]
 	public bool? isSaleWithTimer;
 
-	/// <summary>PC 移植：isSaleWithTimer 的 XML 读写代理（新版 XmlSerializer 不支持可空类型的特性）。</summary>
+	/// <summary>New Unity port: XML read/write proxy for isSaleWithTimer (the newer XmlSerializer rejects [XmlAttribute] on nullable types).</summary>
 	[XmlAttribute("isSaleWithTimer")]
 	public string isSaleWithTimer_XmlText
 	{
@@ -112,14 +112,14 @@ public class CommonShopItem : ShopConfigItem
 				isSaleWithTimer = null;
 				return;
 			}
-			isSaleWithTimer = PcXml.ParseBool(value);
+			isSaleWithTimer = NewUnityXml.ParseBool(value);
 		}
 	}
 
 	[XmlIgnore]
 	public int? salePrice;
 
-	/// <summary>PC 移植：salePrice 的 XML 读写代理（新版 XmlSerializer 不支持可空类型的特性）。</summary>
+	/// <summary>New Unity port: XML read/write proxy for salePrice (the newer XmlSerializer rejects [XmlAttribute] on nullable types).</summary>
 	[XmlAttribute("salePrice")]
 	public string salePrice_XmlText
 	{
@@ -145,7 +145,7 @@ public class CommonShopItem : ShopConfigItem
 	[XmlIgnore]
 	public int? saleDiscount;
 
-	/// <summary>PC 移植：saleDiscount 的 XML 读写代理（新版 XmlSerializer 不支持可空类型的特性）。</summary>
+	/// <summary>New Unity port: XML read/write proxy for saleDiscount (the newer XmlSerializer rejects [XmlAttribute] on nullable types).</summary>
 	[XmlAttribute("saleDiscount")]
 	public string saleDiscount_XmlText
 	{
@@ -171,7 +171,7 @@ public class CommonShopItem : ShopConfigItem
 	[XmlIgnore]
 	public int? unlockLevel;
 
-	/// <summary>PC 移植：unlockLevel 的 XML 读写代理（新版 XmlSerializer 不支持可空类型的特性）。</summary>
+	/// <summary>New Unity port: XML read/write proxy for unlockLevel (the newer XmlSerializer rejects [XmlAttribute] on nullable types).</summary>
 	[XmlAttribute("unlockLevel")]
 	public string unlockLevel_XmlText
 	{
@@ -197,7 +197,7 @@ public class CommonShopItem : ShopConfigItem
 	[XmlIgnore]
 	public int? minLevel;
 
-	/// <summary>PC 移植：minLevel 的 XML 读写代理（新版 XmlSerializer 不支持可空类型的特性）。</summary>
+	/// <summary>New Unity port: XML read/write proxy for minLevel (the newer XmlSerializer rejects [XmlAttribute] on nullable types).</summary>
 	[XmlAttribute("minLevel")]
 	public string minLevel_XmlText
 	{
@@ -223,7 +223,7 @@ public class CommonShopItem : ShopConfigItem
 	[XmlIgnore]
 	public int? maxLevel;
 
-	/// <summary>PC 移植：maxLevel 的 XML 读写代理（新版 XmlSerializer 不支持可空类型的特性）。</summary>
+	/// <summary>New Unity port: XML read/write proxy for maxLevel (the newer XmlSerializer rejects [XmlAttribute] on nullable types).</summary>
 	[XmlAttribute("maxLevel")]
 	public string maxLevel_XmlText
 	{
@@ -249,7 +249,7 @@ public class CommonShopItem : ShopConfigItem
 	[XmlIgnore]
 	public bool? hiddenForDonators;
 
-	/// <summary>PC 移植：hiddenForDonators 的 XML 读写代理（新版 XmlSerializer 不支持可空类型的特性）。</summary>
+	/// <summary>New Unity port: XML read/write proxy for hiddenForDonators (the newer XmlSerializer rejects [XmlAttribute] on nullable types).</summary>
 	[XmlAttribute("hiddenForDonators")]
 	public string hiddenForDonators_XmlText
 	{
@@ -268,14 +268,14 @@ public class CommonShopItem : ShopConfigItem
 				hiddenForDonators = null;
 				return;
 			}
-			hiddenForDonators = PcXml.ParseBool(value);
+			hiddenForDonators = NewUnityXml.ParseBool(value);
 		}
 	}
 
 	[XmlIgnore]
 	public bool? notifyWhenAvailable;
 
-	/// <summary>PC 移植：notifyWhenAvailable 的 XML 读写代理（新版 XmlSerializer 不支持可空类型的特性）。</summary>
+	/// <summary>New Unity port: XML read/write proxy for notifyWhenAvailable (the newer XmlSerializer rejects [XmlAttribute] on nullable types).</summary>
 	[XmlAttribute("notifyWhenAvailable")]
 	public string notifyWhenAvailable_XmlText
 	{
@@ -294,7 +294,7 @@ public class CommonShopItem : ShopConfigItem
 				notifyWhenAvailable = null;
 				return;
 			}
-			notifyWhenAvailable = PcXml.ParseBool(value);
+			notifyWhenAvailable = NewUnityXml.ParseBool(value);
 		}
 	}
 

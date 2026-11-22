@@ -125,8 +125,8 @@ public class Loading : MonoBehaviourAndLog
 		TipLabel.Hide(true);
 		IsReady = false;
 		Singleton.Loader.PreLoad();
-		// PC port: a level that only shipped trimmed (ThePit) falls back to its _trimmed scene, see PcPitTrial.ResolveScene
-		_loading = Application.LoadLevelAsync(PcPitTrial.ResolveScene(Singleton.Loader.LevelToLoad.sceneName + (Singleton.Quality.TrimmedLevels && Loader.IsGameScene(new LevelInfo(Singleton.Loader.LevelToLoad.sceneName)) ? "_trimmed" : string.Empty)));
+		// PC port: a level that only shipped trimmed (ThePit) falls back to its _trimmed scene, see PitTrial.ResolveScene
+		_loading = Application.LoadLevelAsync(PitTrial.ResolveScene(Singleton.Loader.LevelToLoad.sceneName + (Singleton.Quality.TrimmedLevels && Loader.IsGameScene(new LevelInfo(Singleton.Loader.LevelToLoad.sceneName)) ? "_trimmed" : string.Empty)));
 		TimeControl.Pause(true, TimeControl.PauseTypes.Loading);
 	}
 

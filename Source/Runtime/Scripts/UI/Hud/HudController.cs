@@ -4,7 +4,7 @@ using System.Linq;
 using Glu.Localization;
 using UnityEngine;
 
-// PC port: partial; keyboard/mouse controls in PcPort/HudController.Pc.cs
+// PC port: partial; keyboard/mouse controls in HudController.Pc.cs
 public partial class HudController : MonoBehaviourAndLog
 {
 	private struct ScopeData

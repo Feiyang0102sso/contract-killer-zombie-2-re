@@ -22,7 +22,7 @@ public abstract class IAPShopConfigItem : ShopConfigItem
 	[XmlIgnore]
 	public decimal? defaultPrice;
 
-	/// <summary>PC 移植：defaultPrice 的 XML 读写代理（新版 XmlSerializer 不支持可空类型的特性）。</summary>
+	/// <summary>New Unity port: XML read/write proxy for defaultPrice (the newer XmlSerializer rejects [XmlAttribute] on nullable types).</summary>
 	[XmlAttribute("defaultPrice")]
 	public string defaultPrice_XmlText
 	{
@@ -51,7 +51,7 @@ public abstract class IAPShopConfigItem : ShopConfigItem
 	[XmlIgnore]
 	public bool? defaultIsOnSale;
 
-	/// <summary>PC 移植：defaultIsOnSale 的 XML 读写代理（新版 XmlSerializer 不支持可空类型的特性）。</summary>
+	/// <summary>New Unity port: XML read/write proxy for defaultIsOnSale (the newer XmlSerializer rejects [XmlAttribute] on nullable types).</summary>
 	[XmlAttribute("defaultIsOnSale")]
 	public string defaultIsOnSale_XmlText
 	{
@@ -70,7 +70,7 @@ public abstract class IAPShopConfigItem : ShopConfigItem
 				defaultIsOnSale = null;
 				return;
 			}
-			defaultIsOnSale = PcXml.ParseBool(value);
+			defaultIsOnSale = NewUnityXml.ParseBool(value);
 		}
 	}
 

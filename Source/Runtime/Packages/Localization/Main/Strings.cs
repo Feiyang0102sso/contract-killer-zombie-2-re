@@ -215,7 +215,7 @@ namespace Glu.Localization
 #else
 		private static int Glu_Localization_GetLocale(int size, byte[] buf)
 		{
-			return PcNative.Glu_Localization_GetLocale(size, buf);
+			return NonIosNative.Glu_Localization_GetLocale(size, buf);
 		}
 #endif
 	}

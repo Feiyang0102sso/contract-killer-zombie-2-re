@@ -30,7 +30,7 @@ public static class FileManager
 #else
 	private static bool _GetCloudContainerDirectoryPath(string containerID, StringBuilder buffer, uint bufferLength)
 	{
-		PcNative.Stub("_GetCloudContainerDirectoryPath");
+		NonIosNative.Stub("_GetCloudContainerDirectoryPath");
 		return default(bool);
 	}
 #endif
@@ -63,7 +63,7 @@ public static class FileManager
 #else
 	private static bool _ConvertLocalPathToCloudPath(string containerID, string localPath, StringBuilder buffer, uint bufferLength)
 	{
-		PcNative.Stub("_ConvertLocalPathToCloudPath");
+		NonIosNative.Stub("_ConvertLocalPathToCloudPath");
 		return default(bool);
 	}
 #endif
@@ -74,7 +74,7 @@ public static class FileManager
 #else
 	private static void _FindFilePathInCloud(string containerID, string fileName, FindFilePathInCloudDelegate callback)
 	{
-		PcNative.Stub("_FindFilePathInCloud");
+		NonIosNative.Stub("_FindFilePathInCloud");
 	}
 #endif
 
@@ -84,7 +84,7 @@ public static class FileManager
 #else
 	private static void _SaveDataToFile(string path, byte[] data, uint length, SaveFileDelegate callback)
 	{
-		PcNative.Stub("_SaveDataToFile");
+		NonIosNative.Stub("_SaveDataToFile");
 	}
 #endif
 
@@ -94,7 +94,7 @@ public static class FileManager
 #else
 	private static void _LoadDataFromFile(string path, LoadFileDelegate callback)
 	{
-		PcNative.Stub("_LoadDataFromFile");
+		NonIosNative.Stub("_LoadDataFromFile");
 	}
 #endif
 

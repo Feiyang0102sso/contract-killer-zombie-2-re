@@ -109,7 +109,7 @@ public static class CFlurry
 #else
 		private static void CFlurry_SetAppVersion(string version)
 		{
-			PcNative.Stub("CFlurry_SetAppVersion");
+			NonIosNative.Stub("CFlurry_SetAppVersion");
 		}
 #endif
 
@@ -119,7 +119,7 @@ public static class CFlurry
 #else
 		private static string CFlurry_GetFlurryAgentVersion()
 		{
-			PcNative.Stub("CFlurry_GetFlurryAgentVersion");
+			NonIosNative.Stub("CFlurry_GetFlurryAgentVersion");
 			return default(string);
 		}
 #endif
@@ -130,7 +130,7 @@ public static class CFlurry
 #else
 		private static void CFlurry_SetShowErrorInLogEnabled(bool value)
 		{
-			PcNative.Stub("CFlurry_SetShowErrorInLogEnabled");
+			NonIosNative.Stub("CFlurry_SetShowErrorInLogEnabled");
 		}
 #endif
 
@@ -140,7 +140,7 @@ public static class CFlurry
 #else
 		private static void CFlurry_SetDebugLogEnabled(bool value)
 		{
-			PcNative.Stub("CFlurry_SetDebugLogEnabled");
+			NonIosNative.Stub("CFlurry_SetDebugLogEnabled");
 		}
 #endif
 
@@ -150,7 +150,7 @@ public static class CFlurry
 #else
 		private static void CFlurry_SetSessionContinueSeconds(int seconds)
 		{
-			PcNative.Stub("CFlurry_SetSessionContinueSeconds");
+			NonIosNative.Stub("CFlurry_SetSessionContinueSeconds");
 		}
 #endif
 
@@ -160,7 +160,7 @@ public static class CFlurry
 #else
 		private static void CFlurry_SetSecureTransportEnabled(bool value)
 		{
-			PcNative.Stub("CFlurry_SetSecureTransportEnabled");
+			NonIosNative.Stub("CFlurry_SetSecureTransportEnabled");
 		}
 #endif
 
@@ -170,7 +170,7 @@ public static class CFlurry
 #else
 		private static IntPtr CFlurry_GetUserID()
 		{
-			PcNative.Stub("CFlurry_GetUserID");
+			NonIosNative.Stub("CFlurry_GetUserID");
 			return default(IntPtr);
 		}
 #endif
@@ -181,7 +181,7 @@ public static class CFlurry
 #else
 		private static void CFlurry_StartSession(string apiKey, bool trusted, string[] keys, string[] values)
 		{
-			PcNative.Stub("CFlurry_StartSession");
+			NonIosNative.Stub("CFlurry_StartSession");
 		}
 #endif
 
@@ -191,7 +191,7 @@ public static class CFlurry
 #else
 		private static void CFlurry_LogEvent(string eventTypeId, string[] keys, string[] values)
 		{
-			PcNative.Stub("CFlurry_LogEvent");
+			NonIosNative.Stub("CFlurry_LogEvent");
 		}
 #endif
 
@@ -201,7 +201,7 @@ public static class CFlurry
 #else
 		private static void CFlurry_SetSessionReportsOnCloseEnabled(bool sendSessionReportsOnClose)
 		{
-			PcNative.Stub("CFlurry_SetSessionReportsOnCloseEnabled");
+			NonIosNative.Stub("CFlurry_SetSessionReportsOnCloseEnabled");
 		}
 #endif
 
@@ -211,7 +211,7 @@ public static class CFlurry
 #else
 		private static void CFlurry_SetSessionReportsOnPauseEnabled(bool setSessionReportsOnPauseEnabled)
 		{
-			PcNative.Stub("CFlurry_SetSessionReportsOnPauseEnabled");
+			NonIosNative.Stub("CFlurry_SetSessionReportsOnPauseEnabled");
 		}
 #endif
 
@@ -221,7 +221,7 @@ public static class CFlurry
 #else
 		private static void CFlurry_SetEventLoggingEnabled(bool value)
 		{
-			PcNative.Stub("CFlurry_SetEventLoggingEnabled");
+			NonIosNative.Stub("CFlurry_SetEventLoggingEnabled");
 		}
 #endif
 	}

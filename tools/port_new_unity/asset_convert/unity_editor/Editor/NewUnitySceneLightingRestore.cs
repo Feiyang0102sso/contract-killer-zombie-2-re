@@ -1,8 +1,8 @@
-// Writes the original lightmap assignment and light probes back into the scenes: each scene gets a PcSceneLighting
-// object (runtime component: PcPort/PcSceneLighting.cs).
+// Writes the original lightmap assignment and light probes back into the scenes: each scene gets a NewUnitySceneLighting
+// object (runtime component: NewUnitySceneLighting.cs).
 // Data comes from the untouched export via scene_lighting_extract.py, in tools/port_new_unity/asset_convert/data/lighting/<scene name>.json.
 // Renderers are matched by component fileID (GlobalObjectId.targetObjectId; it survives Unity 6 re-saving the scene).
-// Safe to run again: an existing PcSceneLighting object is reused, so a rerun only changes the fields.
+// Safe to run again: an existing NewUnitySceneLighting object is reused, so a rerun only changes the fields.
 // Batch mode: Unity.exe -batchmode -quit -projectPath <project> -executeMethod NewUnitySceneLightingRestore.RestoreAll -logFile <log>
 using System.Collections.Generic;
 using System.IO;
@@ -15,6 +15,8 @@ public static class NewUnitySceneLightingRestore
 {
 	private const string JsonDir = "tools/port_new_unity/asset_convert/data/lighting";
 
+	// Name of the holder object already saved in 36 scenes (from before the class became NewUnitySceneLighting);
+	// a rerun finds the existing holder by this name, so it must not change
 	private const string HolderName = "PcSceneLighting";
 
 	/// <summary>JSON layout (matches the output of scene_lighting_extract.py).</summary>
@@ -57,8 +59,8 @@ public static class NewUnitySceneLightingRestore
 		Debug.Log("[NewUnityLightingRestore] done: " + scenes + " scenes");
 	}
 
-	/// <summary>The scene's PcSceneLighting component: the existing one if there is one, otherwise a new holder object.</summary>
-	private static PcSceneLighting GetOrCreateHolder(UnityEngine.SceneManagement.Scene scene)
+	/// <summary>The scene's NewUnitySceneLighting component: the existing one if there is one, otherwise a new holder object.</summary>
+	private static NewUnitySceneLighting GetOrCreateHolder(UnityEngine.SceneManagement.Scene scene)
 	{
 		foreach (GameObject root in scene.GetRootGameObjects())
 		{
@@ -66,14 +68,14 @@ public static class NewUnitySceneLightingRestore
 			{
 				continue;
 			}
-			PcSceneLighting existing = root.GetComponent<PcSceneLighting>();
+			NewUnitySceneLighting existing = root.GetComponent<NewUnitySceneLighting>();
 			if (existing != null)
 			{
 				return existing;
 			}
 		}
 		GameObject holder = new GameObject(HolderName);
-		return holder.AddComponent<PcSceneLighting>();
+		return holder.AddComponent<NewUnitySceneLighting>();
 	}
 
 	/// <summary>Flat xyz array -> Vector3 array.</summary>
@@ -101,7 +103,7 @@ public static class NewUnitySceneLightingRestore
 			}
 		}
 
-		PcSceneLighting lighting = GetOrCreateHolder(scene);
+		NewUnitySceneLighting lighting = GetOrCreateHolder(scene);
 
 		List<Texture2D> lightmaps = new List<Texture2D>();
 		foreach (string guid in data.lightmapGuids)

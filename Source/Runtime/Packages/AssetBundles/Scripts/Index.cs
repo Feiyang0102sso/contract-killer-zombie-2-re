@@ -50,7 +50,7 @@ namespace Glu.AssetBundles
 			[XmlIgnore]
 			public bool? m_isCompressed;
 
-			/// <summary>PC 移植：m_isCompressed 的 XML 读写代理（新版 XmlSerializer 不支持可空类型的特性）。</summary>
+			/// <summary>New Unity port: XML read/write proxy for m_isCompressed (the newer XmlSerializer rejects [XmlAttribute] on nullable types).</summary>
 			[XmlAttribute("Compressed")]
 			public string m_isCompressed_XmlText
 			{
@@ -69,14 +69,14 @@ namespace Glu.AssetBundles
 						m_isCompressed = null;
 						return;
 					}
-					m_isCompressed = PcXml.ParseBool(value);
+					m_isCompressed = NewUnityXml.ParseBool(value);
 				}
 			}
 
 			[XmlIgnore]
 			public long? m_size;
 
-			/// <summary>PC 移植：m_size 的 XML 读写代理（新版 XmlSerializer 不支持可空类型的特性）。</summary>
+			/// <summary>New Unity port: XML read/write proxy for m_size (the newer XmlSerializer rejects [XmlAttribute] on nullable types).</summary>
 			[XmlAttribute("Size")]
 			public string m_size_XmlText
 			{

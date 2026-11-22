@@ -72,7 +72,7 @@ public class MobileBloom : MonoBehaviour
 		Graphics.Blit(temporary, temporary2, apply, 2);
 		Graphics.Blit(temporary2, temporary, apply, 3);
 		apply.SetTexture("_Bloom", temporary);
-		PcBlit.ToScreen(sourceText, apply, good ? 4 : 0);
+		NewUnityBlit.ToScreen(sourceText, apply, good ? 4 : 0);
 		RenderTexture.ReleaseTemporary(temporary);
 		RenderTexture.ReleaseTemporary(temporary2);
 	}

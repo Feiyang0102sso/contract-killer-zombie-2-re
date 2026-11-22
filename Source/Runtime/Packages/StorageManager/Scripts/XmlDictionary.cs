@@ -25,7 +25,7 @@ public class XmlDictionary<TKey, TValue> : Dictionary<TKey, TValue>, IXmlSeriali
 		{
 			reader.ReadStartElement("item");
 			reader.ReadStartElement("key");
-			TKey key = (TKey)PcXmlPairs.DeserializeKey(reader, xmlSerializer, typeof(TKey));
+			TKey key = (TKey)NewUnityXmlPairs.DeserializeKey(reader, xmlSerializer, typeof(TKey));
 			reader.ReadEndElement();
 			reader.ReadStartElement("value");
 			TValue value = (TValue)xmlSerializer2.Deserialize(reader);
@@ -45,7 +45,7 @@ public class XmlDictionary<TKey, TValue> : Dictionary<TKey, TValue>, IXmlSeriali
 		{
 			writer.WriteStartElement("item");
 			writer.WriteStartElement("key");
-			PcXmlPairs.SerializeKey(writer, xmlSerializer, key);
+			NewUnityXmlPairs.SerializeKey(writer, xmlSerializer, key);
 			writer.WriteEndElement();
 			writer.WriteStartElement("value");
 			TValue val = this[key];

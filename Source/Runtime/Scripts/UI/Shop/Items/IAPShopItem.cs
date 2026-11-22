@@ -11,7 +11,7 @@ public class IAPShopItem : IAPShopConfigItem
 	[XmlIgnore]
 	public int? amount;
 
-	/// <summary>PC 移植：amount 的 XML 读写代理（新版 XmlSerializer 不支持可空类型的特性）。</summary>
+	/// <summary>New Unity port: XML read/write proxy for amount (the newer XmlSerializer rejects [XmlAttribute] on nullable types).</summary>
 	[XmlAttribute("amount")]
 	public string amount_XmlText
 	{

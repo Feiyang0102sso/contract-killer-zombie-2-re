@@ -15,7 +15,7 @@
 // corrupt the asset on save.
 //
 // Key hints (PcKeyHint_*) are created in code, not in any prefab: saving rewrites their position constants in
-// PcPort/HudController.Pc.cs or PcKeyHints.cs instead. Other nodes the game creates at runtime can't be saved.
+// HudController.Pc.cs or PcKeyHints.cs instead. Other nodes the game creates at runtime can't be saved.
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -46,8 +46,8 @@ public class PcHudLayoutTool : EditorWindow
 	/// <summary>Scene view size (m) when focusing a crate P hint: icon and crate lid both in view.</summary>
 	private const float PickUpHintViewSize = 1.5f;
 
-	private const string HudHintSource = "Source/Runtime/PcPort/HudController.Pc.cs";
-	private const string PickUpHintSource = "Source/Runtime/PcPort/PcKeyHints.cs";
+	private const string HudHintSource = "Source/Runtime/Port/PcPort/Input/HudController.Pc.cs";
+	private const string PickUpHintSource = "Source/Runtime/Port/PcPort/Input/PcKeyHints.cs";
 
 	/// <summary>Where a key hint's position lives in code, keyed by the name of the node it is attached to.</summary>
 	private class HintConstant

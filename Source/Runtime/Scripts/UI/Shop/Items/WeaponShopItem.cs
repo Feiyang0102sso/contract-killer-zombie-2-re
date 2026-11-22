@@ -7,7 +7,7 @@ public class WeaponShopItem : InventoryShopItem
 	[XmlIgnore]
 	public int? power;
 
-	/// <summary>PC 移植：power 的 XML 读写代理（新版 XmlSerializer 不支持可空类型的特性）。</summary>
+	/// <summary>New Unity port: XML read/write proxy for power (the newer XmlSerializer rejects [XmlAttribute] on nullable types).</summary>
 	[XmlAttribute("power")]
 	public string power_XmlText
 	{
@@ -33,7 +33,7 @@ public class WeaponShopItem : InventoryShopItem
 	[XmlIgnore]
 	public int? dmg;
 
-	/// <summary>PC 移植：dmg 的 XML 读写代理（新版 XmlSerializer 不支持可空类型的特性）。</summary>
+	/// <summary>New Unity port: XML read/write proxy for dmg (the newer XmlSerializer rejects [XmlAttribute] on nullable types).</summary>
 	[XmlAttribute("dmg")]
 	public string dmg_XmlText
 	{
@@ -59,7 +59,7 @@ public class WeaponShopItem : InventoryShopItem
 	[XmlIgnore]
 	public int? acc;
 
-	/// <summary>PC 移植：acc 的 XML 读写代理（新版 XmlSerializer 不支持可空类型的特性）。</summary>
+	/// <summary>New Unity port: XML read/write proxy for acc (the newer XmlSerializer rejects [XmlAttribute] on nullable types).</summary>
 	[XmlAttribute("acc")]
 	public string acc_XmlText
 	{
@@ -85,7 +85,7 @@ public class WeaponShopItem : InventoryShopItem
 	[XmlIgnore]
 	public int? range;
 
-	/// <summary>PC 移植：range 的 XML 读写代理（新版 XmlSerializer 不支持可空类型的特性）。</summary>
+	/// <summary>New Unity port: XML read/write proxy for range (the newer XmlSerializer rejects [XmlAttribute] on nullable types).</summary>
 	[XmlAttribute("range")]
 	public string range_XmlText
 	{
@@ -111,7 +111,7 @@ public class WeaponShopItem : InventoryShopItem
 	[XmlIgnore]
 	public int? rate;
 
-	/// <summary>PC 移植：rate 的 XML 读写代理（新版 XmlSerializer 不支持可空类型的特性）。</summary>
+	/// <summary>New Unity port: XML read/write proxy for rate (the newer XmlSerializer rejects [XmlAttribute] on nullable types).</summary>
 	[XmlAttribute("rate")]
 	public string rate_XmlText
 	{
@@ -137,7 +137,7 @@ public class WeaponShopItem : InventoryShopItem
 	[XmlIgnore]
 	public int? cap;
 
-	/// <summary>PC 移植：cap 的 XML 读写代理（新版 XmlSerializer 不支持可空类型的特性）。</summary>
+	/// <summary>New Unity port: XML read/write proxy for cap (the newer XmlSerializer rejects [XmlAttribute] on nullable types).</summary>
 	[XmlAttribute("cap")]
 	public string cap_XmlText
 	{
@@ -163,7 +163,7 @@ public class WeaponShopItem : InventoryShopItem
 	[XmlIgnore]
 	public int? speed;
 
-	/// <summary>PC 移植：speed 的 XML 读写代理（新版 XmlSerializer 不支持可空类型的特性）。</summary>
+	/// <summary>New Unity port: XML read/write proxy for speed (the newer XmlSerializer rejects [XmlAttribute] on nullable types).</summary>
 	[XmlAttribute("speed")]
 	public string speed_XmlText
 	{

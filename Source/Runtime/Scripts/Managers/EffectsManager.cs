@@ -319,23 +319,23 @@ public class EffectsManager : MonoBehaviour
 		{
 			foreach (Splatter splatter in BloodSplatter)
 			{
-				num = Mathf.Max(num, splatter.Emitter.GetComponent<LegacyParticleEmitter>().maxEnergy);
+				num = Mathf.Max(num, splatter.Emitter.GetComponent<NewUnityLegacyParticleEmitter>().maxEnergy);
 			}
 			break;
 		}
 		case Emission.Type.Dust:
-			num = (Dust ? Dust.GetComponent<LegacyParticleEmitter>().maxEnergy : 0f);
+			num = (Dust ? Dust.GetComponent<NewUnityLegacyParticleEmitter>().maxEnergy : 0f);
 			break;
 		case Emission.Type.Fragment:
 		{
 			foreach (GameObject gameObject in Fragment)
 			{
-				num = Mathf.Max(num, gameObject.GetComponent<LegacyParticleEmitter>().maxEnergy);
+				num = Mathf.Max(num, gameObject.GetComponent<NewUnityLegacyParticleEmitter>().maxEnergy);
 			}
 			break;
 		}
 		case Emission.Type.Spark:
-			num = (Sparks ? Sparks.GetComponent<LegacyParticleEmitter>().maxEnergy : 0f);
+			num = (Sparks ? Sparks.GetComponent<NewUnityLegacyParticleEmitter>().maxEnergy : 0f);
 			break;
 		}
 		return num;
@@ -465,7 +465,7 @@ public class EffectsManager : MonoBehaviour
 		if ((bool)gameObject)
 		{
 			float particleScale = GetParticleScale(ref position);
-			gameObject.GetComponent<LegacyParticleEmitter>().Emit(position, normal, UnityEngine.Random.Range(gameObject.GetComponent<LegacyParticleEmitter>().minSize, gameObject.GetComponent<LegacyParticleEmitter>().maxSize) * particleScale, UnityEngine.Random.Range(gameObject.GetComponent<LegacyParticleEmitter>().minEnergy, gameObject.GetComponent<LegacyParticleEmitter>().maxEnergy), Color.white, 0f, 0f);
+			gameObject.GetComponent<NewUnityLegacyParticleEmitter>().Emit(position, normal, UnityEngine.Random.Range(gameObject.GetComponent<NewUnityLegacyParticleEmitter>().minSize, gameObject.GetComponent<NewUnityLegacyParticleEmitter>().maxSize) * particleScale, UnityEngine.Random.Range(gameObject.GetComponent<NewUnityLegacyParticleEmitter>().minEnergy, gameObject.GetComponent<NewUnityLegacyParticleEmitter>().maxEnergy), Color.white, 0f, 0f);
 		}
 	}
 
@@ -479,7 +479,7 @@ public class EffectsManager : MonoBehaviour
 		if ((bool)gameObject)
 		{
 			float particleScale = GetParticleScale(ref position);
-			gameObject.GetComponent<LegacyParticleEmitter>().Emit(position, normal * 0.1f, UnityEngine.Random.Range(gameObject.GetComponent<LegacyParticleEmitter>().minSize, gameObject.GetComponent<LegacyParticleEmitter>().maxSize) * particleScale, UnityEngine.Random.Range(gameObject.GetComponent<LegacyParticleEmitter>().minEnergy, gameObject.GetComponent<LegacyParticleEmitter>().maxEnergy), Color.white, UnityEngine.Random.Range(-180f, 180f), 0f);
+			gameObject.GetComponent<NewUnityLegacyParticleEmitter>().Emit(position, normal * 0.1f, UnityEngine.Random.Range(gameObject.GetComponent<NewUnityLegacyParticleEmitter>().minSize, gameObject.GetComponent<NewUnityLegacyParticleEmitter>().maxSize) * particleScale, UnityEngine.Random.Range(gameObject.GetComponent<NewUnityLegacyParticleEmitter>().minEnergy, gameObject.GetComponent<NewUnityLegacyParticleEmitter>().maxEnergy), Color.white, UnityEngine.Random.Range(-180f, 180f), 0f);
 		}
 	}
 
@@ -493,7 +493,7 @@ public class EffectsManager : MonoBehaviour
 		if ((bool)gameObject)
 		{
 			float particleScale = GetParticleScale(ref position);
-			gameObject.GetComponent<LegacyParticleEmitter>().Emit(position, normal, UnityEngine.Random.Range(gameObject.GetComponent<LegacyParticleEmitter>().minSize, gameObject.GetComponent<LegacyParticleEmitter>().maxSize) * particleScale, UnityEngine.Random.Range(gameObject.GetComponent<LegacyParticleEmitter>().minEnergy, gameObject.GetComponent<LegacyParticleEmitter>().maxEnergy), Color.white, UnityEngine.Random.Range(-180f, 180f), 0f);
+			gameObject.GetComponent<NewUnityLegacyParticleEmitter>().Emit(position, normal, UnityEngine.Random.Range(gameObject.GetComponent<NewUnityLegacyParticleEmitter>().minSize, gameObject.GetComponent<NewUnityLegacyParticleEmitter>().maxSize) * particleScale, UnityEngine.Random.Range(gameObject.GetComponent<NewUnityLegacyParticleEmitter>().minEnergy, gameObject.GetComponent<NewUnityLegacyParticleEmitter>().maxEnergy), Color.white, UnityEngine.Random.Range(-180f, 180f), 0f);
 		}
 	}
 
@@ -511,7 +511,7 @@ public class EffectsManager : MonoBehaviour
 			for (int i = 0; i < numSparks; i++)
 			{
 				Vector3 velocity = Spread(normal, SparksSpread) * (SparksVelocity + UnityEngine.Random.Range(-SparksVelocityBias, SparksVelocityBias));
-				gameObject.GetComponent<LegacyParticleEmitter>().Emit(position, velocity, UnityEngine.Random.Range(gameObject.GetComponent<LegacyParticleEmitter>().minSize, gameObject.GetComponent<LegacyParticleEmitter>().maxSize) * particleScale, UnityEngine.Random.Range(gameObject.GetComponent<LegacyParticleEmitter>().minEnergy, gameObject.GetComponent<LegacyParticleEmitter>().maxEnergy), Color.white, 0f, 0f);
+				gameObject.GetComponent<NewUnityLegacyParticleEmitter>().Emit(position, velocity, UnityEngine.Random.Range(gameObject.GetComponent<NewUnityLegacyParticleEmitter>().minSize, gameObject.GetComponent<NewUnityLegacyParticleEmitter>().maxSize) * particleScale, UnityEngine.Random.Range(gameObject.GetComponent<NewUnityLegacyParticleEmitter>().minEnergy, gameObject.GetComponent<NewUnityLegacyParticleEmitter>().maxEnergy), Color.white, 0f, 0f);
 			}
 			AddToHistory(Emission.Type.Spark, position, numSparks);
 		}
@@ -528,7 +528,7 @@ public class EffectsManager : MonoBehaviour
 			for (int i = 0; i < numParticles; i++)
 			{
 				Vector3 velocity = Spread(normal, DustSpread) * (DustVelocity + UnityEngine.Random.Range(-DustVelocityBias, DustVelocityBias));
-				Dust.GetComponent<LegacyParticleEmitter>().Emit(position, velocity, UnityEngine.Random.Range(Dust.GetComponent<LegacyParticleEmitter>().minSize, Dust.GetComponent<LegacyParticleEmitter>().maxSize) * particleScale, UnityEngine.Random.Range(Dust.GetComponent<LegacyParticleEmitter>().minEnergy, Dust.GetComponent<LegacyParticleEmitter>().maxEnergy), Color.white, UnityEngine.Random.Range(-180f, 180f), UnityEngine.Random.Range(-Dust.GetComponent<LegacyParticleEmitter>().rndAngularVelocity, Dust.GetComponent<LegacyParticleEmitter>().rndAngularVelocity));
+				Dust.GetComponent<NewUnityLegacyParticleEmitter>().Emit(position, velocity, UnityEngine.Random.Range(Dust.GetComponent<NewUnityLegacyParticleEmitter>().minSize, Dust.GetComponent<NewUnityLegacyParticleEmitter>().maxSize) * particleScale, UnityEngine.Random.Range(Dust.GetComponent<NewUnityLegacyParticleEmitter>().minEnergy, Dust.GetComponent<NewUnityLegacyParticleEmitter>().maxEnergy), Color.white, UnityEngine.Random.Range(-180f, 180f), UnityEngine.Random.Range(-Dust.GetComponent<NewUnityLegacyParticleEmitter>().rndAngularVelocity, Dust.GetComponent<NewUnityLegacyParticleEmitter>().rndAngularVelocity));
 			}
 			AddToHistory(Emission.Type.Dust, position, numParticles);
 		}
@@ -556,7 +556,7 @@ public class EffectsManager : MonoBehaviour
 			}
 			if ((bool)gameObject)
 			{
-				gameObject.GetComponent<LegacyParticleEmitter>().Emit(position, Spread(normal, FragmentSpread) * (FragmentVelocity + UnityEngine.Random.Range(-FragmentVelocityBias, FragmentVelocityBias)), UnityEngine.Random.Range(gameObject.GetComponent<LegacyParticleEmitter>().minSize, gameObject.GetComponent<LegacyParticleEmitter>().maxSize) * particleScale, UnityEngine.Random.Range(gameObject.GetComponent<LegacyParticleEmitter>().minEnergy, gameObject.GetComponent<LegacyParticleEmitter>().maxEnergy), Color.white, UnityEngine.Random.Range(-180f, 180f), 0f);
+				gameObject.GetComponent<NewUnityLegacyParticleEmitter>().Emit(position, Spread(normal, FragmentSpread) * (FragmentVelocity + UnityEngine.Random.Range(-FragmentVelocityBias, FragmentVelocityBias)), UnityEngine.Random.Range(gameObject.GetComponent<NewUnityLegacyParticleEmitter>().minSize, gameObject.GetComponent<NewUnityLegacyParticleEmitter>().maxSize) * particleScale, UnityEngine.Random.Range(gameObject.GetComponent<NewUnityLegacyParticleEmitter>().minEnergy, gameObject.GetComponent<NewUnityLegacyParticleEmitter>().maxEnergy), Color.white, UnityEngine.Random.Range(-180f, 180f), 0f);
 			}
 		}
 		AddToHistory(Emission.Type.Fragment, position, numParticles);
@@ -575,7 +575,7 @@ public class EffectsManager : MonoBehaviour
 			Quaternion q = Quaternion.AngleAxis(num, forward);
 			Matrix4x4 matrix4x = Matrix4x4.TRS(Vector3.zero, q, Vector3.one);
 			Vector3 velocity = -forward * splatter.NormalVelocity + matrix4x.MultiplyVector(right) * splatter.TangentialVelocity;
-			splatter.Emitter.GetComponent<LegacyParticleEmitter>().Emit(position, velocity, UnityEngine.Random.Range(splatter.Emitter.GetComponent<LegacyParticleEmitter>().minSize, splatter.Emitter.GetComponent<LegacyParticleEmitter>().maxSize) * particleScale, UnityEngine.Random.Range(splatter.Emitter.GetComponent<LegacyParticleEmitter>().minEnergy, splatter.Emitter.GetComponent<LegacyParticleEmitter>().maxEnergy), Color.white, -num + splatter.TextureRotation, 0f);
+			splatter.Emitter.GetComponent<NewUnityLegacyParticleEmitter>().Emit(position, velocity, UnityEngine.Random.Range(splatter.Emitter.GetComponent<NewUnityLegacyParticleEmitter>().minSize, splatter.Emitter.GetComponent<NewUnityLegacyParticleEmitter>().maxSize) * particleScale, UnityEngine.Random.Range(splatter.Emitter.GetComponent<NewUnityLegacyParticleEmitter>().minEnergy, splatter.Emitter.GetComponent<NewUnityLegacyParticleEmitter>().maxEnergy), Color.white, -num + splatter.TextureRotation, 0f);
 			num += UnityEngine.Random.Range(0f, max);
 		}
 	}
@@ -593,7 +593,7 @@ public class EffectsManager : MonoBehaviour
 			Splatter splatter = preset[UnityEngine.Random.Range(0, preset.Length)];
 			float num = angle + UnityEngine.Random.Range(minRotationAngle, maxRotationAngle);
 			Vector3 velocity2 = -forward * splatter.NormalVelocity + vector.normalized * splatter.TangentialVelocity;
-			splatter.Emitter.GetComponent<LegacyParticleEmitter>().Emit(position, velocity2, UnityEngine.Random.Range(splatter.Emitter.GetComponent<LegacyParticleEmitter>().minSize, splatter.Emitter.GetComponent<LegacyParticleEmitter>().maxSize) * particleScale, UnityEngine.Random.Range(splatter.Emitter.GetComponent<LegacyParticleEmitter>().minEnergy, splatter.Emitter.GetComponent<LegacyParticleEmitter>().maxEnergy), Color.white, num + splatter.TextureRotation, 0f);
+			splatter.Emitter.GetComponent<NewUnityLegacyParticleEmitter>().Emit(position, velocity2, UnityEngine.Random.Range(splatter.Emitter.GetComponent<NewUnityLegacyParticleEmitter>().minSize, splatter.Emitter.GetComponent<NewUnityLegacyParticleEmitter>().maxSize) * particleScale, UnityEngine.Random.Range(splatter.Emitter.GetComponent<NewUnityLegacyParticleEmitter>().minEnergy, splatter.Emitter.GetComponent<NewUnityLegacyParticleEmitter>().maxEnergy), Color.white, num + splatter.TextureRotation, 0f);
 		}
 	}
 

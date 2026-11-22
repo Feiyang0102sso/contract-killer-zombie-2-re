@@ -68,7 +68,7 @@ namespace Glu
 #else
 			private static void FacebookInitialize(LoginCallback callback, UserInfoCallback callback2)
 			{
-				PcNative.Stub("FacebookInitialize");
+				NonIosNative.Stub("FacebookInitialize");
 			}
 #endif
 
@@ -78,7 +78,7 @@ namespace Glu
 #else
 			private static bool FacebookUserLoggedIn()
 			{
-				PcNative.Stub("FacebookUserLoggedIn");
+				NonIosNative.Stub("FacebookUserLoggedIn");
 				return default(bool);
 			}
 #endif
@@ -89,7 +89,7 @@ namespace Glu
 #else
 			private static void FacebookLogin(string permissions)
 			{
-				PcNative.Stub("FacebookLogin");
+				NonIosNative.Stub("FacebookLogin");
 			}
 #endif
 
@@ -99,7 +99,7 @@ namespace Glu
 #else
 			private static void FacebookLogout()
 			{
-				PcNative.Stub("FacebookLogout");
+				NonIosNative.Stub("FacebookLogout");
 			}
 #endif
 
@@ -109,7 +109,7 @@ namespace Glu
 #else
 			private static void FacebookRequestUserInfo()
 			{
-				PcNative.Stub("FacebookRequestUserInfo");
+				NonIosNative.Stub("FacebookRequestUserInfo");
 			}
 #endif
 
@@ -119,7 +119,7 @@ namespace Glu
 #else
 			private static void FacebookPostMessageToFeed(string postData)
 			{
-				PcNative.Stub("FacebookPostMessageToFeed");
+				NonIosNative.Stub("FacebookPostMessageToFeed");
 			}
 #endif
 
@@ -129,7 +129,7 @@ namespace Glu
 #else
 			private static void FacebookPostLinkToFeed(string link, string picture, string name, string caption, string description)
 			{
-				PcNative.Stub("FacebookPostLinkToFeed");
+				NonIosNative.Stub("FacebookPostLinkToFeed");
 			}
 #endif
 
@@ -139,7 +139,7 @@ namespace Glu
 #else
 			private static void FacebookAppRequestToFriends(string requestText, string notificationText)
 			{
-				PcNative.Stub("FacebookAppRequestToFriends");
+				NonIosNative.Stub("FacebookAppRequestToFriends");
 			}
 #endif
 
@@ -149,7 +149,7 @@ namespace Glu
 #else
 			private static void FacebookPublishScore(int score)
 			{
-				PcNative.Stub("FacebookPublishScore");
+				NonIosNative.Stub("FacebookPublishScore");
 			}
 #endif
 		}

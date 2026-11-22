@@ -26,7 +26,7 @@ namespace Glu.Kontagent
 #else
 		private static void KontagentStartSession(string apiKey, bool testMode, bool trusted, string integrityDetails, string appVersion)
 		{
-			PcNative.Stub("KontagentStartSession");
+			NonIosNative.Stub("KontagentStartSession");
 		}
 #endif
 
@@ -36,7 +36,7 @@ namespace Glu.Kontagent
 #else
 		private static void KontagentCustomEvent(string name, string st1, string st2, string st3, string level, string val, string data)
 		{
-			PcNative.Stub("KontagentCustomEvent");
+			NonIosNative.Stub("KontagentCustomEvent");
 		}
 #endif
 
@@ -46,7 +46,7 @@ namespace Glu.Kontagent
 #else
 		private static void KontagentRevenueTracking(int val)
 		{
-			PcNative.Stub("KontagentRevenueTracking");
+			NonIosNative.Stub("KontagentRevenueTracking");
 		}
 #endif
 
@@ -56,7 +56,7 @@ namespace Glu.Kontagent
 #else
 		private static IntPtr KontagentGetUserID()
 		{
-			PcNative.Stub("KontagentGetUserID");
+			NonIosNative.Stub("KontagentGetUserID");
 			return default(IntPtr);
 		}
 #endif

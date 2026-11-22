@@ -309,7 +309,7 @@ public class ServerTime : MonoBehaviour
 #else
 	private static long ServerTime_getTicks()
 	{
-		return PcNative.ServerTime_getTicks();
+		return NonIosNative.ServerTime_getTicks();
 	}
 #endif
 }

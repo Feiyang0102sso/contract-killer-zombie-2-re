@@ -20,7 +20,7 @@
 | `asset_convert/navmesh_extract.py` | Original Detour navmeshes → `data/navmesh/` |
 | `asset_convert/legacy_particles_extract.py` | Legacy particles → `data/particles/` |
 | `asset_convert/legacy_particles_size_fix.py` | SizeOverLifetime curves written into scene/prefab YAML |
-| `asset_convert/audio_2d_extract.py` | 2D sound table → `Source/Runtime/PcPort/PcAudio.Generated.cs` |
+| `asset_convert/audio_2d_extract.py` | 2D sound table → `Source/Runtime/Port/NewUnityPort/AssetRestore/NewUnityAudio.Generated.cs` |
 | `asset_convert/data/` | JSON written by the scripts above, read by `unity_editor/` |
 | `asset_convert/unity_editor/` | Optional package `com.ckz2.port-new-unity`, see below |
 | `cs_migrate/replace_scripts.py` | One-off: decompiled scripts replaced by the restored source, GUIDs kept |
@@ -42,6 +42,6 @@
 | `art/make_key_banners.py` | Key-hint banner sheet `PcKeyBanners.png` |
 | `art/make_pit_icons.py` | The Pit map icon `PcPitIcon.png` (candidates in `out/pit_icons/`) |
 | `asset_convert/convert_intro_movie.py` | Intro movie `.mov` → `Scene_01.mp4` |
-| `cs_migrate/bridge_externs.py` | One-off: `DllImport("__Internal")` externs forwarded to `PcNative` |
+| `cs_migrate/bridge_externs.py` | One-off: `DllImport("__Internal")` externs forwarded to `NonIosNative` |
 | `test/run_and_capture.ps1` | Starts the game with test arguments, takes screenshots, stops it |
 | `test/scene_tour.sh` | Runs `run_and_capture.ps1` once per level and summarizes the logs |

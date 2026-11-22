@@ -187,7 +187,7 @@ namespace PlayHaven
 #else
 			private static void _PlayHavenOpenRequest(int hash, string token, string secret, string customUDID)
 			{
-				PcNative.Stub("_PlayHavenOpenRequest");
+				NonIosNative.Stub("_PlayHavenOpenRequest");
 			}
 #endif
 
@@ -298,7 +298,7 @@ namespace PlayHaven
 #else
 			private static void _PlayHavenMetadataRequest(int hash, string token, string secret, string placement)
 			{
-				PcNative.Stub("_PlayHavenMetadataRequest");
+				NonIosNative.Stub("_PlayHavenMetadataRequest");
 			}
 #endif
 
@@ -419,7 +419,7 @@ namespace PlayHaven
 #else
 			private static void _PlayHavenContentRequest(int hash, string token, string secret, string placement, bool showsOverlayImmediately)
 			{
-				PcNative.Stub("_PlayHavenContentRequest");
+				NonIosNative.Stub("_PlayHavenContentRequest");
 			}
 #endif
 
@@ -558,7 +558,7 @@ namespace PlayHaven
 #else
 			private static void _PlayHavenPreloadRequest(int hash, string token, string secret, string placement)
 			{
-				PcNative.Stub("_PlayHavenPreloadRequest");
+				NonIosNative.Stub("_PlayHavenPreloadRequest");
 			}
 #endif
 
@@ -679,7 +679,7 @@ namespace PlayHaven
 #else
 		private static void _PlayHavenCancelRequest(int hash)
 		{
-			PcNative.Stub("_PlayHavenCancelRequest");
+			NonIosNative.Stub("_PlayHavenCancelRequest");
 		}
 #endif
 
@@ -689,7 +689,7 @@ namespace PlayHaven
 #else
 		private static void _PlayHavenProductPurchaseResolution(int action)
 		{
-			PcNative.Stub("_PlayHavenProductPurchaseResolution");
+			NonIosNative.Stub("_PlayHavenProductPurchaseResolution");
 		}
 #endif
 
@@ -699,7 +699,7 @@ namespace PlayHaven
 #else
 		private static void _PlayHavenIAPTrackingRequest(string token, string secret, string productId, int quantity, int resolution)
 		{
-			PcNative.Stub("_PlayHavenIAPTrackingRequest");
+			NonIosNative.Stub("_PlayHavenIAPTrackingRequest");
 		}
 #endif
 
@@ -709,7 +709,7 @@ namespace PlayHaven
 #else
 		private static bool _PlayHavenOptOutStatus()
 		{
-			PcNative.Stub("_PlayHavenOptOutStatus");
+			NonIosNative.Stub("_PlayHavenOptOutStatus");
 			return default(bool);
 		}
 #endif
@@ -720,7 +720,7 @@ namespace PlayHaven
 #else
 		private static void _PlayHavenSetOptOutStatus(bool yesOrNo)
 		{
-			PcNative.Stub("_PlayHavenSetOptOutStatus");
+			NonIosNative.Stub("_PlayHavenSetOptOutStatus");
 		}
 #endif
 

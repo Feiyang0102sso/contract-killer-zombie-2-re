@@ -1,4 +1,4 @@
-"""Draws candidate city map icons for The Pit (PC port mission, see Source/Runtime/PcPort/PcPitMission.cs).
+"""Draws candidate city map icons for The Pit (PC port mission, see PitMission.cs).
 
 The stock mission icons in the HD GUILocations atlas are white and get their color at run time: MapLocation
 multiplies the sprite by the mission color (Survival and SpecialHunt: 255, 171, 0). The survival and special hunt
@@ -13,7 +13,7 @@ Steps:
   4. write every candidate as a white icon, plus a preview sheet with the stock icons for comparison and each
      candidate white, tinted with the survival orange over the glow, and at half size;
   5. write the chosen candidate (CHOSEN_CANDIDATE) to Assets/Resources/PcPort/PcPitIcon.png, the texture of the
-     PcPitIcon material that PcPitMission puts on its copy of the special hunt button.
+     PcPitIcon material that PitMission puts on its copy of the special hunt button.
 
 Usage (from ckz2_repo_pc):
     ../.venv/Scripts/python.exe tools/port_pc/art/make_pit_icons.py

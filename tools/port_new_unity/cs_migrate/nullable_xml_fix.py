@@ -25,7 +25,7 @@ PARSERS = {
     "long": "XmlConvert.ToInt64({v})",
     "double": "XmlConvert.ToDouble({v})",
     "decimal": "XmlConvert.ToDecimal({v})",
-    "bool": "PcXml.ParseBool({v})",
+    "bool": "NewUnityXml.ParseBool({v})",
 }
 
 # Suffix of the proxy property name
@@ -49,7 +49,7 @@ def make_replacement(match):
         f"{i}[XmlIgnore]",
         f"{i}{access} {value_type}? {name};",
         "",
-        f"{i}/// <summary>PC 移植：{name} 的 XML 读写代理（新版 XmlSerializer 不支持可空类型的特性）。</summary>",
+        f"{i}/// <summary>New Unity port: XML read/write proxy for {name} (the newer XmlSerializer rejects [XmlAttribute] on nullable types).</summary>",
         f"{i}[XmlAttribute(\"{xml_name}\")]",
         f"{i}public string {name}{PROXY_SUFFIX}",
         f"{i}{{",

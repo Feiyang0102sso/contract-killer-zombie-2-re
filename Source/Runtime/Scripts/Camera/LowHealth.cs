@@ -105,7 +105,7 @@ public class LowHealth : MonoBehaviour
 
 	public void ShaderRender(RenderTexture sourceText)
 	{
-		PcBlit.ToScreen(sourceText, _lowHealth);
+		NewUnityBlit.ToScreen(sourceText, _lowHealth);
 	}
 
 	private void OnDestroy()

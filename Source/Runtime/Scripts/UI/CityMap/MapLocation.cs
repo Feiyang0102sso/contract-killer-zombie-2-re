@@ -96,7 +96,7 @@ public class MapLocation : MonoBehaviour
 				return SpecialHunt;
 			}
 			// PC port: The Pit is a hard KillAll mission, but its icon takes the survival orange
-			if (PcPitMission.IsPit(missionIndex))
+			if (PitMission.IsPit(missionIndex))
 			{
 				return Survival;
 			}

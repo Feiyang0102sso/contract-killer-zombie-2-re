@@ -13,7 +13,7 @@ public class ConsumableShopItem : CommonShopItem
 	[XmlIgnore]
 	public int? count;
 
-	/// <summary>PC 移植：count 的 XML 读写代理（新版 XmlSerializer 不支持可空类型的特性）。</summary>
+	/// <summary>New Unity port: XML read/write proxy for count (the newer XmlSerializer rejects [XmlAttribute] on nullable types).</summary>
 	[XmlAttribute("count")]
 	public string count_XmlText
 	{

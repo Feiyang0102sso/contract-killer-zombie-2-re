@@ -25,7 +25,7 @@ public static class NativeUtils
 #else
 	private static int NetworkStatus()
 	{
-		PcNative.Stub("NetworkStatus");
+		NonIosNative.Stub("NetworkStatus");
 		return default(int);
 	}
 #endif
@@ -49,7 +49,7 @@ public static class NativeUtils
 #else
 	private static int MT_GetCurrentMemoryBytes()
 	{
-		PcNative.Stub("MT_GetCurrentMemoryBytes");
+		NonIosNative.Stub("MT_GetCurrentMemoryBytes");
 		return default(int);
 	}
 #endif

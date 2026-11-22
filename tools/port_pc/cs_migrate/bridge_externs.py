@@ -1,6 +1,6 @@
-"""Rewrite DllImport("__Internal") extern declarations: unchanged on iOS, forwarded to the same-named PcNative function on other platforms.
+"""Rewrite DllImport("__Internal") extern declarations: unchanged on iOS, forwarded to the same-named NonIosNative function on other platforms.
 
-Only functions already implemented in PcPort/PcNative.cs are handled; other externs stay unchanged. Call sites are not modified.
+Only functions already implemented in NonIosNative.cs are handled; other externs stay unchanged. Call sites are not modified.
 
     #if UNITY_IOS
         [DllImport("__Internal")]
@@ -8,7 +8,7 @@ Only functions already implemented in PcPort/PcNative.cs are handled; other exte
     #else
         private static int Foo(int size, byte[] buf)
         {
-            return PcNative.Foo(size, buf);
+            return NonIosNative.Foo(size, buf);
         }
     #endif
 
@@ -19,8 +19,8 @@ import re
 import sys
 from pathlib import Path
 
-PC_NATIVE_FILE = "PcPort/PcNative.cs"
-# Public static method names in PcNative
+PC_NATIVE_FILE = "Port/NonIosPort/NonIosNative.cs"
+# Public static method names in NonIosNative
 PC_NATIVE_METHOD = re.compile(r"public static \S+ (\w+)\(")
 # One DllImport + extern declaration (only whitespace between the attribute line and the declaration line)
 EXTERN_DECL = re.compile(
@@ -35,7 +35,7 @@ PARAM_ATTRIBUTE = re.compile(r"\[[A-Za-z][^\]]*\]")
 
 
 def load_pc_native_methods(assets_dir):
-    """Read the method names already implemented in PcNative."""
+    """Read the method names already implemented in NonIosNative."""
     text = (assets_dir / PC_NATIVE_FILE).read_text(encoding="utf-8-sig")
     names = set()
     for name in PC_NATIVE_METHOD.findall(text):
@@ -69,9 +69,9 @@ def make_replacement(match):
     plain_params = PARAM_ATTRIBUTE.sub("", params).strip()
     body_lines = []
     if name in IMPLEMENTED:
-        # PcNative has a real implementation: forward the call
+        # NonIosNative has a real implementation: forward the call
         arguments = build_arguments(params)
-        call = f"PcNative.{name}({arguments})"
+        call = f"NonIosNative.{name}({arguments})"
         if ret == "void":
             body_lines.append(f"{indent}\t{call};")
         else:
@@ -108,7 +108,7 @@ def collect_out_params(plain_params):
     return names
 
 
-# Method names implemented in PcNative, filled in main()
+# Method names implemented in NonIosNative, filled in main()
 IMPLEMENTED = set()
 
 
@@ -117,7 +117,7 @@ def main():
     assets_dir = Path(sys.argv[1]) / "Source" / "Runtime"
     implemented = load_pc_native_methods(assets_dir)
     IMPLEMENTED.update(implemented)
-    print(f"[bridge] PcNative implements: {sorted(implemented)}")
+    print(f"[bridge] NonIosNative implements: {sorted(implemented)}")
     for cs_path in sorted(assets_dir.rglob("*.cs")):
         if "PcPort" in cs_path.parts:
             continue

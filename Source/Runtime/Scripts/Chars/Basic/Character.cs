@@ -372,7 +372,7 @@ public class Character : MonoBehaviourAndLog
 		{
 			characterController = GetComponentInChildren<CharacterController>();
 		}
-		PcPhysics.MatchLegacyController(characterController);
+		NewUnityPhysics.MatchLegacyController(characterController);
 		health = healthTotal;
 		Scene.AddChar(this);
 		_charInfo = Singleton.Cache.PerPrefabCache.Instantiate(Singleton.Cache.PerResourceCache.Load("CharInfo"), 16).GetComponent<CharInfo>();
@@ -621,7 +621,7 @@ public class Character : MonoBehaviourAndLog
 		bool useCharacterController = true;
 		if (useCharacterController)
 		{
-			PcPhysics.LegacyMove(characterController, vector, transform);
+			NewUnityPhysics.LegacyMove(characterController, vector, transform);
 		}
 		else
 		{

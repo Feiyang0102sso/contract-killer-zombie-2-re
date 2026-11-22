@@ -17,7 +17,7 @@ public class GameData : MonoBehaviour
 		TealArea,
 		AmberArea,
 		GoldenArea,
-		// PC port: area of The Pit's own map spot (PcPitMission), no shipped mission uses it
+		// PC port: area of The Pit's own map spot (PitMission), no shipped mission uses it
 		PcPitArea
 	}
 

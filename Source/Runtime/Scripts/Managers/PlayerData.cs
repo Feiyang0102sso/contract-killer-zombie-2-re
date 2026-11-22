@@ -1111,7 +1111,7 @@ public class PlayerData : MonoBehaviourAndLog
 			{
 				num--;
 			}
-			else if (PcPitMission.IsPit(activeMission.Value))
+			else if (PitMission.IsPit(activeMission.Value))
 			{
 				// PC port: The Pit is an extra, like the survival missions
 				num--;
@@ -1687,16 +1687,16 @@ public class PlayerData : MonoBehaviourAndLog
 
 	private void Save()
 	{
-		// PC port: nothing is written during a PcPitTrial (the trial never saves)
-		if (PcPitTrial.IsActive)
+		// PC port: nothing is written during a PitTrial (the trial never saves)
+		if (PitTrial.IsActive)
 		{
-			UnityEngine.Debug.Log("[PcPitTrial] save skipped");
+			UnityEngine.Debug.Log("[PitTrial] save skipped");
 			return;
 		}
 		StorageManager.WriteXml(Const.SaveFileName, _data);
 	}
 
-	/// <summary>PC port: in-memory copy of the player state, taken and restored by PcPitTrial.</summary>
+	/// <summary>PC port: in-memory copy of the player state, taken and restored by PitTrial.</summary>
 	public class PcSnapshot
 	{
 		/// <summary>The save data (_data), serialized the same way as the save file.</summary>
@@ -1718,14 +1718,14 @@ public class PlayerData : MonoBehaviourAndLog
 		public int CurrLevel;
 	}
 
-	/// <summary>PC port: saves the current state to disk, then returns an in-memory copy of it (PcPitTrial).</summary>
+	/// <summary>PC port: saves the current state to disk, then returns an in-memory copy of it (PitTrial).</summary>
 	public PcSnapshot PcTakeSnapshot()
 	{
 		Save();
 		_flush = false;
 		_data.Statistics.Flush = false;
 		MemoryStream stream = new MemoryStream();
-		PcXmlPairs.Serialize(System.Xml.XmlWriter.Create(stream), _data);
+		NewUnityXmlPairs.Serialize(System.Xml.XmlWriter.Create(stream), _data);
 		PcSnapshot snapshot = new PcSnapshot();
 		snapshot.DataXml = stream.ToArray();
 		snapshot.CurrentLocation = _currentLocation;
@@ -1739,13 +1739,13 @@ public class PlayerData : MonoBehaviourAndLog
 	}
 
 	/// <summary>
-	/// PC port: puts back the state from PcTakeSnapshot (PcPitTrial). The disk already holds the same state,
+	/// PC port: puts back the state from PcTakeSnapshot (PitTrial). The disk already holds the same state,
 	/// so nothing is marked for saving.
 	/// </summary>
 	public void PcRestoreSnapshot(PcSnapshot snapshot)
 	{
 		MemoryStream stream = new MemoryStream(snapshot.DataXml);
-		_data = (Data)PcXmlPairs.Deserialize(System.Xml.XmlReader.Create(stream), typeof(Data));
+		_data = (Data)NewUnityXmlPairs.Deserialize(System.Xml.XmlReader.Create(stream), typeof(Data));
 		_currentLocation = snapshot.CurrentLocation;
 		_isSpecialHuntPlayed = snapshot.IsSpecialHuntPlayed;
 		_lastCompletedMissionLocation = snapshot.LastCompletedMissionLocation;

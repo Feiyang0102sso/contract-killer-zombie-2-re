@@ -10,7 +10,7 @@ public class InventoryShopItem : CommonShopItem
 	[XmlIgnore]
 	public PlayerData.Slots? slot;
 
-	/// <summary>PC 移植：slot 的 XML 读写代理（新版 XmlSerializer 不支持可空类型的特性）。</summary>
+	/// <summary>New Unity port: XML read/write proxy for slot (the newer XmlSerializer rejects [XmlAttribute] on nullable types).</summary>
 	[XmlAttribute("slot")]
 	public string slot_XmlText
 	{

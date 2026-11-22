@@ -209,7 +209,7 @@ public class LightProbeSampler
 
 	public static void InterpolateSH(Vector3 position, Renderer renderer)
 	{
-		PcSceneLighting.GetInterpolatedLightProbe(position, renderer, _probe);
+		NewUnitySceneLighting.GetInterpolatedLightProbe(position, renderer, _probe);
 		int num = 0;
 		for (int i = 0; i < 9; i++)
 		{

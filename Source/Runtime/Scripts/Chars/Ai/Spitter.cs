@@ -230,8 +230,8 @@ public class Spitter : Special
 				{
 					Vector3 to = @char.transform.position - transform.position;
 					float unusedDamageValue;
-					// PC port: 3.5 angle (zero vector = 90 degrees) so the spitter skips itself as in the original (see PcLegacyMath)
-					if (to.magnitude - Radius() > spitDamageRange || Mathf.Abs(PcLegacyMath.Angle(transform.forward, to)) > spitDamageAngle)
+					// PC port: 3.5 angle (zero vector = 90 degrees) so the spitter skips itself as in the original (see NewUnityLegacyMath)
+					if (to.magnitude - Radius() > spitDamageRange || Mathf.Abs(NewUnityLegacyMath.Angle(transform.forward, to)) > spitDamageAngle)
 					{
 						continue;
 					}

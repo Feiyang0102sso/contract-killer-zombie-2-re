@@ -23,7 +23,7 @@ namespace Glu.MobileAppTracking
 #else
 		private static void MAT_initialize(string advertiserId, string key)
 		{
-			PcNative.Stub("MAT_initialize");
+			NonIosNative.Stub("MAT_initialize");
 		}
 #endif
 
@@ -33,7 +33,7 @@ namespace Glu.MobileAppTracking
 #else
 		private static void MAT_trackAction(string eventName, string itemName, float itemPrice, string currencyCode)
 		{
-			PcNative.Stub("MAT_trackAction");
+			NonIosNative.Stub("MAT_trackAction");
 		}
 #endif
 

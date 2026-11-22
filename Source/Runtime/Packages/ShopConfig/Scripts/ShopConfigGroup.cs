@@ -18,7 +18,7 @@ public class ShopConfigGroup
 		[XmlIgnore]
 		public double? order;
 
-		/// <summary>PC 移植：order 的 XML 读写代理（新版 XmlSerializer 不支持可空类型的特性）。</summary>
+		/// <summary>New Unity port: XML read/write proxy for order (the newer XmlSerializer rejects [XmlAttribute] on nullable types).</summary>
 		[XmlAttribute("order")]
 		public string order_XmlText
 		{
@@ -44,7 +44,7 @@ public class ShopConfigGroup
 		[XmlIgnore]
 		public bool? visible;
 
-		/// <summary>PC 移植：visible 的 XML 读写代理（新版 XmlSerializer 不支持可空类型的特性）。</summary>
+		/// <summary>New Unity port: XML read/write proxy for visible (the newer XmlSerializer rejects [XmlAttribute] on nullable types).</summary>
 		[XmlAttribute("visible")]
 		public string visible_XmlText
 		{
@@ -63,7 +63,7 @@ public class ShopConfigGroup
 					visible = null;
 					return;
 				}
-				visible = PcXml.ParseBool(value);
+				visible = NewUnityXml.ParseBool(value);
 			}
 		}
 
@@ -118,7 +118,7 @@ public class ShopConfigGroup
 	[XmlIgnore]
 	public bool? visible;
 
-	/// <summary>PC 移植：visible 的 XML 读写代理（新版 XmlSerializer 不支持可空类型的特性）。</summary>
+	/// <summary>New Unity port: XML read/write proxy for visible (the newer XmlSerializer rejects [XmlAttribute] on nullable types).</summary>
 	[XmlAttribute("visible")]
 	public string visible_XmlText
 	{
@@ -137,14 +137,14 @@ public class ShopConfigGroup
 				visible = null;
 				return;
 			}
-			visible = PcXml.ParseBool(value);
+			visible = NewUnityXml.ParseBool(value);
 		}
 	}
 
 	[XmlIgnore]
 	public double? order;
 
-	/// <summary>PC 移植：order 的 XML 读写代理（新版 XmlSerializer 不支持可空类型的特性）。</summary>
+	/// <summary>New Unity port: XML read/write proxy for order (the newer XmlSerializer rejects [XmlAttribute] on nullable types).</summary>
 	[XmlAttribute("order")]
 	public string order_XmlText
 	{

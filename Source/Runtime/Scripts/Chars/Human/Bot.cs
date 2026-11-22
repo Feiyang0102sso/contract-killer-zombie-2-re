@@ -264,8 +264,8 @@ public class Bot : Human
 			UnityEngine.AI.NavMeshPath path;
 			if (!Util.SamplePosition(ref position) || !Util.FindPath(transform.position, position, out path))
 			{
-				// PC port: start off the rebuilt NavMesh -> path from the nearest NavMesh point instead (see PcNavCompat)
-				if (!PcNavCompat.FindPathFromNearestNavMesh(this, position, out path))
+				// PC port: start off the rebuilt NavMesh -> path from the nearest NavMesh point instead (see NewUnityNavCompat)
+				if (!NewUnityNavCompat.FindPathFromNearestNavMesh(this, position, out path))
 				{
 					Reset();
 					UnityEngine.Debug.DrawLine(transform.position, position, new Color(1f, 0.5f, 0f), 1f);

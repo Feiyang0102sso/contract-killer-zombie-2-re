@@ -1,7 +1,7 @@
-﻿# Launch the pilot build and have the game take screenshots by itself at the given times (-pcShots / -pcShotDir of PcBootDiagnostics), then close the game.
+﻿# Launch the pilot build and have the game take screenshots by itself at the given times (-pcShots / -pcShotDir of DevBootDiagnostics), then close the game.
 # The game takes the screenshots itself: it does not capture the screen, so it works even when the window is covered and never captures other programs.
 # Usage: powershell -File run_and_capture.ps1 <exe> <log> <screenshot dir> <list of seconds, comma-separated>
-# Optional: -Taps "40,60@0.5:0.5>0.7:0.5~3" is passed to the game's -pcAutoTap (injects taps / holds / drags at the given times; format in PcBootDiagnostics.AutoTaps).
+# Optional: -Taps "40,60@0.5:0.5>0.7:0.5~3" is passed to the game's -pcAutoTap (injects taps / holds / drags at the given times; format in DevBootDiagnostics.AutoTaps).
 # Optional: -FinishTutorial 50 is passed to the game's -pcFinishTutorial (skips the tutorial level at the given time).
 # Optional: -PostEffect '60:LowHealth,80:Dying' is passed to the game's -pcPostEffect (forces a post-processing effect switch at the given times).
 # Optional: -Mission '50:27' is passed to the game's -pcMission (enters the level of GameData.Missions[27] at the given time).

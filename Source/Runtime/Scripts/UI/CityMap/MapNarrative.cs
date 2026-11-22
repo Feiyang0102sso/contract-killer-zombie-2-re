@@ -574,7 +574,7 @@ public class MapNarrative : MonoBehaviour
 	{
 		_instance = this;
 		// PC port: map spot of The Pit
-		PcPitMission.Setup(this);
+		PitMission.Setup(this);
 	}
 
 	private void Start()
@@ -611,7 +611,7 @@ public class MapNarrative : MonoBehaviour
 			GenerateSurvival(Mission.Type.SurvivalArena);
 		}
 		// PC port: The Pit is always on the map, like the survival missions
-		PcPitMission.EnsureAssigned(this);
+		PitMission.EnsureAssigned(this);
 		if (!SpecialHuntIsAssigned() && !SpecialHuntIsQueued() && SpecialHuntIsEnabled())
 		{
 			GenerateSpecialHunt();
@@ -664,9 +664,9 @@ public class MapNarrative : MonoBehaviour
 			return SpecialHuntButton;
 		}
 		// PC port: icon of The Pit
-		if (PcPitMission.IsPit(missionIndex))
+		if (PitMission.IsPit(missionIndex))
 		{
-			return PcPitMission.Button;
+			return PitMission.Button;
 		}
 		Mission.Type type = GetMissionByIndex(missionIndex).Type;
 		return GetMissionButton(type);
