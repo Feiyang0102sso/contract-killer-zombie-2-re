@@ -11,7 +11,8 @@
 //      flickered as the camera moved. This level's copies of those materials use a per-pixel version of the same formula
 //      (PcPitPixelGlossy.shader). Other levels keep the original shader;
 //   6. the psycho on the platform is a generic Survivor, so he kept crying for rescue ("someone there?"), warning about
-//      waves and shouting for help when hit. His voice lines are cleared;
+//      waves and shouting for help when hit. His voice lines are cleared. His AI also kept turning him around, so he
+//      ended up giving the ending line with his back to Evelyn: PcPitPsychoPose holds him still, facing the glass;
 //   7. ending: the original level ends the moment the 100th zombie dies. A cut-scene task is appended after the kill task,
 //      built from the game's own cut-scene commands (the opening one is copied for its settings): enemies cleared, the
 //      camera flies to the psycho and slowly pushes in while "Impressive, Evelyn. Truly impressive." shows in the big
@@ -136,7 +137,7 @@ public static class PcPitEnhance
 		}
 	}
 
-	/// <summary>Clears the voice lines of every survivor in the level (only the psycho); returns him.</summary>
+	/// <summary>Clears the voice lines of every survivor in the level (only the psycho) and holds him still; returns him.</summary>
 	private static Survivor SilenceSurvivors(UnityEngine.SceneManagement.Scene scene)
 	{
 		Survivor found = null;
@@ -148,6 +149,7 @@ public static class PcPitEnhance
 				survivor.HordeSound = string.Empty;
 				survivor.PainSound = new string[0];
 				survivor.DeathSound = new string[0];
+				survivor.gameObject.AddComponent<PcPitPsychoPose>();
 				found = survivor;
 				Debug.Log("[PcPitEnhance] silenced " + survivor.name);
 			}

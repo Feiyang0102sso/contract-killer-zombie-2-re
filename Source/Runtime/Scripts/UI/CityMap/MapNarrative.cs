@@ -663,10 +663,10 @@ public class MapNarrative : MonoBehaviour
 		{
 			return SpecialHuntButton;
 		}
-		// PC port: placeholder icon of The Pit
+		// PC port: icon of The Pit
 		if (PcPitMission.IsPit(missionIndex))
 		{
-			return SpecialHuntButton;
+			return PcPitMission.Button;
 		}
 		Mission.Type type = GetMissionByIndex(missionIndex).Type;
 		return GetMissionButton(type);
