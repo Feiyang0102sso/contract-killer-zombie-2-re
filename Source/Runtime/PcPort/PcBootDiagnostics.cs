@@ -34,6 +34,7 @@ public class PcBootDiagnostics : MonoBehaviour
 		diagnostics.StartCoroutine(CompleteMission());
 		diagnostics.StartCoroutine(PitTrial());
 		diagnostics.StartCoroutine(GoToMap());
+		diagnostics.StartCoroutine(CompleteTask());
 		diagnostics.StartCoroutine(AddMoney());
 		diagnostics.StartCoroutine(ReportPerformance());
 		diagnostics.StartCoroutine(CheckPlayerPath());
@@ -833,6 +834,26 @@ public class PcBootDiagnostics : MonoBehaviour
 				yield return null;
 			}
 			Debug.Log("[PcDiag] pit trial t=" + target + " started=" + PcPitTrial.TryStart("-pcPitTrial"));
+		}
+	}
+
+	/// <summary>Test: -pcCompleteTask 50 calls Cheat.CompleteTask (the cheat window's "Complete task") at those times: finishes only the current task, so following tasks such as an ending cut-scene still play.</summary>
+	private static IEnumerator CompleteTask()
+	{
+		string argument = GetArgument("-pcCompleteTask");
+		if (argument == null)
+		{
+			yield break;
+		}
+		foreach (string item in argument.Split(','))
+		{
+			float target = float.Parse(item, System.Globalization.CultureInfo.InvariantCulture);
+			while (Time.realtimeSinceStartup < target)
+			{
+				yield return null;
+			}
+			Debug.Log("[PcDiag] complete task t=" + target + " scene=" + UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+			Cheat.CompleteTask();
 		}
 	}
 

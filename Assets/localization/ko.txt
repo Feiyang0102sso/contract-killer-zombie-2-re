@@ -6321,3 +6321,10 @@ msgstr "Press {0} to throw beacon grenade"
 #: Source/Runtime/PcPort/PcTutorialTexts.cs
 msgid "Press {0} for sniper, {1} to zoom"
 msgstr "Press {0} for sniper, {1} to zoom"
+
+# ---- PC port: The Pit ending ----
+
+# PC only. Caption of the ending cut-scene added to The Pit (answers "Impress me, Evelyn!").
+#: Source/Runtime/PcPort/PcPitEnhance.cs
+msgid "Impressive, Evelyn. Truly impressive."
+msgstr "Impressive, Evelyn. Truly impressive."

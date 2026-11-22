@@ -6320,3 +6320,11 @@ msgstr "鼠标右键"
 #: Source/Runtime/PcPort/PcTutorialTexts.cs
 msgid "MIDDLE MOUSE"
 msgstr "鼠标中键"
+
+# ---- PC port: The Pit ending ----
+
+# PC only. Caption of the ending cut-scene added to The Pit (answers "Impress me, Evelyn!").
+# Only characters present in the bitmap font (Assets/ui/fonts/Chinese*.txt) render.
+#: Source/Runtime/PcPort/PcPitEnhance.cs
+msgid "Impressive, Evelyn. Truly impressive."
+msgstr "真让人刮目相看，伊夫林。"
