@@ -6,9 +6,9 @@ using UnityEngine;
 
 public static class PcCursor
 {
-	private const string ResourcePrefix = "PcPort/PcCursor";
+	private const string ResourcePrefix = "PortAddon/PcCursor";
 
-	/// <summary>Available sizes (Resources/PcPort/PcCursor&lt;size&gt;.png), smallest first.</summary>
+	/// <summary>Available sizes (Resources/PortAddon/PcCursor&lt;size&gt;.png), smallest first.</summary>
 	private static readonly int[] Sizes = new int[] { 32, 48, 64 };
 
 	/// <summary>Cursor size at 100% display scale.</summary>

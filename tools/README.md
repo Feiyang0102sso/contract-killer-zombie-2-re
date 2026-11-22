@@ -40,7 +40,7 @@
 | `art/make_cursor.py` | Mouse cursor `PcCursor{32,48,64}.png` |
 | `art/make_exit_button.py` | City map exit button `PcExitButton.png` |
 | `art/make_key_banners.py` | Key-hint banner sheet `PcKeyBanners.png` |
-| `art/make_pit_icons.py` | The Pit map icon `PcPitIcon.png` (candidates in `out/pit_icons/`) |
+| `art/make_pit_icons.py` | The Pit map icon `PitIcon.png` (candidates in `out/pit_icons/`) |
 | `asset_convert/convert_intro_movie.py` | Intro movie `.mov` → `Scene_01.mp4` |
 | `cs_migrate/bridge_externs.py` | One-off: `DllImport("__Internal")` externs forwarded to `NonIosNative` |
 | `test/run_and_capture.ps1` | Starts the game with test arguments, takes screenshots, stops it |

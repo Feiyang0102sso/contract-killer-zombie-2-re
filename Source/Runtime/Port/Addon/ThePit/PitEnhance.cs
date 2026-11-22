@@ -17,7 +17,7 @@
 //      built from the game's own cut-scene commands (the opening one is copied for its settings): enemies cleared, the
 //      camera flies to the psycho and slowly pushes in while "Impressive, Evelyn. Truly impressive." shows in the big
 //      caption, the caption fades, the screen fades to black (PitCutSceneFadeOut) and the result popup fades in.
-// The scene file is not changed. Materials and shader: Assets/Resources/PcPort/PcPit*.
+// The scene file is not changed. Materials and shader: Assets/Resources/PortAddon/PcPit*.
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -32,14 +32,14 @@ public static class PitEnhance
 	private const string GlassMaterialName = "Fx_Throver_Explosion";
 
 	// ---- Materials (Resources paths) ----
-	private const string PoolMaterialPath = "PcPort/PcPitPool";
-	private const string GlassMaterialPath = "PcPort/PcPitGlass";
-	private const string MistMaterialPath = "PcPort/PcPitMist";
-	private const string BubbleMaterialPath = "PcPort/PcPitBubbles";
+	private const string PoolMaterialPath = "PortAddon/PcPitPool";
+	private const string GlassMaterialPath = "PortAddon/PcPitGlass";
+	private const string MistMaterialPath = "PortAddon/PcPitMist";
+	private const string BubbleMaterialPath = "PortAddon/PcPitBubbles";
 
 	// ---- Wall highlight ----
 	private const string VertexGlossyShaderName = "CKZ2/Lightmap + Unlit + VirtualVertexGlossy-Add";
-	private const string PixelGlossyShaderPath = "PcPort/PcPitPixelGlossy";
+	private const string PixelGlossyShaderPath = "PortAddon/PcPitPixelGlossy";
 
 	// ---- Ending cut-scene ----
 	/// <summary>Mission branch the level plays, and its opening cut-scene task (copied for the ending).</summary>

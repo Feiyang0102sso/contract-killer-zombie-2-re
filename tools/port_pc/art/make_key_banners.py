@@ -1,7 +1,7 @@
 """Builds the key-hint banner sprite sheet (red strips behind PC key hints such as SPACE / R / P).
 
 Every banner is drawn as SVG by its own function (tunable values at the top of each function), the sheet is
-rendered to PNG by headless Edge, and the result replaces Assets/Resources/PcPort/PcKeyBanners.png.
+rendered to PNG by headless Edge, and the result replaces Assets/Resources/PortAddon/PcKeyBanners.png.
 
 Sheet layout: 4 columns x 5 rows, each cell 512 x 256 px, banner N (1-based) in reading order.
 Each banner is drawn centered in its cell; the game maps the whole cell onto the banner quad
@@ -20,7 +20,7 @@ from pathlib import Path
 # ---- Output ----
 # tools/port_pc/<category>/<script>.py -> project root
 PROJECT_DIR = Path(__file__).resolve().parents[3]
-OUTPUT_PNG = PROJECT_DIR / "Assets" / "Resources" / "PcPort" / "PcKeyBanners.png"
+OUTPUT_PNG = PROJECT_DIR / "Assets" / "Resources" / "PortAddon" / "PcKeyBanners.png"
 EDGE_EXE = Path(r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe")
 # Seconds to wait for Edge to write the screenshot
 RENDER_TIMEOUT = 30

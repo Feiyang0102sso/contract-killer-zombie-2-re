@@ -20,7 +20,7 @@ from PIL import Image, ImageChops, ImageDraw, ImageFilter
 # tools/port_pc/<category>/<script>.py -> project root
 PROJECT_DIR = Path(__file__).resolve().parents[3]
 SOURCE_ATLAS = PROJECT_DIR / "Assets" / "Resources" / "copiedtextures" / "GUICityMap.png"
-OUTPUT_PNG = PROJECT_DIR / "Assets" / "Resources" / "PcPort" / "PcExitButton.png"
+OUTPUT_PNG = PROJECT_DIR / "Assets" / "Resources" / "PortAddon" / "PcExitButton.png"
 PREVIEW_PNG = PROJECT_DIR / "tools" / "out" / "PcExitButton_preview.png"
 
 # ---- Source frame ----

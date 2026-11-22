@@ -7,7 +7,7 @@
 //   - Briefing, rewards and story progress go through the game's normal mission code (KillAll, Hard).
 //   - The GameData entry is left as shipped (MinLevel 99), so the act mission pools never pick it.
 //   - Icon: a copy of the special hunt button (the big icon with the glow, tinted with the survival orange like it)
-//     with its own white glyph, a zombie hand rising from the pool (Resources/PcPort/PcPitIcon, drawn by
+//     with its own white glyph, a zombie hand rising from the pool (Resources/PortAddon/PitIcon, drawn by
 //     make_pit_icons.py). MapNarrative.GetMissionButton returns it for The Pit, and MapLocation.GetMissionColor
 //     gives it the survival orange instead of the hard-mission yellow.
 using UnityEngine;
@@ -24,7 +24,7 @@ public static class PitMission
 	public const int MinLevel = 2;
 
 	/// <summary>Material with the icon texture (the whole texture is one icon).</summary>
-	private const string IconMaterialPath = "PcPort/PcPitIcon";
+	private const string IconMaterialPath = "PortAddon/PitIcon";
 
 	/// <summary>Index into GameData.Missions, -1 until looked up.</summary>
 	private static int _missionIndex = -1;

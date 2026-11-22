@@ -1,7 +1,7 @@
 // PC port: key hint labels (ESC / SPACE / R / P etc. on the Mac HUD).
 // Text: clones an original SpriteText as template (keeps font, layer, rendering), parented under the button;
 //   the text comes from PcKeyBindings.
-// Red banner (optional): a sprite from the banner sheet (Resources/PcPort/PcKeyBanners.png, made by
+// Red banner (optional): a sprite from the banner sheet (Resources/PortAddon/PcKeyBanners.png, made by
 //   make_key_banners.py) placed as a child of the text, centered behind it and sized to it.
 //   Moving the text moves the banner; PcKeyHintRoot makes a Scene-view click on the banner select the text.
 // Labels are children of the button, so they hide with it.
@@ -31,7 +31,7 @@ public static class PcKeyHints
 
 	// ---- Banner sheet (layout must match make_key_banners.py) ----
 	/// <summary>Banner sheet (Resources path).</summary>
-	private const string BannerSheetPath = "PcPort/PcKeyBanners";
+	private const string BannerSheetPath = "PortAddon/PcKeyBanners";
 	private const int BannerSheetColumns = 4;
 	private const int BannerSheetRows = 5;
 	/// <summary>Banner used for every hint: number N in the sheet (1-based, reading order). 3 = short brush.</summary>

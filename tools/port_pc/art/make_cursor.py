@@ -4,7 +4,7 @@ The cyan matches the game's stock UI icons (achievements, settings). The shape i
 and rendered at every size in CURSOR_SIZES (supersampled), so small sizes stay crisp instead of being downscaled.
 PcCursor picks the size closest to 32 px times the display scale (100% -> 32, 150% -> 48, 200% -> 64).
 
-Output: Assets/Resources/PcPort/PcCursor<size>.png, plus a preview sheet in tools/out/.
+Output: Assets/Resources/PortAddon/PcCursor<size>.png, plus a preview sheet in tools/out/.
 The hotspot (arrow tip) is HOTSPOT on the 64 grid; PcCursor.HotspotOnGrid must match it.
 
 Usage (from ckz2_repo_pc):
@@ -17,7 +17,7 @@ from PIL import Image, ImageChops, ImageDraw, ImageFilter
 # ---- Paths ----
 # tools/port_pc/<category>/<script>.py -> project root
 PROJECT_DIR = Path(__file__).resolve().parents[3]
-OUTPUT_DIR = PROJECT_DIR / "Assets" / "Resources" / "PcPort"
+OUTPUT_DIR = PROJECT_DIR / "Assets" / "Resources" / "PortAddon"
 PREVIEW_PNG = PROJECT_DIR / "tools" / "out" / "PcCursor_preview.png"
 
 # ---- Sizes ----

@@ -12,8 +12,8 @@ Steps:
   3. draw each candidate glyph as a white mask (supersampled, then scaled down) into the glyph square;
   4. write every candidate as a white icon, plus a preview sheet with the stock icons for comparison and each
      candidate white, tinted with the survival orange over the glow, and at half size;
-  5. write the chosen candidate (CHOSEN_CANDIDATE) to Assets/Resources/PcPort/PcPitIcon.png, the texture of the
-     PcPitIcon material that PitMission puts on its copy of the special hunt button.
+  5. write the chosen candidate (CHOSEN_CANDIDATE) to Assets/Resources/PortAddon/PitIcon.png, the texture of the
+     PitIcon material that PitMission puts on its copy of the special hunt button.
 
 Usage (from ckz2_repo_pc):
     ../.venv/Scripts/python.exe tools/port_pc/art/make_pit_icons.py
@@ -29,9 +29,9 @@ PROJECT_DIR = Path(__file__).resolve().parents[3]
 SOURCE_ATLAS = PROJECT_DIR / "Assets" / "Resources" / "copiedtextures" / "GUILocations.png"
 OUTPUT_DIR = PROJECT_DIR / "tools" / "out" / "pit_icons"
 PREVIEW_PNG = OUTPUT_DIR / "preview.png"
-# The candidate the game uses (picked 2026-11-21), written as the texture of the PcPitIcon material
+# The candidate the game uses (picked 2026-11-21), written as the texture of the PitIcon material
 CHOSEN_CANDIDATE = "zombie_hand"
-GAME_ICON_PNG = PROJECT_DIR / "Assets" / "Resources" / "PcPort" / "PcPitIcon.png"
+GAME_ICON_PNG = PROJECT_DIR / "Assets" / "Resources" / "PortAddon" / "PitIcon.png"
 
 # ---- Source sprites: EZGUI UVs from CityMap.unity (x, y, width, height; y measured from the bottom) ----
 SURVIVAL_UV = (0.40966797, 0.91748047, 0.06689453, 0.07910156)
@@ -488,7 +488,7 @@ def main():
     for number, (name, draw_glyph) in enumerate(CANDIDATES, start=1):
         icon = compose_icon(frame, draw_glyph())
         label = str(number) + ". " + name
-        path = OUTPUT_DIR / ("PcPitIcon_" + str(number) + "_" + name + ".png")
+        path = OUTPUT_DIR / ("PitIcon_" + str(number) + "_" + name + ".png")
         icon.save(path)
         print("wrote " + str(path.relative_to(PROJECT_DIR)))
         if name == CHOSEN_CANDIDATE:

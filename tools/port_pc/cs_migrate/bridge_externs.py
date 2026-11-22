@@ -119,7 +119,7 @@ def main():
     IMPLEMENTED.update(implemented)
     print(f"[bridge] NonIosNative implements: {sorted(implemented)}")
     for cs_path in sorted(assets_dir.rglob("*.cs")):
-        if "PcPort" in cs_path.parts:
+        if "Port" in cs_path.parts:
             continue
         raw = cs_path.read_bytes()
         if b"__Internal" not in raw:
