@@ -2,6 +2,39 @@
 #include <windows.h>
 #include "resource.h"
 
+// Launcher version: change both forms together.
+#define LAUNCHER_VERSION_NUM 1,0,0,0
+#define LAUNCHER_VERSION_STR "1.0.0.0"
+
+// Version shown in the exe's Properties > Details tab.
+VS_VERSION_INFO VERSIONINFO
+FILEVERSION     LAUNCHER_VERSION_NUM
+PRODUCTVERSION  LAUNCHER_VERSION_NUM
+FILEFLAGSMASK   VS_FFI_FILEFLAGSMASK
+FILEFLAGS       0
+FILEOS          VOS_NT_WINDOWS32
+FILETYPE        VFT_APP
+FILESUBTYPE     VFT2_UNKNOWN
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        // en-US, Unicode
+        BLOCK "040904B0"
+        BEGIN
+            VALUE "FileDescription",  "CK Zombies 2"
+            VALUE "FileVersion",      LAUNCHER_VERSION_STR
+            VALUE "InternalName",     "ckz2"
+            VALUE "OriginalFilename", "ckz2.exe"
+            VALUE "ProductName",      "CK Zombies 2"
+            VALUE "ProductVersion",   LAUNCHER_VERSION_STR
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x0409, 1200
+    END
+END
+
 // Lowest icon ID first: it becomes the exe icon. Path is relative to this file.
 IDI_APP ICON "../../assets/ckz2.ico"
 
