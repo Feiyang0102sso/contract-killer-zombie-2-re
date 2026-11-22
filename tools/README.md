@@ -37,6 +37,7 @@
 
 | File | What |
 | --- | --- |
+| `build/unity_build.bat` | Shared body of `build_dev.bat` / `build_release.bat` (finds Unity, runs `PcBuild` in batch mode) |
 | `art/make_cursor.py` | Mouse cursor `PcCursor{32,48,64}.png` |
 | `art/make_exit_button.py` | City map exit button `PcExitButton.png` |
 | `art/make_key_banners.py` | Key-hint banner sheet `PcKeyBanners.png` |

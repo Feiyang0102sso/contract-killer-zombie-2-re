@@ -22,7 +22,7 @@
 #include "resource.h"
 
 // GPU hints and the D3D12 Agility SDK location, copied from Unity 6000.3.28f1 WindowsPlayer/Main.cpp.
-// D3D12SDKVersion must match Builds/D3D12/D3D12Core.dll: compare with Main.cpp again after a Unity upgrade.
+// D3D12SDKVersion must match Builds/<Dev|Release>/D3D12/D3D12Core.dll: compare with Main.cpp again after a Unity upgrade.
 extern "C"
 {
     __declspec(dllexport) DWORD NvOptimusEnablement = 0x00000001;

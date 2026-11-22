@@ -1,10 +1,17 @@
 @echo off
 rem Builds the launcher (vs\Launcher.sln, Release x64) with MSBuild to bin\x64\Release\ckz2.exe,
-rem then copies it over Builds\ckz2.exe when that folder holds a Unity build.
+rem then copies it over ckz2.exe of a Unity build folder.
+rem Usage: build_launcher.bat [build folder]
+rem   With a folder (PcBuild passes Builds\Dev or Builds\Release): replace ckz2.exe there.
+rem   Without one: replace ckz2.exe in every one of Builds\Dev and Builds\Release that holds a Unity build.
 rem Needs Visual Studio or Build Tools with the "Desktop development with C++" workload (found with vswhere).
-rem PcBuild.Build (build.bat or the CKZ2/Build menu) calls this after the Unity build; run it alone to update only the exe.
+rem PcBuild (build_dev.bat, build_release.bat or the CKZ2/Build menu) calls this after the Unity build;
+rem run it alone to update only the exe.
 rem Comments are in English on purpose: cmd reads .bat files in the OEM code page.
 setlocal
+rem Resolve the folder against the caller's directory before changing it
+set "TARGET_DIR="
+if not "%~1"=="" set "TARGET_DIR=%~f1"
 cd /d "%~dp0"
 
 set "VSWHERE=%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe"
@@ -27,12 +34,24 @@ if errorlevel 1 (
 set "EXE=%CD%\bin\x64\Release\ckz2.exe"
 echo [launcher] built %EXE%
 
-if exist "..\Builds\UnityPlayer.dll" (
-    copy /y "%EXE%" "..\Builds\ckz2.exe" >nul
-    if errorlevel 1 (
-        echo [launcher] cannot replace Builds\ckz2.exe - is the game running?
-        exit /b 1
-    )
-    echo [launcher] replaced Builds\ckz2.exe
+if defined TARGET_DIR (
+    call :replace_exe "%TARGET_DIR%"
+    exit /b
 )
+call :replace_exe "%CD%\..\Builds\Dev" || exit /b 1
+call :replace_exe "%CD%\..\Builds\Release" || exit /b 1
+exit /b 0
+
+rem Copies the launcher over <folder>\ckz2.exe; skips folders without a Unity build
+:replace_exe
+if not exist "%~1\UnityPlayer.dll" (
+    echo [launcher] no Unity build in %~1, skipped
+    exit /b 0
+)
+copy /y "%EXE%" "%~1\ckz2.exe" >nul
+if errorlevel 1 (
+    echo [launcher] cannot replace %~1\ckz2.exe - is the game running?
+    exit /b 1
+)
+echo [launcher] replaced %~1\ckz2.exe
 exit /b 0

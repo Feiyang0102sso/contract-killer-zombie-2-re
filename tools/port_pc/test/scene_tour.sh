@@ -2,7 +2,7 @@
 # Level tour: for the first mission of each level scene, launch the game once, enter that mission directly (-pcMission), take screenshots and keep the log.
 # Before each run the save is restored to the same copy (past the tutorial, on the map) so every run starts the same way.
 # Usage (from the project root): bash tools/port_pc/test/scene_tour.sh <exe> <save backup dir> <output dir> [mission index ...]
-#   Example: bash tools/port_pc/test/scene_tour.sh Builds/ckz2.exe RunLogs/save_backup_0150 RunLogs/tour1
+#   Example: bash tools/port_pc/test/scene_tour.sh Builds/Dev/ckz2.exe RunLogs/save_backup_0150 RunLogs/tour1
 # Mission indices come from Missions in prefabs/basic/GameData.prefab (the first one of each scene).
 set -u
 
